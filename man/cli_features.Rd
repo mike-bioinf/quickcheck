@@ -2,13 +2,18 @@
 % Please edit documentation in R/cli_lists_generators.R
 \name{cli_features}
 \alias{cli_features}
-\alias{generate_cli_alert_list}
-\title{Set of functions that manipulate cli functions and facilitate apllying its syntax.
-Generates a list of main cli alert functions with informative names.}
+\alias{alert_generator}
+\title{Set of functions that manipulate cli functions and facilitate applying its syntax.
+Allows to generate error, warning calls based on the specified type and using custom messages.}
 \usage{
-generate_cli_alert_list()
+alert_generator(type, alert_message)
+}
+\arguments{
+\item{type}{string equal to one of: 'error', 'message' and 'warning'. Determines the type of alert.}
+
+\item{alert_message}{character vector that follows the cli syntax and conventions.}
 }
 \description{
-Set of functions that manipulate cli functions and facilitate apllying its syntax.
-Generates a list of main cli alert functions with informative names.
+Set of functions that manipulate cli functions and facilitate applying its syntax.
+Allows to generate error, warning calls based on the specified type and using custom messages.
 }

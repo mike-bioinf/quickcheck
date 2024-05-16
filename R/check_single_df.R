@@ -1,7 +1,6 @@
 # Checking functions that work on single dataframe.
 
 
-
 #' Checks the presence of one or multiple columns in a dataframe
 #' @description
 #' Checks the presence of a column in a dataframe base on its name and raises error, warning or a message.
@@ -12,18 +11,17 @@
 #' @param columns character string reporting the column/s name.
 #' @param df_arg string specifying how to address df in the raised messages (default "df").
 #' @param raise character string equal to one of "error", "warning" or "message" (default error).
+#'  Set the type of alert that is created.
 #' @param alert_message string reporting the alert message. Its formatted by cli_bullets function.
 #'  Default NULL, in this case a standard message with the appropriate bullet sign is used.
-#'
-#' @return NULL or side effects.
+#' @return NULL.
 #' @export
 check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", alert_message = NULL){
-  check_required_all()
   rlang::arg_match(arg = raise, values = c("error", "warning", "message"), multiple = F)
   absent_cols <- columns[!columns %in% colnames(df)]
 
   if(length(absent_cols) == 0){
-    return()
+    return(NULL)
   }
 
   if(is.null(alert_message)){
@@ -43,13 +41,11 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 
 #' Checks if the specified column of the dataframe is suitable as key with only unique values.
 #' @param key character reporting the column name.
-#' @inheritParams source check_columns_presence
-#' @return NULL or side effects.
+#' @inheritParams check_columns_presence
+#' @return NULL.
 #' @export
 check_key <- function(df, key, raise = "error", alert_message = NULL){
-  check_columns_presence(df = df, columns = key, df_arg = deparse(substitute(df)))
   value_freqs <- table(df[[key]])
-
   if(!all(value_freqs == 1)){
     err_value <- names(value_freqs[value_freqs != 1])
     if(is.null(alert_message)){
@@ -63,8 +59,3 @@ check_key <- function(df, key, raise = "error", alert_message = NULL){
   }
   return(NULL)
 }
-
-
-
-
-

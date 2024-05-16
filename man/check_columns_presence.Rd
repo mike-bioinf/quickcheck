@@ -2,33 +2,34 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_columns_presence}
 \alias{check_columns_presence}
-\title{Checks the presence of one or multiple columns in a dataframe.}
+\title{Checks the presence of one or multiple columns in a dataframe}
 \usage{
 check_columns_presence(
   df,
   columns,
   df_arg = "df",
   raise = "error",
-  warn_message = NULL
+  alert_message = NULL
 )
 }
 \arguments{
 \item{df}{dataframe.}
 
-\item{columns}{character string reporting the column/s name.
-@param df_arg string specifying how to address df in the raised messages (default "df").}
+\item{columns}{character string reporting the column/s name.}
 
-\item{raise}{character string equal to "error" or "warning" (default error).}
+\item{df_arg}{string specifying how to address df in the raised messages (default "df").}
 
-\item{warn_message}{string reporting the warning or message based on raise value
-(default NULL, in this case the error message is used with the correct sign).}
+\item{raise}{character string equal to one of "error", "warning" or "message" (default error).
+Set the type of alert that is created.}
+
+\item{alert_message}{string reporting the alert message. Its formatted by cli_bullets function.
+Default NULL, in this case a standard message with the appropriate bullet sign is used.}
 }
 \value{
-NULL or side effects.
+NULL.
 }
 \description{
 Checks the presence of a column in a dataframe base on its name and raises error, warning or a message.
-The error message is standardized because always informative, the warning and message can be personalized,
-following the cli syntax (it is passed to cli_bullets).
-If NULL the message displayed for errors is used with the "correct bullet sign".
+The default alert message can be modified and the cli syntax can be used
+(the character vector is passed to cli_bullets).
 }
