@@ -22,14 +22,11 @@ check_nrow(
 
 \item{df2_arg}{string specifying how to address df2 in the raised messages (default "df2").}
 
-\item{raise}{character string equal to one of "error", "warning" or "message" (default error).
+\item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
 Set the type of alert that is created.}
 
-\item{alert_message}{string reporting the alert message. Its formatted by cli_bullets function.
+\item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
 Default NULL, in this case a standard message with the appropriate bullet sign is used.}
-}
-\value{
-NULL or side effects
 }
 \description{
 Checks equal number of rows between two dataframes

@@ -1,17 +1,75 @@
-#' @name cli_features
-#' @title Set of functions that manipulate cli functions and facilitate applying its syntax.
+### Set of functions that manipulate cli functions and facilitate applying its syntax.
 
 
-#' Allows to generate error, warning calls based on the specified type and using custom messages.
+#' Generic that allows to generate error, warning calls based on the specified type and using custom messages.
 #' @param type string equal to one of: 'error', 'message' and 'warning'. Determines the type of alert.
-#' @param alert_message character vector that follows the cli syntax and conventions.
+#' @param alert_message list of character vector or a single character vector that follow the cli
+#'  syntax. If list it is formatted following the scheme explained in format_cli_list.
 alert_generator <- function(type, alert_message){
+  UseMethod(generic = "alert_generator", object = alert_message)
+}
+
+
+
+
+#' S3 method for character class of alert_generator
+#' @inheritParams alert_generator
+alert_generator.character <- function(type, alert_message){
+  rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
   alert_funcs <- generate_cli_alert_list()
   signs <- generate_cli_sign_list()
   selected_alert <- alert_funcs[[type]]
   names(alert_message)[1] <- signs[[type]]
   selected_alert(alert_message)
 }
+
+
+
+
+#' S3 method for list class of alert_generator
+#' @inheritParams alert_generator
+alert_generator.list <- function(type, alert_message){
+  rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
+  alert_funcs <- generate_cli_alert_list()
+  signs <- generate_cli_sign_list()
+  selected_alert <- alert_funcs[[type]]
+  header_sign = signs[[type]]
+  formatted_alert <- format_cli_list(alert_message, header_sign)
+  selected_alert(formatted_alert)
+}
+
+
+
+
+
+#' Helper of alert_generator.list. It formats the list message as header plus colored bullet list
+#' with every name or position (in absence of the name) colored and a sequence of elements
+#' (aka the collapsed character vector). The header is by default considered as the first element
+#' in the list and it has to be a single string.
+#' @param l list to format
+#' @param header_sign sign associated with the header selected according to the raised alert type.
+format_cli_list <- function(l, header_sign){
+  lnames <- names(l)
+  formatted_vector <- c()
+
+  for(i in seq_along(l)[2:length(l)]){
+    if(is_empty_vec(lnames[i])){
+      n <- i - 1
+    } else {
+      n <- lnames[i]
+    }
+    formatted_vector <- c(
+      formatted_vector,
+      glue::glue("{cli::col_magenta(n)}: ", paste(l[[i]], collapse = ", "), "\n")
+    )
+  }
+
+  formatted_vector <- c(l[[1]], formatted_vector)
+  names(formatted_vector)[1] <- header_sign
+  return(formatted_vector)
+}
+
+
 
 
 
@@ -23,6 +81,7 @@ generate_cli_alert_list <- function(){
     message = function(...) cli::cli_inform(message = ..., .envir = rlang::caller_env(n = 2))
   )
 }
+
 
 
 

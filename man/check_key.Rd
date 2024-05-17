@@ -7,18 +7,18 @@
 check_key(df, key, raise = "error", alert_message = NULL)
 }
 \arguments{
-\item{df}{dataframe.}
+\item{df}{Dataframe passed in the outer function.}
 
 \item{key}{character reporting the column name.}
 
-\item{raise}{character string equal to one of "error", "warning" or "message" (default error).
+\item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
 Set the type of alert that is created.}
 
-\item{alert_message}{string reporting the alert message. Its formatted by cli_bullets function.
+\item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
 Default NULL, in this case a standard message with the appropriate bullet sign is used.}
 }
 \value{
-NULL.
+invisible NULL.
 }
 \description{
 Checks if the specified column of the dataframe is suitable as key with only unique values.

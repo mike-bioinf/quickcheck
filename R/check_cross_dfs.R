@@ -7,7 +7,7 @@
 #' @param df1_arg string specifying how to address df1 in the raised messages (default "df1").
 #' @param df2_arg string specifying how to address df2 in the raised messages (default "df2").
 #' @inheritParams check_columns_presence
-#' @return NULL or side effects
+#' @return NULL
 #' @export
 check_nrow <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL){
   if(nrow(df1) != nrow(df2)){
@@ -16,8 +16,7 @@ check_nrow <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "erro
     }
     alert_generator(raise, alert_message)
   }
-
-  return(NULL)
+  invisible(NULL)
 }
 
 
@@ -39,7 +38,7 @@ check_nrow <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "erro
 #' @inheritParams check_columns_presence
 #' @return NULL
 #' @export
-check_copresence <- function(df1, df2, col, direction = "first_in_second", raise = "error", alert_message = NULL){
+check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", raise = "error", alert_message = NULL){
   rlang::arg_match(arg = direction, values = c("first_in_second", "second_in_first", "bidirectional"), multiple = FALSE)
 
   if(length(col) > 2){
@@ -98,5 +97,6 @@ check_copresence <- function(df1, df2, col, direction = "first_in_second", raise
     alert_generator(raise, alert_message)
   }
 
-  return(NULL)
+  invisible(NULL)
 }
+
