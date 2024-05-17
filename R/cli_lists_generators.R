@@ -33,7 +33,7 @@ alert_generator.list <- function(type, alert_message){
   alert_funcs <- generate_cli_alert_list()
   signs <- generate_cli_sign_list()
   selected_alert <- alert_funcs[[type]]
-  header_sign = signs[[type]]
+  header_sign <- signs[[type]]
   formatted_alert <- format_cli_list(alert_message, header_sign)
   selected_alert(formatted_alert)
 }

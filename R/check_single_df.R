@@ -20,7 +20,7 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
   absent_cols <- columns[!columns %in% colnames(df)]
 
   if(length(absent_cols) == 0){
-    invisible(NULL)
+    return(NULL)
   }
 
   if(is.null(alert_message)){
