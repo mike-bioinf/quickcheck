@@ -16,7 +16,7 @@ check_required_all <- function(){
   envmiss <- purrr::keep(envlist, rlang::is_missing)
 
   if(length(envmiss) > 0){
-    cli_abort(c("x" = "{col_red(names(envmiss))} {?is/are} absent but must be supplied."))
+    cli::cli_abort(c("x" = "{col_red(names(envmiss))} {?is/are} absent but must be supplied."))
   }
   return(NULL)
 }
@@ -36,7 +36,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
   if(!is.null(numeric_correspondence)){
     expected_types <- control_recycle(args, expected_types, numeric_correspondence)
   } else if(length(args) != length(expected_types)){
-    cli_abort(c("x" = "args and expected_types have different lengths"))
+    cli::cli_abort(c("x" = "args and expected_types have {col_red('different lengths')}"))
   }
 
   type_outer <- c()
@@ -68,7 +68,7 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
   if(!is.null(numeric_correspondence)){
     expected_classes <- control_recycle(args, expected_classes, numeric_correspondence)
   } else if(length(args) != length(expected_classes)){
-    cli_abort(c("x" = "args and expected_classes have different lengths"))
+    cli::cli_abort(c("x" = "args and expected_classes have different lengths"))
   }
 
   class_outer <- list()
@@ -107,11 +107,11 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
 #' @param numeric_correspondence number of times the elements of vector2 must be repeated in order.
 control_recycle <- function(vector1, vector2, numeric_correspondence){
   if(!is.numeric(numeric_correspondence)){
-    cli_abort(c("x" = "numeric_correspondence is not a numeric vector"))
+   cli::cli_abort(c("x" = "numeric_correspondence is not a numeric vector"))
   }
 
   if(length(vector1) != sum(numeric_correspondence)){
-    cli_abort(c("x" = "The sum of numbers specified in numeric_correspondence is different from args length"))
+    cli::cli_abort(c("x" = "The sum of numbers specified in numeric_correspondence is different from args length"))
   }
 
   vector2 <- rep(vector2, numeric_correspondence)

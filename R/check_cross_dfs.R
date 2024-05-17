@@ -42,7 +42,7 @@ check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", r
   rlang::arg_match(arg = direction, values = c("first_in_second", "second_in_first", "bidirectional"), multiple = FALSE)
 
   if(length(col) > 2){
-    cli_abort(c("x" = "col argument must be of length 1 or 2"))
+    cli::cli_abort(c("x" = "col argument must be of length 1 or 2"))
   }
 
   if(length(col) == 2){
