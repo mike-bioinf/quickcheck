@@ -6,7 +6,7 @@ cli::test_that_cli(
     x = {
       l <- list("this is the error header", fruits = c("banana", "apple"), "second element without name")
       mess <- format_cli_list(l, header_sign = "x")
-      alert_generator(type = "error", alert_message = mess)
+      alert_generator.character(type = "error", alert_message = mess, eval_env = 1)
     },
     error = T
   )},

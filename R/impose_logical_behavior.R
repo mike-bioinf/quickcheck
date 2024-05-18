@@ -1,22 +1,32 @@
 ### Impose Boolean returns for check functions
+# The tryCatch interrupts the execution of code, therefore if a 'quickalert' condition is
+# hit before an other non 'quickalert' condition, this will not be seen by impose_logical_behavior.
+# This means that alert_generator must be the last call in the check-functions.
 
 
-#' Alter the behavior of checking conditions to raising alerts to return boolean values.
+#' Alter the behavior of checking conditions from raising alerts to return boolean values.
 #' @description
-#' This function works as a wrapper of the checking conditions and allows to impose
-#' to them a 'logical' behavior, in the sense they don't raise anymore the alerts but instead
-#' boolean values. If the alert would be raised they will return TRUE otherwise FALSE.
+#' This function works as a wrapper of the checking functions and impose them a
+#' 'logical' behavior. This means that they will raise anymore the alerts condition
+#' but instead they will return boolean values. In greater detail if a 'quickalert' class
+#' condition is hit, then the function return TRUE otherwise FALSE.
 #'
 #' @param expr check function call.
-#' @return Boolean value
+#' @return A single logical value.
 #' @export
-impose_logical_behaviour <- function(expr){
+impose_logical_behavior <- function(expr){
   alert <- FALSE
   logical_return <- FALSE
 
   tryCatch(
     expr = {expr},
     condition = function(cond){
+      if(!"quickalert" %in% class(cond)){
+        cli::cli_abort(c(
+          "x" = "The supplied expression have raised an {col_red('unexpected')} alert:",
+          "{cond$message}"
+        ))
+      }
       alert <<- TRUE
     }
   )

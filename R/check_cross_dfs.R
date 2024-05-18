@@ -9,15 +9,16 @@
 #' @inheritParams check_columns_presence
 #' @return NULL
 #' @export
-check_nrow <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL){
+check_nrow <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n.evaluation_frame = 2){
   if(nrow(df1) != nrow(df2)){
     if(is.null(alert_message)){
       alert_message <- c("{col_red('Different number')} of rows between {df1_arg} and {df2_arg}")
     }
-    alert_generator(raise, alert_message)
+    alert_generator(raise, alert_message, n.evaluation_frame)
   }
   invisible(NULL)
 }
+
 
 
 
@@ -38,7 +39,7 @@ check_nrow <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "erro
 #' @inheritParams check_columns_presence
 #' @return NULL
 #' @export
-check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", raise = "error", alert_message = NULL){
+check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", raise = "error", alert_message = NULL, n.evaluation_frame = 2){
   rlang::arg_match(arg = direction, values = c("first_in_second", "second_in_first", "bidirectional"), multiple = FALSE)
 
   if(length(col) > 2){
@@ -94,7 +95,7 @@ check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", r
       alert_message <- c(alert_message, "\n", alert_message2)
     }
 
-    alert_generator(raise, alert_message)
+    alert_generator(raise, alert_message, n.evaluation_frame)
   }
 
   invisible(NULL)

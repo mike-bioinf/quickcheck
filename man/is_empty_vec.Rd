@@ -8,7 +8,7 @@ Return a single boolean (FALSE even if one value is empty, TRUE otherwise).}
 is_empty_vec(vec)
 }
 \arguments{
-\item{vec}{vector to check}
+\item{vec}{Vector to check.}
 }
 \description{
 Helper of check_empty_vec in which all "empty possibilities" are tested for each value.
