@@ -13,6 +13,7 @@ check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message
     if(is.null(alert_message)){
       alert_message <- "There are empty values in {vec_arg}"
     }
+    alert_generator(raise, alert_message)
   }
   invisible(NULL)
 }

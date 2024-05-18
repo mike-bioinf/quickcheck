@@ -12,7 +12,7 @@ alert_generator <- function(type, alert_message){
 
 
 
-#' S3 method for character class of alert_generator
+#' S3 method of alert_generator for 'character' class
 #' @inheritParams alert_generator
 alert_generator.character <- function(type, alert_message){
   rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
@@ -26,7 +26,7 @@ alert_generator.character <- function(type, alert_message){
 
 
 
-#' S3 method for list class of alert_generator
+#' S3 method of alert_generator for 'list' class
 #' @inheritParams alert_generator
 alert_generator.list <- function(type, alert_message){
   rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
@@ -49,18 +49,19 @@ alert_generator.list <- function(type, alert_message){
 #' @param l list to format
 #' @param header_sign sign associated with the header selected according to the raised alert type.
 format_cli_list <- function(l, header_sign){
-  lnames <- names(l)
+  list_wout_header <- l[2:length(l)]
+  lnames <- names(list_wout_header)
   formatted_vector <- c()
 
-  for(i in seq_along(l)[2:length(l)]){
+  for(i in seq_along(list_wout_header)){
     if(is_empty_vec(lnames[i])){
-      n <- i - 1
+      n <- i
     } else {
       n <- lnames[i]
     }
     formatted_vector <- c(
       formatted_vector,
-      glue::glue("{cli::col_magenta(n)}: ", paste(l[[i]], collapse = ", "), "\n")
+      glue::glue("{cli::col_magenta(n)}: ", paste(list_wout_header[[i]], collapse = ", "), "\n")
     )
   }
 
