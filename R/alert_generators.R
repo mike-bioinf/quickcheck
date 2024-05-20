@@ -1,4 +1,4 @@
-### Set of functions that manipulate cli functions and facilitate applying its syntax.
+### Set of functions that manipulate cli alert functions.
 
 
 #' Generic that allows to generate error, warning calls based on the specified type and using custom messages.
@@ -7,7 +7,10 @@
 #'  syntax. If list it is formatted following the scheme explained in format_cli_list.
 #' @param eval_env numeric indicating the calling frame in which evaluates the alert in respect
 #'  to which is called. So it indicates the number of frames to look up in the calling stack.
-alert_generator <- function(type, alert_message, eval_env){
+#' @param quickalert logical, whether to generate an alert with class "quickalert" or not (default TRUE).
+#'  The generation of plain alerts is useful when using checking functions inside other ones,
+#'  in order to have exclusively the main check to raise quickalert.
+alert_generator <- function(type, alert_message, eval_env, quickalert = TRUE){
   UseMethod(generic = "alert_generator", object = alert_message)
 }
 
@@ -16,11 +19,11 @@ alert_generator <- function(type, alert_message, eval_env){
 
 #' S3 method of alert_generator for 'character' class
 #' @inheritParams alert_generator
-alert_generator.character <- function(type, alert_message, eval_env){
-  rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
-  alert_funcs <- generate_cli_alert_list()
-  signs <- generate_cli_sign_list()
+alert_generator.character <- function(type, alert_message, eval_env, quickalert = TRUE){
+  rlang::arg_match(arg = type, values = c("error", "warning", "message", "accumulate_message"), multiple = F)
+  alert_funcs <- generate_cli_alert_list(quickalert)
   selected_alert <- alert_funcs[[type]]
+  signs <- generate_cli_sign_list()
   names(alert_message)[1] <- signs[[type]]
   selected_alert(alert_message, eval_env)
 }
@@ -30,11 +33,11 @@ alert_generator.character <- function(type, alert_message, eval_env){
 
 #' S3 method of alert_generator for 'list' class
 #' @inheritParams alert_generator
-alert_generator.list <- function(type, alert_message, eval_env){
-  rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
-  alert_funcs <- generate_cli_alert_list()
-  signs <- generate_cli_sign_list()
+alert_generator.list <- function(type, alert_message, eval_env, quickalert = TRUE){
+  rlang::arg_match(arg = type, values = c("error", "warning", "message", "accumulate_message"), multiple = F)
+  alert_funcs <- generate_cli_alert_list(quickalert)
   selected_alert <- alert_funcs[[type]]
+  signs <- generate_cli_sign_list()
   header_sign <- signs[[type]]
   alert_message <- format_cli_list(alert_message, header_sign)
   selected_alert(alert_message, eval_env)
@@ -76,12 +79,19 @@ format_cli_list <- function(l, header_sign){
 
 
 
-#' Generates a list of main cli alert functions with informative names.
-generate_cli_alert_list <- function(){
+#' Generates a list of aliases of main cli alert functions with intuitive names.
+generate_cli_alert_list <- function(quickalert){
+  if(quickalert){
+    alertclass <- "quickalert"
+  } else {
+    alertclass <- NULL
+  }
+
   cli_main_list <- list(
-    error = function(alert, eval_env) cli::cli_abort(alert, .envir = rlang::caller_env(n = eval_env), class = "quickalert"),
-    warning = function(alert, eval_env) cli::cli_warn(alert, .envir = rlang::caller_env(n = eval_env), class = "quickalert"),
-    message = function(alert, eval_env) cli::cli_inform(alert, .envir = rlang::caller_env(n = eval_env), class = "quickalert")
+    error = function(alert, eval_env) cli::cli_abort(alert, .envir = rlang::caller_env(n = eval_env), class = alertclass),
+    warning = function(alert, eval_env) cli::cli_warn(alert, .envir = rlang::caller_env(n = eval_env), class = alertclass),
+    message = function(alert, eval_env) cli::cli_inform(alert, .envir = rlang::caller_env(n = eval_env), class = alertclass),
+    accumulate_message = function(alert, eval_env) cli::cli_inform(alert, .envir = rlang::caller_env(n = eval_env), class = alertclass)
   )
 }
 
@@ -93,7 +103,16 @@ generate_cli_sign_list <- function(){
   cli_sign_list <- list(
     error = "x",
     warning = "!",
-    message = "i"
+    message = "i",
+    accumulate_message = ""
   )
 }
 
+
+
+#' Add header string to "alert formatted" list.
+#' @param alert_list list to be formatted as an 'alert list'.
+#' @param header string that will appear as header of the alert.
+add_header <- function(header, alert_list){
+  c(list(header), alert_list)
+}

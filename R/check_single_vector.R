@@ -10,15 +10,16 @@
 #'  of the alert message in respect to where the function calling the alert is run.
 #'  The default value points to the function frame. So it's possible to simply points
 #'  to upper frames (as well as to below frames but is not recommended).
+#' @param ... not useful for direct use.
 #'
 #' @return invisible NULL
 #' @export
-check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2){
+check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, ...){
   if(is_empty_vec(vec)){
     if(is.null(alert_message)){
       alert_message <- "There are empty values in {vec_arg}"
     }
-    alert_generator(raise, alert_message, n.evaluation_frame)
+    alert_generator(raise, alert_message, n.evaluation_frame, ...)
   }
   invisible(NULL)
 }
@@ -34,7 +35,7 @@ check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior computations.
 #' @return NULL
 #' @export
-check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", raise = "error", alert_message = NULL, na.rm = TRUE, n.evaluation_frame = 2){
+check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", raise = "error", alert_message = NULL, na.rm = TRUE, n.evaluation_frame = 2, ...){
   check_required_all()
   unique_levels <- unique(vec)
 
@@ -46,7 +47,7 @@ check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", ra
     if(is.null(alert_message)){
       alert_message <- c("{expected_number_levels} level{?s} expected but {length(unique_levels)} detected")
     }
-    alert_generator(raise, alert_message, n.evaluation_frame)
+    alert_generator(raise, alert_message, n.evaluation_frame, ...)
   }
 
   invisible(NULL)
@@ -59,19 +60,19 @@ check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", ra
 #' Checks the presence of the specified values in a vector.
 #' @inheritParams check_empty_vec
 #' @param values character vector of values searched in vec.
-check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2){
+check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, ...){
   check_required_all()
   unique_vec <- unique(stats::na.omit(vec))
 
   if(!all(values %in% vec)){
-    missing_values <- dplyr::setdiff(values, unique_vec)
+    missing_values <- setdiff(values, unique_vec)
     if(is.null(alert_message)){
       alert_message <- c(
-        "The following {qty(missing_values)} value{?s} {?is/are} missing in {vec_arg}",
+        "The following {qty(missing_values)} value{?s} {?is/are} missing in {vec_arg}:",
         "{col_magenta(missing_values)}"
       )
     }
-    alert_generator(raise, alert_message, n.evaluation_frame)
+    alert_generator(raise, alert_message, n.evaluation_frame, ...)
   }
 
   invisible(NULL)
@@ -85,7 +86,7 @@ check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error",
 #' @inheritParams check_number_values
 #' @return NULL
 #' @export
-check_unique_values <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, na.rm = TRUE, n.evaluation_frame = 2){
+check_unique_values <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, na.rm = TRUE, n.evaluation_frame = 2, ...){
   if(na.rm){
     value_freqs <- table(vec)
   } else {
@@ -100,7 +101,7 @@ check_unique_values <- function(vec, vec_arg = "vec", raise = "error", alert_mes
         "{col_magenta(err_value)}"
       )
     }
-    alert_generator(raise, alert_message, n.evaluation_frame)
+    alert_generator(raise, alert_message, n.evaluation_frame, ...)
   }
 
   invisible(NULL)

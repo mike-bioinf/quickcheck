@@ -2,16 +2,17 @@
 
 
 #' Checks the presence of one or multiple columns in a dataframe
+#'
 #' @description
-#' Checks the presence of a column in a dataframe base on its name and raises error, warning or a message.
-#' The default alert message can be modified and the cli syntax can be used
-#' (the character vector is passed to cli_bullets).
+#' Checks the presence of columns in a dataframe base on strings and raises an error, warning or a message.
 #'
 #' @param df Dataframe passed in the outer function.
 #' @param columns Character string reporting the column/s name.
 #' @param df_arg String specifying how to address df in the raised messages (default "df").
-#' @param raise Character string equal to one of "error", "warning" or "message" (default error).
-#'  Set the type of alert that is created.
+#' @param raise Character string equal to one of "error", "warning", "message" or "accumulate_message"
+#' (default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
+#' times ignored because it is used internally in combination with impose_accumulate_behavior.
+#' Either the case it raises a message without "i" bullet.
 #' @param alert_message String reporting the alert message. Its formatted by cli_bullets function.
 #'  Default NULL, in this case a standard message with the appropriate bullet sign is used.
 #' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
@@ -25,7 +26,7 @@
 check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", alert_message = NULL, n.evaluation_frame = 2){
   if(is.null(alert_message)){
     alert_message <- c(
-      "The following {qty(missing_values)} column{?s} {?is/are} missing in {vec_arg}",
+      "The following {qty(missing_values)} column{?s} {?is/are} {col_red('missing')} in {vec_arg}:",
       "{col_magenta(missing_values)}"
     )
   }
@@ -46,21 +47,42 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 
 
 
-#' Checks if the specified column of the dataframe is suitable as key with only unique values.
-#' @param key character reporting the column name.
+#' Checks if the specified dataframe columns are suitable as keys of only unique values.
+#' @param keys character vector reporting the names of the columns to test as key.
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior computations.
 #' @inheritParams check_columns_presence
 #' @return NULL.
 #' @export
-check_key <- function(df, key, raise = "error", alert_message = NULL, na.rm = TRUE, n.evaluation_frame = 2){
+check_columns_key <- function(df, keys, raise = "error", alert_message = NULL, na.rm = TRUE, n.evaluation_frame = 2){
+  check_required_all()
+
+  check_presence_values(
+    vec = colnames(df),
+    values = keys,
+    vec_arg = "df",
+    alert_message = c("The following {qty(missing_values)} key{?s} {?is/are} {col_red('missing')} in {vec_arg}:", "{col_magenta(missing_values)}"),
+    quickalert = FALSE
+  )
+
   if(is.null(alert_message)){
-    alert_message <- c(
-      "x" = "The following {qty(err_value)} value{?s} {?is/are} present {col_red('multiple times')} in {vec_arg}: ",
-      "{col_magenta(err_value)}",
-      "i" = "Use a different key or filter the duplicated rows."
-    )
+    alert_message <- "{vec_arg} --> {col_magenta(err_value)}"
   }
-  check_unique_values(vec = df[[key]], vec_arg = key, raise, alert_message, na.rm, n.evaluation_frame)
+
+  impose_accumulation_behavior(
+    header = "The following values occur {col_red('multiple times')} for the following columns:",
+    type = raise,
+    expr = {
+      for(n in keys){
+        check_unique_values(
+          vec = df[[n]],
+          raise = "accumulate_messag",
+          vec_arg = n,
+          alert_message = alert_message,
+          na.rm = na.rm,
+      )}
+    }
+  )
+
   invisible(NULL)
 }
 
@@ -70,13 +92,7 @@ check_key <- function(df, key, raise = "error", alert_message = NULL, na.rm = TR
 
 
 
-
-
-
-#### DA MODIFICARE CREANDO DAPPRIMA LA CONTROPARTE VETTORIALE.=====================================
-
-
-#' Checks the presence of the specified values in the selected column
+#' Checks the presence of the specified values in the selected columns.
 #' @inheritParams check_columns_presence
 #' @param columns character vector of columns names to check
 #' @param col_levels list of character vector reporting the expected levels for each column
@@ -86,30 +102,32 @@ check_key <- function(df, key, raise = "error", alert_message = NULL, na.rm = TR
 check_columns_levels <- function(df, columns, col_levels, raise = "error", alert_message = NULL, n.evaluation_frame = 2){
   check_required_all()
   check_args_primitive_types("col_levels", "list")
-  check_empty_vec(vec = names(col_levels), alert_message = "All elements of col_levels must be nominated")
-  check_length_vecs(columns, names(col_levels), vec1_arg = "columns", vec2_arg = "col_levels")
+  check_empty_vec(vec = names(col_levels), alert_message = "All elements of col_levels must be nominated", quickalert = FALSE)
+  check_length_vecs(columns, names(col_levels), vec1_arg = "columns", vec2_arg = "col_levels", quickalert = FALSE)
 
   check_equality_vecs(
-    sort(columns),
-    sort(names(col_levels)),
+    vec1 = sort(columns),
+    vec2 = sort(names(col_levels)),
     alert_message = c(
       "columns and col_levels names {col_red('not coincide')}: ",
       "i" = "all cols specified in columns must be reported as element names in col_levels"
-    )
+    ),
+    quickalert = FALSE
   )
 
-  err_list <- list()
-  for(n in columns){
-    miss_values <- dplyr::setdiff(x = col_levels[[n]], y = unique(df[[n]]))
-    if(length(miss_values) > 0){
-      err_list[[n]] <- miss_values
+  impose_accumulation_behavior(
+    type = raise,
+    header = "The following levels are {col_red('missing')} from the reported columns:" ,
+    expr = for(n in columns){
+      check_presence_values(
+        vec = df[[n]],
+        values = col_levels[[n]],
+        vec_arg = n,
+        alert_message = "{vec_arg} --> {col_magenta(missing_values)}",
+        raise = "accumulate_message"
+      )
     }
-  }
-
-  if(length(err_list) > 0){
-    alert_message <- c("The following levels are missing: \n", err_list)
-    alert_generator(raise, alert_message, n.evaluation_frame)
-  }
+  )
 
   invisible(NULL)
 }

@@ -14,3 +14,21 @@ cli::test_that_cli(
   },
   configs = "ansi"
 )
+
+
+
+testthat::test_that("alert_generator produce alerts of class", {
+  expect_condition(
+    alert_generator.character(type = "message", alert_message = "generic message", quickalert = TRUE),
+    class = "quickalert"
+  )
+
+  expect_failure(
+    suppressMessages({
+      expect_condition(
+        alert_generator.character(type = "message", alert_message = "generic message", quickalert = FALSE),
+        class = "quickalert"
+      )
+    })
+  )
+})

@@ -1,13 +1,13 @@
-### test if the picking evaluation frame mechanism for the alert message is working
+### test if the picking evaluation frame mechanism for the alert message is working.
 
 cli::test_that_cli(desc = "Testing the functionality of the selection evalution frame mechanism",{
   expect_snapshot(
     {
-      check_key(
-        df = df,
-        key = "sex",
+      check_presence_values(
+        vec = df[["sex"]],
+        values = c("maschio"),
         raise = "message",
-        alert_message = "{vec_arg} glue substitution is evaluated correctly as sex"
+        alert_message = "{missing_values} glue substitution is evaluated correctly as maschio"
       )
     }
   )},

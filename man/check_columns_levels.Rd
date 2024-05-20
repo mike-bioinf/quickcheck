@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_columns_levels}
 \alias{check_columns_levels}
-\title{Checks the presence of the specified values in the selected column}
+\title{Checks the presence of the specified values in the selected columns.}
 \usage{
 check_columns_levels(
   df,
@@ -29,12 +29,10 @@ Default NULL, in this case a standard message with the appropriate bullet sign i
 
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
 of the alert message in respect to where the function calling the alert is run.
-The default value points to the frame below the function frame. So it's possible to simply points
-to upper frames (as well as to below frames but is not recommended).}
-}
-\value{
-invisible NULL
+The default value points to the frame below the function frame (to not modify
+if the default alert is desired).
+So it's easy to points to upper frames (as well as to below frames but is not recommended).}
 }
 \description{
-Checks the presence of the specified values in the selected column
+Checks the presence of the specified values in the selected columns.
 }

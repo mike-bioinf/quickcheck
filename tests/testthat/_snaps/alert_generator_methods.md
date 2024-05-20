@@ -5,8 +5,8 @@
       col_levels = list(visit_number = c("v1", "2", "3"), ppi_treatment = c("yes",
         "no_treatment")))
     Condition
-      [1m[33mError[39m in `check_columns_levels()`:[22m
-      [1m[22m[31mx[39m The following levels are missing:
-      [35mvisit_number[39m: v1
-      [35mppi_treatment[39m: yes
+      [1m[33mError[39m in `impose_accumulation_behavior()`:[22m
+      [1m[22m[31mx[39m The following levels are [31mmissing[39m from the reported columns:
+      [35m1[39m: visit_number --> [35mv1[39m
+      [35m2[39m: ppi_treatment --> [35myes[39m
 
