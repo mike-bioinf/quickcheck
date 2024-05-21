@@ -7,6 +7,7 @@
 #' @param vec2 Second vector.
 #' @param vec1_arg string indicating how to address vec1 in the raised message (default 'vec1').
 #' @param vec2_arg string indicating how to address vec2 in the raised message (default 'vec2)'.
+#' @param ... not of direct use.
 #' @inheritParams check_columns_presence
 #' @return invisible NULL
 #' @export

@@ -60,26 +60,17 @@ impose_accumulation_behavior <- function(expr, type = "error", header = NULL, n.
     expr = {expr},
     message = function(m){
       if(!"quickalert" %in% class(m)){
-        cli::cli_abort(c(
-          "x" = "An {col_red('unexpected')} alert is been raised:",
-          "{m$message} {m$body}"
-        ))
+        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{m$message} {m$body}"))
       } else {
         accumulated_cond <<- c(accumulated_cond, list(m$message))
         invokeRestart("muffleMessage")
       }
     },
     warning = function(w){
-      cli::cli_abort(c(
-        "x" = "An {col_red('unexpected')} alert is been raised:",
-        "{w$message} {w$body}"
-      ))
+      cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{w$message} {w$body}"))
     },
     error = function(e){
-      cli::cli_abort(c(
-        "x" = "An {col_red('unexpected')} alert is been raised:",
-        "{e$message} {e$body}"
-      ))
+      cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{e$message} {e$body}"))
     }
   )
 

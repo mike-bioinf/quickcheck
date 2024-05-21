@@ -12,14 +12,13 @@
 #' @param raise Character string equal to one of "error", "warning", "message" or "accumulate_message"
 #' (default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
 #' times ignored because it is used internally in combination with impose_accumulate_behavior.
-#' Either the case it raises a message without "i" bullet.
+#' Either the case it raises a message without the "i" bullet.
 #' @param alert_message String reporting the alert message. Its formatted by cli_bullets function.
 #'  Default NULL, in this case a standard message with the appropriate bullet sign is used.
 #' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
 #'  of the alert message in respect to where the function calling the alert is run.
 #'  The default value points to the frame below the function frame (to not modify
-#'  if the default alert is desired).
-#'  So it's easy to points to upper frames (as well as to below frames but is not recommended).
+#'  if the default alert is desired). So to point to the calling frame of this function you have to set 4.
 #'
 #' @return NULL.
 #' @export
@@ -75,10 +74,11 @@ check_columns_key <- function(df, keys, raise = "error", alert_message = NULL, n
       for(n in keys){
         check_unique_values(
           vec = df[[n]],
-          raise = "accumulate_messag",
+          raise = "accumulate_message",
           vec_arg = n,
           alert_message = alert_message,
           na.rm = na.rm,
+          n.evaluation_frame = n.evaluation_frame
       )}
     }
   )
@@ -117,14 +117,15 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
   impose_accumulation_behavior(
     type = raise,
-    header = "The following levels are {col_red('missing')} from the reported columns:" ,
+    header = "The following levels are {col_red('missing')} from the reported columns:",
     expr = for(n in columns){
       check_presence_values(
         vec = df[[n]],
         values = col_levels[[n]],
         vec_arg = n,
         alert_message = "{vec_arg} --> {col_magenta(missing_values)}",
-        raise = "accumulate_message"
+        raise = "accumulate_message",
+        n.evaluation_frame = n.evaluation_frame
       )
     }
   )
@@ -134,4 +135,22 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
 
 
+
+### WORKING ON ===================================================================================
+
+#' check if all predicate result on vector columns are TRUE
+check_predicate_columns <- function(df, predicate, raise = "error", alert_message = NULL, n.evaluation_frame = 2){
+  check_args_classes(args = c("df", "predicate"), expected_classes = c("data.frame", "function"))
+  logical_vec <- purrr::map(df, ~ predicate(.x))
+  false_col <- colnames(df)[!logical_vec]
+
+  if(length(false_col) > 0){
+    if(is.null(alert_message)){
+      alert_message <- c(
+        "The predicate {col_red('returned FALSE')} for the following {qty(false_col)} column{?s}:", "{col_magenta(false_col)}")
+    }
+    alert_generator(raise, alert_message, n.evaluation_frame)
+  }
+
+}
 

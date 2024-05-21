@@ -40,6 +40,8 @@ check_nrow <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "erro
 #' @return NULL
 #' @export
 check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", raise = "error", alert_message = NULL, n.evaluation_frame = 2){
+  check_required_all()
+  check_args_classes(args = c("df1", "df2"), expected_classes = c("data.frame"), 2)
   rlang::arg_match(arg = direction, values = c("first_in_second", "second_in_first", "bidirectional"), multiple = FALSE)
 
   if(length(col) > 2){
@@ -47,7 +49,7 @@ check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", r
   }
 
   if(length(col) == 2){
-    df2[colnames(df2) == col[2]] <- col[1]
+    colnames(df2)[colnames(df2) == col[2]] <- col[1]
     col <- col[1]
   }
 
@@ -83,10 +85,12 @@ check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", r
 
     if(direction == "bidirectional"){
       miss_values2 <- new_df2[[col]][!log_comparisons2]
-      alert_message2 <- c(
-        "The following {qty(miss_values2)} value{?s} of {col} {qty(miss_values2)} {?is/are} {col_red('missing')} in {df1_ori} but present in {df2_ori}: ",
-        "{col_magenta(miss_values2)}"
-      )
+      if(is.null(alert_message)){
+        alert_message2 <- c(
+          "The following {qty(miss_values2)} value{?s} of {col} {qty(miss_values2)} {?is/are} {col_red('missing')} in {df1_ori} but present in {df2_ori}: ",
+          "{col_magenta(miss_values2)}"
+        )
+      } else {alert_message2 <- NULL}
     } else {
       miss_values2 <- NULL
     }

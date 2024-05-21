@@ -10,7 +10,7 @@
 #'  of the alert message in respect to where the function calling the alert is run.
 #'  The default value points to the function frame. So it's possible to simply points
 #'  to upper frames (as well as to below frames but is not recommended).
-#' @param ... not useful for direct use.
+#' @param ... not of direct use.
 #'
 #' @return invisible NULL
 #' @export
