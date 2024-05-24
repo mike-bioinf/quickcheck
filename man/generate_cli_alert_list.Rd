@@ -2,10 +2,10 @@
 % Please edit documentation in R/alert_generators.R
 \name{generate_cli_alert_list}
 \alias{generate_cli_alert_list}
-\title{Generates a list of main cli alert functions with informative names.}
+\title{Generates a list of aliases of main cli alert functions with intuitive names.}
 \usage{
-generate_cli_alert_list()
+generate_cli_alert_list(quickalert)
 }
 \description{
-Generates a list of main cli alert functions with informative names.
+Generates a list of aliases of main cli alert functions with intuitive names.
 }

@@ -4,7 +4,7 @@
 \alias{alert_generator.list}
 \title{S3 method of alert_generator for 'list' class}
 \usage{
-\method{alert_generator}{list}(type, alert_message, eval_env)
+\method{alert_generator}{list}(type, alert_message, eval_env, quickalert = TRUE)
 }
 \arguments{
 \item{type}{string equal to one of: 'error', 'message' and 'warning'. Determines the type of alert.}
@@ -14,6 +14,10 @@ syntax. If list it is formatted following the scheme explained in format_cli_lis
 
 \item{eval_env}{numeric indicating the calling frame in which evaluates the alert in respect
 to which is called. So it indicates the number of frames to look up in the calling stack.}
+
+\item{quickalert}{logical, whether to generate an alert with class "quickalert" or not (default TRUE).
+The generation of plain alerts is useful when using checking functions inside other ones,
+in order to have exclusively the main check to raise quickalert.}
 }
 \description{
 S3 method of alert_generator for 'list' class

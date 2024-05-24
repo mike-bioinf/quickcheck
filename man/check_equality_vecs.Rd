@@ -11,7 +11,8 @@ check_equality_vecs(
   vec2_arg = "vec2",
   raise = "error",
   alert_message = NULL,
-  n.evaluation_frame = 2
+  n.evaluation_frame = 2,
+  ...
 )
 }
 \arguments{
@@ -23,8 +24,10 @@ check_equality_vecs(
 
 \item{vec2_arg}{string indicating how to address vec2 in the raised message (default 'vec2)'.}
 
-\item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
-Set the type of alert that is created.}
+\item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
+(default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
+times ignored because it is used internally in combination with impose_accumulate_behavior.
+Either the case it raises a message without the "i" bullet.}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
 Default NULL, in this case a standard message with the appropriate bullet sign is used.}
@@ -32,8 +35,9 @@ Default NULL, in this case a standard message with the appropriate bullet sign i
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
 of the alert message in respect to where the function calling the alert is run.
 The default value points to the frame below the function frame (to not modify
-if the default alert is desired).
-So it's easy to points to upper frames (as well as to below frames but is not recommended).}
+if the default alert is desired). So to point to the calling frame of this function you have to set 4.}
+
+\item{...}{not of direct use.}
 }
 \value{
 invisible NULL

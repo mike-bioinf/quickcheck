@@ -3,8 +3,8 @@
 \name{impose_accumulation_behavior}
 \alias{impose_accumulation_behavior}
 \title{Imposes an accumulation behavior of the checking function in a loop scenario, in which
-the checking function can raise alert that are stored in a list and finally at the end of
-the loop reported. Set to works exclusively with message type in order to distinguish
+the checking function can raise alerts, that are stored in a list and finally, at the end of
+the loop, reported. Set to works exclusively with message type in order to distinguish
 quickalert alert from normal alert.}
 \usage{
 impose_accumulation_behavior(
@@ -27,7 +27,7 @@ to this function frame.}
 }
 \description{
 Imposes an accumulation behavior of the checking function in a loop scenario, in which
-the checking function can raise alert that are stored in a list and finally at the end of
-the loop reported. Set to works exclusively with message type in order to distinguish
+the checking function can raise alerts, that are stored in a list and finally, at the end of
+the loop, reported. Set to works exclusively with message type in order to distinguish
 quickalert alert from normal alert.
 }

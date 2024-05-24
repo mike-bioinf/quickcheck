@@ -11,7 +11,8 @@ check_number_values(
   raise = "error",
   alert_message = NULL,
   na.rm = TRUE,
-  n.evaluation_frame = 2
+  n.evaluation_frame = 2,
+  ...
 )
 }
 \arguments{
@@ -22,8 +23,10 @@ unique values for vec.}
 
 \item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
 
-\item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
-Set the type of alert that is created.}
+\item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
+(default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
+times ignored because it is used internally in combination with impose_accumulate_behavior.
+Either the case it raises a message without the "i" bullet.}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
 Default NULL, in this case a standard message with the appropriate bullet sign is used.}
@@ -34,6 +37,8 @@ Default NULL, in this case a standard message with the appropriate bullet sign i
 of the alert message in respect to where the function calling the alert is run.
 The default value points to the function frame. So it's possible to simply points
 to upper frames (as well as to below frames but is not recommended).}
+
+\item{...}{not of direct use.}
 }
 \description{
 Checks if the number of unique values of a vector is equal to the expected.
