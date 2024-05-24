@@ -43,7 +43,7 @@ testthat::test_that(desc = "impose_accumulation_behavior accumulate quickalert",
           values = col_levels[[n]],
           vec_arg = n,
           alert_message = "{vec_arg} --> {col_magenta(missing_values)}",
-          raise = "message"
+          raise = "accumulate_message"
         )
       })
   })

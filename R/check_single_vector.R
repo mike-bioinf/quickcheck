@@ -60,6 +60,7 @@ check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", ra
 #' Checks the presence of the specified values in a vector.
 #' @inheritParams check_empty_vec
 #' @param values character vector of values searched in vec.
+#' @export
 check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, ...){
   check_required_all()
   unique_vec <- unique(stats::na.omit(vec))

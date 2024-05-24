@@ -1,8 +1,8 @@
 # impose_accumulation_behavior accumulate quickalert
 
     x this is the header.
-    1: i sex --> femmina
-    2: i visit_number --> visit1 and vis3
+    1: sex --> femmina
+    2: visit_number --> visit1 and vis3
 
 # impose_accumulation_behavior launch unexpected error alert
 
