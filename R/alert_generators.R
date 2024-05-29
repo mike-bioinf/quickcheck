@@ -80,6 +80,7 @@ format_cli_list <- function(l, header_sign){
 
 
 #' Generates a list of aliases of main cli alert functions with intuitive names.
+#' @inheritParams alert_generator
 generate_cli_alert_list <- function(quickalert){
   if(quickalert){
     alertclass <- "quickalert"

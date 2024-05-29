@@ -6,6 +6,11 @@
 \usage{
 generate_cli_alert_list(quickalert)
 }
+\arguments{
+\item{quickalert}{logical, whether to generate an alert with class "quickalert" or not (default TRUE).
+The generation of plain alerts is useful when using checking functions inside other ones,
+in order to have exclusively the main check to raise quickalert.}
+}
 \description{
 Generates a list of aliases of main cli alert functions with intuitive names.
 }

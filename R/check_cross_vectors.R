@@ -1,7 +1,6 @@
 # Checking functions that works on 2 vectors.
 
 
-
 #' Checks if two vectors have the same length
 #' @param vec1 First vector.
 #' @param vec2 Second vector.

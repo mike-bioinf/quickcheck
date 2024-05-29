@@ -19,10 +19,11 @@
 #'  of the alert message in respect to where the function calling the alert is run.
 #'  The default value points to the frame below the function frame (to not modify
 #'  if the default alert is desired). So to point to the calling frame of this function you have to set 4.
+#' @param ... not of direct use.
 #'
 #' @return NULL.
 #' @export
-check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", alert_message = NULL, n.evaluation_frame = 2){
+check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", alert_message = NULL, n.evaluation_frame = 2,...){
   if(is.null(alert_message)){
     alert_message <- c(
       "The following {qty(missing_values)} column{?s} {?is/are} {col_red('missing')} in {vec_arg}:",
@@ -36,7 +37,8 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
     vec_arg = df_arg,
     raise = raise,
     alert_message = alert_message,
-    n.evaluation_frame = n.evaluation_frame
+    n.evaluation_frame = n.evaluation_frame,
+    ...
   )
 
   invisible(NULL)
@@ -91,7 +93,6 @@ check_columns_key <- function(df, keys, raise = "error", alert_message = NULL, n
 
 
 
-
 #' Checks the presence of the specified values in the selected columns.
 #' @inheritParams check_columns_presence
 #' @param columns character vector of columns names to check
@@ -102,6 +103,7 @@ check_columns_key <- function(df, keys, raise = "error", alert_message = NULL, n
 check_columns_levels <- function(df, columns, col_levels, raise = "error", alert_message = NULL, n.evaluation_frame = 2){
   check_required_all()
   check_args_primitive_types("col_levels", "list")
+  check_columns_presence(df, columns, quickalert = FALSE)
   check_empty_vec(vec = names(col_levels), alert_message = "All elements of col_levels must be nominated", quickalert = FALSE)
   check_length_vecs(columns, names(col_levels), vec1_arg = "columns", vec2_arg = "col_levels", quickalert = FALSE)
 
@@ -110,7 +112,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
     vec2 = sort(names(col_levels)),
     alert_message = c(
       "columns and col_levels names {col_red('not coincide')}: ",
-      "i" = "all cols specified in columns must be reported as element names in col_levels"
+      "i" = "All cols specified in columns must be reported as element names in col_levels."
     ),
     quickalert = FALSE
   )
@@ -136,12 +138,23 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
 
 
-### WORKING ON ===================================================================================
 
-#' check if all predicate result on vector columns are TRUE
-check_predicate_columns <- function(df, predicate, raise = "error", alert_message = NULL, n.evaluation_frame = 2){
+#' Checks if all columns satisfy the predicate.
+#' @inheritParams check_columns_presence
+#' @param predicate function that works on vectors and return a single logical value.
+#' @param inverse logical, whether to invert the check direction in the sense that the predicate
+#'  must be not satisfied for all columns (default FALSE).
+#' @return NULL
+#' @export
+check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "error", alert_message = NULL, n.evaluation_frame = 2){
+  check_required_all()
   check_args_classes(args = c("df", "predicate"), expected_classes = c("data.frame", "function"))
-  logical_vec <- purrr::map(df, ~ predicate(.x))
+  logical_vec <- purrr::map_lgl(df, ~ predicate(.x))
+
+  if(inverse){
+    logical_vec <- !logical_vec
+  }
+
   false_col <- colnames(df)[!logical_vec]
 
   if(length(false_col) > 0){
@@ -152,5 +165,6 @@ check_predicate_columns <- function(df, predicate, raise = "error", alert_messag
     alert_generator(raise, alert_message, n.evaluation_frame)
   }
 
+  invisible(NULL)
 }
 
