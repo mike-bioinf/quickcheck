@@ -2,7 +2,6 @@
 
 testthat::test_that("impose_logical_behavior returns expcted logical", {
   expect_equal(impose_logical_behavior(check_columns_presence(df = df, columns = "materasso")), TRUE)
-
   expect_equal(impose_logical_behavior(check_empty_vec(vec = c(1, 2, 3))), FALSE)
 
   expect_error(
@@ -16,7 +15,7 @@ testthat::test_that("impose_logical_behavior returns expcted logical", {
 
 testthat::test_that("impose_logical_behavior return error when the wrong alert is picked", {
   expect_error(
-    object = impose_logical_behavior(expr = check_columns_key(df, keys = c("visit_numb"))),
+    object = impose_logical_behavior(expr = check_columns_key(df, columns = c("visit_numb"))),
     regexp = "The following key is missing in df: visit_numb"
   )
 })

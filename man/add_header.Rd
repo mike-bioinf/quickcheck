@@ -2,7 +2,7 @@
 % Please edit documentation in R/alert_generators.R
 \name{add_header}
 \alias{add_header}
-\title{Add header string to "alert formatted" list.}
+\title{Add header string to a list (as first element of the list).}
 \usage{
 add_header(header, alert_list)
 }
@@ -12,5 +12,5 @@ add_header(header, alert_list)
 \item{alert_list}{list to be formatted as an 'alert list'.}
 }
 \description{
-Add header string to "alert formatted" list.
+Add header string to a list (as first element of the list).
 }

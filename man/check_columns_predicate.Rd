@@ -22,8 +22,8 @@ check_columns_predicate(
 must be not satisfied for all columns (default FALSE).}
 
 \item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
-(default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
-times ignored because it is used internally in combination with impose_accumulate_behavior.
+(default error). Set the type of alert that is created. Note: 'accumulate_message' can be ignored
+most of times because it is used internally in combination with impose_accumulate_behavior.
 Either the case it raises a message without the "i" bullet.}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
@@ -33,6 +33,9 @@ Default NULL, in this case a standard message with the appropriate bullet sign i
 of the alert message in respect to where the function calling the alert is run.
 The default value points to the frame below the function frame (to not modify
 if the default alert is desired). So to point to the calling frame of this function you have to set 4.}
+}
+\value{
+invisible NULL
 }
 \description{
 Checks if all columns satisfy the predicate.

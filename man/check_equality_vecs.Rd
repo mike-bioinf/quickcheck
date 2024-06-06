@@ -25,8 +25,8 @@ check_equality_vecs(
 \item{vec2_arg}{string indicating how to address vec2 in the raised message (default 'vec2)'.}
 
 \item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
-(default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
-times ignored because it is used internally in combination with impose_accumulate_behavior.
+(default error). Set the type of alert that is created. Note: 'accumulate_message' can be ignored
+most of times because it is used internally in combination with impose_accumulate_behavior.
 Either the case it raises a message without the "i" bullet.}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.

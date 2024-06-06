@@ -22,8 +22,8 @@ check_columns_levels(
 specified in columns. The element of the list must be nominated according to the columns values.}
 
 \item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
-(default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
-times ignored because it is used internally in combination with impose_accumulate_behavior.
+(default error). Set the type of alert that is created. Note: 'accumulate_message' can be ignored
+most of times because it is used internally in combination with impose_accumulate_behavior.
 Either the case it raises a message without the "i" bullet.}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
@@ -36,4 +36,8 @@ if the default alert is desired). So to point to the calling frame of this funct
 }
 \description{
 Checks the presence of the specified values in the selected columns.
+}
+\details{
+Is suggested to not set a custom alert message. This is for the internal working of the function which
+will trigger the custom message for every column that fails the checking.
 }

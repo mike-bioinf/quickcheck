@@ -111,7 +111,7 @@ generate_cli_sign_list <- function(){
 
 
 
-#' Add header string to "alert formatted" list.
+#' Add header string to a list (as first element of the list).
 #' @param alert_list list to be formatted as an 'alert list'.
 #' @param header string that will appear as header of the alert.
 add_header <- function(header, alert_list){

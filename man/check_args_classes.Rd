@@ -2,12 +2,12 @@
 % Please edit documentation in R/check_args.R
 \name{check_args_classes}
 \alias{check_args_classes}
-\title{Checks the actual and expected classes of selected args of an outer function.}
+\title{Checks the classes of selected arguments of a calling function.}
 \usage{
 check_args_classes(args, expected_classes, numeric_correspondence = NULL)
 }
 \arguments{
-\item{args}{character vector reporting the arguments of the outer calling function to check.}
+\item{args}{character vector reporting the arguments of the outer function to check.}
 
 \item{expected_classes}{character vector with the expected classes.}
 
@@ -15,5 +15,5 @@ check_args_classes(args, expected_classes, numeric_correspondence = NULL)
 the order of expected_types and the number specified by this vector.}
 }
 \description{
-Checks the actual and expected classes of selected args of an outer function.
+Checks the classes of selected arguments of a calling function.
 }

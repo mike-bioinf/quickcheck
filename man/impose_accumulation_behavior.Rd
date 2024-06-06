@@ -2,10 +2,7 @@
 % Please edit documentation in R/impose_wrappers.R
 \name{impose_accumulation_behavior}
 \alias{impose_accumulation_behavior}
-\title{Imposes an accumulation behavior of the checking function in a loop scenario, in which
-the checking function can raise alerts, that are stored in a list and finally, at the end of
-the loop, reported. Set to works exclusively with message type in order to distinguish
-quickalert alert from normal alert.}
+\title{Allow to accumulate in list non-error alert of checking functions}
 \usage{
 impose_accumulation_behavior(
   expr,
@@ -19,15 +16,15 @@ impose_accumulation_behavior(
 
 \item{type}{type of the accumulated final alert if any.}
 
-\item{header}{string to add as the head of the accumulated alert list.}
+\item{header}{string to add as the header of the accumulated alert list.}
 
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
 of the alert message in respect to where the function calling the alert is run. The default points
 to this function frame.}
 }
 \description{
-Imposes an accumulation behavior of the checking function in a loop scenario, in which
-the checking function can raise alerts, that are stored in a list and finally, at the end of
-the loop, reported. Set to works exclusively with message type in order to distinguish
-quickalert alert from normal alert.
+Imposes an accumulation behavior for a checking function in a loop scenario, in which
+the alert raised by the checking function are stored in a list and then displayed.
+Works preferably with checking functions that raise accumulated message type for
+a better final alert format. It does not work with error since they stop the loop execution.
 }

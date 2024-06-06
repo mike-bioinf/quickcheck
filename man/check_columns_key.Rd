@@ -6,7 +6,7 @@
 \usage{
 check_columns_key(
   df,
-  keys,
+  columns,
   raise = "error",
   alert_message = NULL,
   na.rm = TRUE,
@@ -16,11 +16,11 @@ check_columns_key(
 \arguments{
 \item{df}{Dataframe passed in the outer function.}
 
-\item{keys}{character vector reporting the names of the columns to test as key.}
+\item{columns}{character vector reporting the names of the columns to test as key.}
 
 \item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
-(default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
-times ignored because it is used internally in combination with impose_accumulate_behavior.
+(default error). Set the type of alert that is created. Note: 'accumulate_message' can be ignored
+most of times because it is used internally in combination with impose_accumulate_behavior.
 Either the case it raises a message without the "i" bullet.}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
@@ -34,8 +34,12 @@ The default value points to the frame below the function frame (to not modify
 if the default alert is desired). So to point to the calling frame of this function you have to set 4.}
 }
 \value{
-NULL.
+invisible NULL.
 }
 \description{
 Checks if the specified dataframe columns are suitable as keys of only unique values.
+}
+\details{
+Is suggested to not set a custom alert message. This is for the internal working of the function which
+will trigger the custom message for every column that fails the checking.
 }

@@ -1,12 +1,10 @@
 #' @name check_args
 #' @title function argument checks
-#' @description
-#' A set of functions useful to check the arguments provided in input by outer functions
+#' @description A set of functions useful to check the arguments provided in input by outer functions
 
 
 
-
-#' Checks not provided arguments with no default value in the calling function.
+#' Checks for not provided arguments with no default value in the calling function.
 #' @description
 #' Checks the presence of all arguments that have no default values in the upper calling function
 #' and stops if find some of them indicating their names. Ensemble version of rlang 'check_required'.
@@ -24,9 +22,8 @@ check_required_all <- function(){
 
 
 
-
-#' Checks if the primitive types of the specified arguments are the ones expected.
-#' @param args character vector reporting the arguments of the outer calling function to check.
+#' Checks the primitive types of the specified arguments of a calling function.
+#' @param args character vector reporting the arguments of the outer function to check.
 #' @param expected_types character vector with the expected types.
 #' @param numeric_correspondence numeric vector that allows to recycle expected_types following
 #'  the order of expected_types and the number specified by this vector.
@@ -40,8 +37,8 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
   }
 
   type_outer <- c()
-  for(a in args){
-    type_outer <- c(type_outer, typeof(rlang::caller_env(n = 1)[[a]]))
+  for(arg in args){
+    type_outer <- c(type_outer, typeof(rlang::caller_env(n = 1)[[arg]]))
   }
 
   err_args <- args[type_outer != expected_types]
@@ -59,7 +56,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
 
 
 
-#' Checks the actual and expected classes of selected args of an outer function.
+#' Checks the classes of selected arguments of a calling function.
 #' @inheritParams check_args_primitive_types
 #' @param expected_classes character vector with the expected classes.
 #' @return NULL
@@ -107,11 +104,11 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
 #' @param numeric_correspondence number of times the elements of vector2 must be repeated in order.
 control_recycle <- function(vector1, vector2, numeric_correspondence){
   if(!is.numeric(numeric_correspondence)){
-   cli::cli_abort(c("x" = "numeric_correspondence is not a numeric vector"))
+   cli::cli_abort(c("x" = "numeric_correspondence must be a numeric vector"))
   }
 
   if(length(vector1) != sum(numeric_correspondence)){
-    cli::cli_abort(c("x" = "The sum of numbers specified in numeric_correspondence is different from args length"))
+    cli::cli_abort(c("x" = "The sum of numbers specified in numeric_correspondence must be equal to args length"))
   }
 
   vector2 <- rep(vector2, numeric_correspondence)

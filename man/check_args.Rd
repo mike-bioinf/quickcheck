@@ -9,7 +9,7 @@ check_required_all()
 }
 \description{
 A set of functions useful to check the arguments provided in input by outer functions
-Checks not provided arguments with no default value in the calling function.
+Checks for not provided arguments with no default value in the calling function.
 
 Checks the presence of all arguments that have no default values in the upper calling function
 and stops if find some of them indicating their names. Ensemble version of rlang 'check_required'.

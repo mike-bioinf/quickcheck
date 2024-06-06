@@ -2,12 +2,12 @@
 % Please edit documentation in R/check_args.R
 \name{check_args_primitive_types}
 \alias{check_args_primitive_types}
-\title{Checks if the primitive types of the specified arguments are the ones expected.}
+\title{Checks the primitive types of the specified arguments of a calling function.}
 \usage{
 check_args_primitive_types(args, expected_types, numeric_correspondence = NULL)
 }
 \arguments{
-\item{args}{character vector reporting the arguments of the outer calling function to check.}
+\item{args}{character vector reporting the arguments of the outer function to check.}
 
 \item{expected_types}{character vector with the expected types.}
 
@@ -15,5 +15,5 @@ check_args_primitive_types(args, expected_types, numeric_correspondence = NULL)
 the order of expected_types and the number specified by this vector.}
 }
 \description{
-Checks if the primitive types of the specified arguments are the ones expected.
+Checks the primitive types of the specified arguments of a calling function.
 }

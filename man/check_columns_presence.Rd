@@ -22,8 +22,8 @@ check_columns_presence(
 \item{df_arg}{String specifying how to address df in the raised messages (default "df").}
 
 \item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
-(default error). Set the type of alert that is created. Note: 'accumulate_message' can be most of
-times ignored because it is used internally in combination with impose_accumulate_behavior.
+(default error). Set the type of alert that is created. Note: 'accumulate_message' can be ignored
+most of times because it is used internally in combination with impose_accumulate_behavior.
 Either the case it raises a message without the "i" bullet.}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
@@ -40,5 +40,5 @@ if the default alert is desired). So to point to the calling frame of this funct
 NULL.
 }
 \description{
-Checks the presence of columns in a dataframe base on strings and raises an error, warning or a message.
+Checks the presence of one or multiple columns in a dataframe
 }
