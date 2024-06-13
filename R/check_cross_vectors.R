@@ -12,9 +12,7 @@
 #' @export
 check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, n.evaluation_frame = 2, ...){
   if(length(vec1) != length(vec2)){
-    if(is.null(alert_message)){
-      alert_message <- "{vec1_arg} and {vec2_arg} have {col_red('different length')}"
-    }
+    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} have {col_red('different length')}")
     alert_generator(raise, alert_message, n.evaluation_frame, ...)
   }
   invisible(NULL)
@@ -23,15 +21,16 @@ check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", 
 
 
 
-#' Checks the equality of two vectors
+#' Checks the ordered equality of two vectors
+#' @details
+#' The equality is checked thought "==", so the order of the values matter as well as the presence of repeated values.
+#' If the order or the repeats must not be considered see "check_unordered_equality_vecs" function.
 #' @inheritParams check_length_vecs
 #' @return invisible NULL
 #' @export
 check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, n.evaluation_frame = 2, ...){
   if(any(vec1 != vec2)){
-    if(is.null(alert_message)){
-      alert_message <- "{vec1_arg} and {vec2_arg} {col_red('are not equal')}"
-    }
+    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} {col_red('are not equal')}")
     alert_generator(raise, alert_message, n.evaluation_frame, ...)
   }
   invisible(NULL)
@@ -39,3 +38,43 @@ check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2"
 
 
 
+
+#' Checks the unordered equality of two vectors.
+#' @details
+#' The equality is checked thought "%in% ", so the order of the vectors don't matter as well as the presence of repeated values.
+#' If the order and the repeats must be considered see "check_equality_vecs" function.
+#' @inheritParams check_length_vecs
+#' @return invisible NULL
+#' @export
+check_unordered_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, n.evaluation_frame = 2, ...){
+  missing12 <- vec1[!vec1 %in% vec2]
+  missing21 <- vec2[!vec2 %in% vec1]
+
+  if(length(missing12) > 0){
+    message1 <- c(
+      "The following {qty(length(missing12))} value{?s} {?is/are} present in {vec1_arg} but missing in {vec2_arg}:",
+      "{unique(missing12)}",
+      "\n"
+    )
+  } else {
+    message1 <- NULL
+  }
+
+  if(length(missing21) > 0){
+    message2 <- c(
+      "The following {qty(length(missing21))} value{?s} {?is/are} present in {vec2_arg} but missing in {vec1_arg}:",
+      "{unique(missing21)}"
+    )
+  } else {
+    message2 <- NULL
+  }
+
+  final_message <- c(message1, message2)
+
+  if(!is.null(final_message)){
+    alert_message <- generate_message(alert_message , c("{col_red('Detected differences')}", final_message))
+    alert_generator(raise, alert_message, n.evaluation_frame, ...)
+  }
+
+  invisible(NULL)
+}

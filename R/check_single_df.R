@@ -18,7 +18,7 @@
 #' @param ... not of direct use.
 #' @return NULL.
 #' @export
-check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", alert_message = NULL, n.evaluation_frame = 2,...){
+check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", alert_message = NULL, n.evaluation_frame = 2, ...){
   alert_message <- generate_message(
     alert_message,
     c("The following {qty(missing_values)} column{?s} {?is/are} {col_red('missing')} in {vec_arg}:",
