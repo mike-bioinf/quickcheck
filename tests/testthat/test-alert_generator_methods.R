@@ -1,4 +1,4 @@
-### testing alert_generator dispatch process and list message formatting process
+### testing alert_generator dispatch process, list message formatting process and generation of classed alerts.
 
 cli::test_that_cli(
   "List messages are formatted correctly",

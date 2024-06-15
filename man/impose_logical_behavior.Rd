@@ -14,7 +14,7 @@ A single logical value.
 }
 \description{
 This function works as a wrapper of the checking functions and impose them a
-'logical' behavior. This means that they will raise anymore the alerts condition
-but instead they will return boolean values. In greater detail if a 'quickalert' class
+'logical' behavior. This means that they will not raise anymore alerts but instead
+they will return boolean values. In greater detail if a 'quickalert' class
 condition is hit, then the function return TRUE otherwise FALSE.
 }

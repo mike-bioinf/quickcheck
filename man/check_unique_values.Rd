@@ -7,17 +7,19 @@
 check_unique_values(
   vec,
   vec_arg = "vec",
+  na.rm = TRUE,
   raise = "error",
   alert_message = NULL,
-  na.rm = TRUE,
   n.evaluation_frame = 2,
-  ...
+  quickalert = TRUE
 )
 }
 \arguments{
 \item{vec}{Vector to check.}
 
 \item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
+
+\item{na.rm}{logical (default TRUE), indicating if NA must be excluded prior computations.}
 
 \item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
 (default error). Set the type of alert that is created. Note: 'accumulate_message' can be ignored
@@ -27,14 +29,12 @@ Either the case it raises a message without the "i" bullet.}
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.
 Default NULL, in this case a standard message with the appropriate bullet sign is used.}
 
-\item{na.rm}{logical (default TRUE), indicating if NA must be excluded prior computations.}
-
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
 of the alert message in respect to where the function calling the alert is run.
 The default value points to the function frame. So it's possible to simply points
 to upper frames (as well as to below frames but is not recommended).}
 
-\item{...}{not of direct use.}
+\item{quickalert}{logical, whether the raised alert is of class "quickalert".}
 }
 \value{
 invisible NULL

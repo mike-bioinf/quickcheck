@@ -8,7 +8,8 @@ impose_accumulation_behavior(
   expr,
   type = "error",
   header = NULL,
-  n.evaluation_frame = 2
+  n.evaluation_frame = 2,
+  quickalert = TRUE
 )
 }
 \arguments{
@@ -21,6 +22,8 @@ impose_accumulation_behavior(
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
 of the alert message in respect to where the function calling the alert is run. The default points
 to this function frame.}
+
+\item{quickalert}{logical, whether the raised alert is of class "quickalert".}
 }
 \description{
 Imposes an accumulation behavior for a checking function in a loop scenario, in which

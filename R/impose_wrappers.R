@@ -7,8 +7,8 @@
 #' Alter the behavior of checking conditions from raising alerts to return boolean values.
 #' @description
 #' This function works as a wrapper of the checking functions and impose them a
-#' 'logical' behavior. This means that they will raise anymore the alerts condition
-#' but instead they will return boolean values. In greater detail if a 'quickalert' class
+#' 'logical' behavior. This means that they will not raise anymore alerts but instead
+#' they will return boolean values. In greater detail if a 'quickalert' class
 #' condition is hit, then the function return TRUE otherwise FALSE.
 #' @param expr check function call.
 #' @return A single logical value.
@@ -30,12 +30,11 @@ impose_logical_behavior <- function(expr){
     }
   )
 
-  if(alert){
-    logical_return <- TRUE
-  }
-
+  if(alert) {logical_return <- TRUE}
   return(logical_return)
 }
+
+
 
 
 
@@ -51,9 +50,10 @@ impose_logical_behavior <- function(expr){
 #' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
 #'  of the alert message in respect to where the function calling the alert is run. The default points
 #'  to this function frame.
+#' @param quickalert logical, whether the raised alert is of class "quickalert".
 #' @return NULL
 #' @export
-impose_accumulation_behavior <- function(expr, type = "error", header = NULL, n.evaluation_frame = 2){
+impose_accumulation_behavior <- function(expr, type = "error", header = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   accumulated_cond <- list()
 
   withCallingHandlers(
@@ -70,7 +70,7 @@ impose_accumulation_behavior <- function(expr, type = "error", header = NULL, n.
 
   if(length(accumulated_cond) > 0){
     accumulated_cond <- add_header(header, accumulated_cond)
-    alert_generator(type, accumulated_cond, n.evaluation_frame)
+    alert_generator(type, accumulated_cond, n.evaluation_frame , quickalert)
   }
 
   invisible(NULL)

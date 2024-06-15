@@ -9,12 +9,10 @@
 #' @inheritParams check_columns_presence
 #' @return NULL
 #' @export
-check_nrow <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n.evaluation_frame = 2){
+check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   if(nrow(df1) != nrow(df2)){
-    if(is.null(alert_message)){
-      alert_message <- c("{col_red('Different number')} of rows between {df1_arg} and {df2_arg}")
-    }
-    alert_generator(raise, alert_message, n.evaluation_frame)
+    alert_message <- generate_message(alert_message, "{col_red('Different number')} of rows between {df1_arg} and {df2_arg}")
+    alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
   }
   invisible(NULL)
 }

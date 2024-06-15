@@ -9,7 +9,8 @@ check_columns_na(
   columns,
   raise = "error",
   alert_message = NULL,
-  n.evaluation_frame = 2
+  n.evaluation_frame = 2,
+  quickalert = TRUE
 )
 }
 \arguments{
@@ -29,6 +30,8 @@ Default NULL, in this case a standard message with the appropriate bullet sign i
 of the alert message in respect to where the function calling the alert is run.
 The default value points to the frame below the function frame (to not modify
 if the default alert is desired). So to point to the calling frame of this function you have to set 4.}
+
+\item{quickalert}{logical, whether the raised alert is of class "quickalert".}
 }
 \value{
 invisible NULL

@@ -46,6 +46,6 @@ invisible NULL
 Checks the ordered equality of two vectors
 }
 \details{
-The equality is checked thought "==", so the order of the values matter.
-If the order must not be considered see "check_unordered_equality_vecs" function.
+The equality is checked thought "==", so the order of the values matter as well as the presence of repeated values.
+If the order or the repeats must not be considered see "check_unordered_equality_vecs" function.
 }

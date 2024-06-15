@@ -117,3 +117,13 @@ generate_cli_sign_list <- function(){
 add_header <- function(header, alert_list){
   c(list(header), alert_list)
 }
+
+
+
+#' Helper that is used to construct a default alert message if not provided (if NULL).
+#' @param alert_message takes in the alert_message argument of the checking function.
+#' @param default_message character vector that is used as default message. Follow cli intax rules.
+generate_message <- function(alert_message, default_message){
+  if(is.null(alert_message)) {alert_message <- default_message}
+  return(alert_message)
+}
