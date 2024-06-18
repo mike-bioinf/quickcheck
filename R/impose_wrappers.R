@@ -70,7 +70,7 @@ impose_accumulation_behavior <- function(expr, type = "error", header = NULL, n.
 
   if(length(accumulated_cond) > 0){
     accumulated_cond <- add_header(header, accumulated_cond)
-    alert_generator(type, accumulated_cond, n.evaluation_frame , quickalert)
+    alert_generator(type, accumulated_cond, n.evaluation_frame, quickalert)
   }
 
   invisible(NULL)

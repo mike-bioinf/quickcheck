@@ -110,33 +110,3 @@ check_unique_values <- function(vec, vec_arg = "vec", na.rm = TRUE, raise = "err
   invisible(NULL)
 }
 
-
-
-
-
-
-### HELPERS ======================================================================================================================
-
-#' Helper of check_empty_vec in which all "empty possibilities" are tested for each value.
-#' Return a single boolean (FALSE even if one value is empty, TRUE otherwise).
-#' @inheritParams check_empty_vec
-is_empty_vec <- function(vec){
-  if("" %in% vec){
-    return(TRUE)
-  }
-
-  if(is.null(vec)){
-    return(TRUE)
-  }
-
-  if(length(vec) == 0){
-    return(TRUE)
-  }
-
-  if(any(is.na(vec))){
-    return(TRUE)
-  }
-
-  return(FALSE)
-}
-

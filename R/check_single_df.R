@@ -179,7 +179,7 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
 
   impose_accumulation_behavior(
     type = raise,
-    header = "The following columns present NAs:",
+    header = "The following columns {cli::col_red('present NAs')}:",
     quickalert = quickalert,
     expr = for(col in columns){
       check_na_vec(

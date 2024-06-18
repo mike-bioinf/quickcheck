@@ -1,4 +1,4 @@
-### test if format_cli_list format list in chracter vector messages as expected
+### test if format_cli_list format list in character vector messages as expected
 
 cli::test_that_cli(
   desc = "format_cli_list format list in character vector messages as expected",
