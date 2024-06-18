@@ -7,6 +7,7 @@
 #' @param x list.
 #' @param flatten logical, whether to flat out the list before before doing the check (default TRUE).
 #' @return invisible NULL.
+#' @export
 check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   check_args_primitive_types("x", "list")
 
@@ -33,6 +34,7 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 #' @param predicate a predicate function, usually an "is.something" function type.
 #' @details The alert will not points the eventual elements in error if no or some elements names are missing.
 #' @return invisible NULL.
+#' @export
 check_types_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   check_required_all()
   check_args_primitive_types(c("x", "flatten"), c("list", "logical"))
