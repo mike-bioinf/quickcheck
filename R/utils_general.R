@@ -26,8 +26,9 @@ all2 <- function(..., na.rm = FALSE, na_res = FALSE){
 
 
 #' Checks the presence of null values in a vector in a broader sense.
-#' Return a single boolean (FALSE even if one value is empty, TRUE otherwise).
 #' @param vec vector to test.
+#' @return A single boolean (FALSE even if one value is empty, TRUE otherwise).
+#' @export
 is_empty_vec <- function(vec){
 
   if("" %in% vec){

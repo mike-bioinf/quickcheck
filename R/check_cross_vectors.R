@@ -1,7 +1,7 @@
 # Checking functions that works on 2 vectors.
 
 
-#' Checks if two vectors have the same length
+#' Checks if two vectors have the same length (works with all object on which length can be called).
 #' @param vec1 First vector.
 #' @param vec2 Second vector.
 #' @param vec1_arg string indicating how to address vec1 in the raised message (default 'vec1').

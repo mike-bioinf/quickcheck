@@ -3,7 +3,7 @@
 \docType{data}
 \name{df_row}
 \alias{df_row}
-\title{df_row --> rows have changed}
+\title{df_row --> changed rows in respect to df.}
 \format{
 has half rows but the same columns of df
 }
@@ -11,6 +11,6 @@ has half rows but the same columns of df
 df_row
 }
 \description{
-df_row --> rows have changed
+df_row --> changed rows in respect to df.
 }
 \keyword{datasets}

@@ -2,15 +2,16 @@
 % Please edit documentation in R/utils_general.R
 \name{is_empty_vec}
 \alias{is_empty_vec}
-\title{Checks the presence of null values in a vector in a broader sense.
-Return a single boolean (FALSE even if one value is empty, TRUE otherwise).}
+\title{Checks the presence of null values in a vector in a broader sense.}
 \usage{
 is_empty_vec(vec)
 }
 \arguments{
 \item{vec}{vector to test.}
 }
+\value{
+A single boolean (FALSE even if one value is empty, TRUE otherwise).
+}
 \description{
 Checks the presence of null values in a vector in a broader sense.
-Return a single boolean (FALSE even if one value is empty, TRUE otherwise).
 }
