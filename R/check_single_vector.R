@@ -32,6 +32,7 @@ check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = 
     alert_message <- generate_message(alert_message, "There are NAs in {vec_arg}")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
   }
+  invisible(NULL)
 }
 
 

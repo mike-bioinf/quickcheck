@@ -19,7 +19,7 @@ check_columns_key(
 
 \item{columns}{character vector reporting the names of the columns to test as key.}
 
-\item{na.rm}{logical (default TRUE), indicating if NA must be excluded prior computations.}
+\item{na.rm}{logical (default TRUE), indicating if NA must be excluded prior evaluation.}
 
 \item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
 (default error). Set the type of alert that is created. Note: 'accumulate_message' can be ignored

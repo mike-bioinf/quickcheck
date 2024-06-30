@@ -6,7 +6,7 @@
 \usage{
 impose_accumulation_behavior(
   expr,
-  type = "error",
+  raise = "error",
   header = NULL,
   n.evaluation_frame = 2,
   quickalert = TRUE
@@ -15,7 +15,7 @@ impose_accumulation_behavior(
 \arguments{
 \item{expr}{check function call.}
 
-\item{type}{type of the accumulated final alert if any.}
+\item{raise}{type of the accumulated final alert if any.}
 
 \item{header}{string to add as the header of the accumulated alert list.}
 
@@ -24,6 +24,9 @@ of the alert message in respect to where the function calling the alert is run. 
 to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert is of class "quickalert".}
+}
+\value{
+invisible NULL
 }
 \description{
 Imposes an accumulation behavior for a checking function in a loop scenario, in which

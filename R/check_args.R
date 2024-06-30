@@ -26,22 +26,28 @@ check_required_all <- function(){
 #' @param args character vector reporting the arguments of the outer function to check.
 #' @param expected_types character vector with the expected types.
 #' @param numeric_correspondence numeric vector that allows to recycle expected_types following
-#'  the order of expected_types and the number specified by this vector.
+#'  its order and the numbers specified in this vector.
+#' @param null logical, whether args can be NULL or not in addiction to the "normal" expected type (default FALSE).
 #' @return NULL
 #' @export
-check_args_primitive_types <- function(args, expected_types, numeric_correspondence = NULL){
+check_args_primitive_types <- function(args, expected_types, numeric_correspondence = NULL, null = FALSE){
   if(!is.null(numeric_correspondence)){
     expected_types <- control_recycle(args, expected_types, numeric_correspondence)
   } else if(length(args) != length(expected_types)){
     cli::cli_abort(c("x" = "args and expected_types have {col_red('different lengths')}"))
   }
 
-  type_outer <- c()
+  type_args <- c()
   for(arg in args){
-    type_outer <- c(type_outer, typeof(rlang::caller_env(n = 1)[[arg]]))
+    type_args <- c(type_args, typeof(rlang::caller_env(n = 1)[[arg]]))
   }
 
-  err_args <- args[type_outer != expected_types]
+  if(null){
+    err_args <- args[type_args != expected_types & type_args != "NULL"]
+  } else {
+    err_args <- args[type_args != expected_types]
+  }
+
   if(length(err_args) > 0){
     cli::cli_abort(c(
       "x" = "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}: ",
@@ -49,7 +55,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
     ))
   }
 
-  return(NULL)
+  invisible(NULL)
 }
 
 
@@ -58,24 +64,28 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
 
 #' Checks the classes of selected arguments of a calling function.
 #' @inheritParams check_args_primitive_types
-#' @param expected_classes character vector with the expected classes.
+#' @param expected_classes character vector with the expected classes (one for argument).
 #' @return NULL
 #' @export
-check_args_classes <- function(args, expected_classes, numeric_correspondence = NULL){
+check_args_classes <- function(args, expected_classes, numeric_correspondence = NULL, null = FALSE){
   if(!is.null(numeric_correspondence)){
     expected_classes <- control_recycle(args, expected_classes, numeric_correspondence)
   } else if(length(args) != length(expected_classes)){
     cli::cli_abort(c("x" = "args and expected_classes have different lengths"))
   }
 
-  class_outer <- list()
+  class_args <- list()
   for(a in args){
-    class_outer[[a]] <- class(rlang::caller_env(n = 1)[[a]])
+    class_args[[a]] <- class(rlang::caller_env(n = 1)[[a]])
+  }
+
+  if(null){
+    class_args <- lapply(class_args, \(v) c(v, "NULL"))
   }
 
   err_args <- c()
-  for(i in seq_along(class_outer)){
-    if(!expected_classes[i] %in% class_outer[[i]]){
+  for(i in seq_along(class_args)){
+    if(!expected_classes[i] %in% class_args[[i]]){
       err_args <- c(err_args, args[i])
     }
   }
@@ -87,7 +97,7 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
     ))
   }
 
-  return(NULL)
+  invisible(NULL)
 }
 
 

@@ -26,6 +26,7 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 
 
 
+
 #' Checks the types of all elements of the list through a  predicate function.
 #' @description
 #'  The function doesn't check the argument provided in predicate. Therefore the

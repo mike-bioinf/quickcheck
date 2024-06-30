@@ -16,11 +16,9 @@ testthat::test_that("impose_logical_behavior returns expcted logical", {
 testthat::test_that("impose_logical_behavior return error when the wrong alert is picked", {
   expect_error(
     object = impose_logical_behavior(expr = check_columns_key(df, columns = c("visit_numb"))),
-    regexp = "The following key is missing in df: visit_numb"
+    regexp = "The following column is missing in df: visit_numb"
   )
 })
-
-
 
 
 
@@ -87,3 +85,32 @@ testthat::test_that("impose_acumulation_behavior correctly doesn't raise alert",
   expect_null(res)
 })
 
+
+
+
+
+
+
+#### impose_additional_alert ====================================================================================
+
+test_that("impose_additional_alert works as intended", {
+  expect_snapshot({
+      impose_additional_alert(
+        expr = check_columns_key(df, c("sex", "visit_number"), raise = "message"),
+        message = c("i" = "additional_part"),
+        margin = 1,
+        raise = "message"
+      )},
+    cnd_class = T
+  )
+
+  expect_snapshot({
+    impose_additional_alert(
+      expr = check_columns_key(df, c("sex", "visit_number"), raise = "warning"),
+      message = "additional_part",
+      margin = 2,
+      raise = "warning"
+    )},
+    cnd_class = T
+  )
+})

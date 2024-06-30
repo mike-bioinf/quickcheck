@@ -4,15 +4,22 @@
 \alias{check_args_classes}
 \title{Checks the classes of selected arguments of a calling function.}
 \usage{
-check_args_classes(args, expected_classes, numeric_correspondence = NULL)
+check_args_classes(
+  args,
+  expected_classes,
+  numeric_correspondence = NULL,
+  null = FALSE
+)
 }
 \arguments{
 \item{args}{character vector reporting the arguments of the outer function to check.}
 
-\item{expected_classes}{character vector with the expected classes.}
+\item{expected_classes}{character vector with the expected classes (one for argument).}
 
 \item{numeric_correspondence}{numeric vector that allows to recycle expected_types following
-the order of expected_types and the number specified by this vector.}
+its order and the numbers specified in this vector.}
+
+\item{null}{logical, whether args can be NULL or not in addiction to the "normal" expected type (default FALSE).}
 }
 \description{
 Checks the classes of selected arguments of a calling function.

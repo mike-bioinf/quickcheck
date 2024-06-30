@@ -7,12 +7,12 @@ with every name or position (in absence of the name) colored and a sequence of e
 (aka the collapsed character vector). The header is by default considered as the first element
 in the list and it has to be a single string.}
 \usage{
-format_cli_list(l, header_sign)
+format_cli_list(l, header_sign = NULL)
 }
 \arguments{
 \item{l}{list to format}
 
-\item{header_sign}{sign associated with the header selected according to the raised alert type.}
+\item{header_sign}{sign associated with the header selected according to the raised alert type or NULL.}
 }
 \description{
 Helper of alert_generator.list. It formats the list message as header plus colored bullet list

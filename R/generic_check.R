@@ -21,3 +21,5 @@ generic_check <- function(expr, raise = "error", alert_message = NULL, n.evaluat
   if(!expr_res) {alert_generator(raise, alert_message, n.evaluation_frame, quickalert)}
   invisible(NULL)
 }
+
+

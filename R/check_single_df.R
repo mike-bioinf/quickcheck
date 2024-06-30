@@ -44,7 +44,7 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 
 #' Checks if the specified dataframe columns are suitable as keys of only unique values.
 #' @param columns character vector reporting the names of the columns to test as key.
-#' @param na.rm logical (default TRUE), indicating if NA must be excluded prior computations.
+#' @param na.rm logical (default TRUE), indicating if NA must be excluded prior evaluation.
 #' @inheritParams check_columns_presence
 #' @details
 #'  Is suggested to not set a custom alert message. This is for the internal working of the function which
@@ -53,20 +53,12 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 #' @export
 check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   check_required_all()
-
-  check_presence_values(
-    vec = colnames(df),
-    values = columns,
-    vec_arg = "df",
-    alert_message = c("The following {qty(missing_values)} key{?s} {?is/are} {col_red('missing')} in {vec_arg}:", "{col_magenta(missing_values)}"),
-    quickalert = FALSE
-  )
-
+  check_columns_presence(df, columns, quickalert = FALSE)
   alert_message <- generate_message(alert_message, "{vec_arg} --> {col_magenta(err_value)}")
 
   impose_accumulation_behavior(
     header = "The following values occur {col_red('multiple times')} for the following columns:",
-    type = raise,
+    raise = raise,
     quickalert = quickalert,
     expr = {
       for(n in columns){
@@ -115,7 +107,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
   )
 
   impose_accumulation_behavior(
-    type = raise,
+    raise = raise,
     header = "The following levels are {col_red('missing')} from the reported columns:",
     quickalert = quickalert,
     expr = for(n in columns){
@@ -155,13 +147,14 @@ check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "err
   if(length(false_cols) > 0){
     alert_message <- generate_message(
       alert_message,
-      c("The predicate function {col_red('returned FALSE')} for the following {qty(false_cols)} column{?s}:", "{col_magenta('false_cols')}")
+      c("The predicate function {col_red('returned FALSE')} for the following {qty(false_cols)} column{?s}:", "{col_magenta(false_cols)}")
     )
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
   }
 
   invisible(NULL)
 }
+
 
 
 
@@ -178,7 +171,7 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
   alert_message <- generate_message(alert_message, "{vec_arg}")
 
   impose_accumulation_behavior(
-    type = raise,
+    raise = raise,
     header = "The following columns {cli::col_red('present NAs')}:",
     quickalert = quickalert,
     expr = for(col in columns){
@@ -194,4 +187,3 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
 
   invisible(NULL)
 }
-

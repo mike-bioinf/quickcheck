@@ -21,6 +21,7 @@ check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", 
 
 
 
+
 #' Checks the ordered equality of two vectors
 #' @details
 #' The equality is checked thought "==", so the order of the values matter as well as the presence of repeated values.
@@ -35,6 +36,7 @@ check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2"
   }
   invisible(NULL)
 }
+
 
 
 

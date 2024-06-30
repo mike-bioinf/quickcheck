@@ -10,7 +10,8 @@
 #' @param quickalert logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 #'  The generation of plain alerts is useful when using checking functions inside other ones,
 #'  in order to have exclusively the main check to raise quickalert.
-alert_generator <- function(type, alert_message, eval_env, quickalert = TRUE){
+#' @param sign logical, whether to add the sign to the first element of the alert (default TRUE).
+alert_generator <- function(type, alert_message, eval_env, quickalert = TRUE, sign = TRUE){
   UseMethod(generic = "alert_generator", object = alert_message)
 }
 
@@ -19,12 +20,16 @@ alert_generator <- function(type, alert_message, eval_env, quickalert = TRUE){
 
 #' S3 method of alert_generator for 'character' class
 #' @inheritParams alert_generator
-alert_generator.character <- function(type, alert_message, eval_env, quickalert = TRUE){
+alert_generator.character <- function(type, alert_message, eval_env, quickalert = TRUE, sign = TRUE){
   rlang::arg_match(arg = type, values = c("error", "warning", "message", "accumulate_message"), multiple = F)
   alert_funcs <- generate_cli_alert_list(quickalert)
   selected_alert <- alert_funcs[[type]]
-  signs <- generate_cli_sign_list()
-  names(alert_message)[1] <- signs[[type]]
+
+  if(sign){
+    signs <- generate_cli_sign_list()
+    names(alert_message)[1] <- signs[[type]]
+  }
+
   selected_alert(alert_message, eval_env)
 }
 
@@ -33,12 +38,18 @@ alert_generator.character <- function(type, alert_message, eval_env, quickalert 
 
 #' S3 method of alert_generator for 'list' class
 #' @inheritParams alert_generator
-alert_generator.list <- function(type, alert_message, eval_env, quickalert = TRUE){
+alert_generator.list <- function(type, alert_message, eval_env, quickalert = TRUE, sign = TRUE){
   rlang::arg_match(arg = type, values = c("error", "warning", "message", "accumulate_message"), multiple = F)
   alert_funcs <- generate_cli_alert_list(quickalert)
   selected_alert <- alert_funcs[[type]]
-  signs <- generate_cli_sign_list()
-  header_sign <- signs[[type]]
+
+  if(sign){
+    signs <- generate_cli_sign_list()
+    header_sign <- signs[[type]]
+  } else {
+    header_sign <- NULL
+  }
+
   alert_message <- format_cli_list(alert_message, header_sign)
   selected_alert(alert_message, eval_env)
 }
@@ -52,8 +63,8 @@ alert_generator.list <- function(type, alert_message, eval_env, quickalert = TRU
 #' (aka the collapsed character vector). The header is by default considered as the first element
 #' in the list and it has to be a single string.
 #' @param l list to format
-#' @param header_sign sign associated with the header selected according to the raised alert type.
-format_cli_list <- function(l, header_sign){
+#' @param header_sign sign associated with the header selected according to the raised alert type or NULL.
+format_cli_list <- function(l, header_sign = NULL){
   list_wout_header <- l[2:length(l)]
   lnames <- names(list_wout_header)
   formatted_vector <- c()
@@ -64,14 +75,15 @@ format_cli_list <- function(l, header_sign){
     } else {
       n <- lnames[i]
     }
-    formatted_vector <- c(
-      formatted_vector,
-      glue::glue("{cli::col_magenta(n)}: ", paste(list_wout_header[[i]], collapse = ", "), "\n")
-    )
+    formatted_vector <- c(formatted_vector, glue::glue("{cli::col_magenta(n)}: ", paste(list_wout_header[[i]], collapse = ", "), "\n"))
   }
 
   formatted_vector <- c(l[[1]], formatted_vector)
-  names(formatted_vector)[1] <- header_sign
+
+  if(!is.null(header_sign)){
+    names(formatted_vector)[1] <- header_sign
+  }
+
   return(formatted_vector)
 }
 
@@ -111,12 +123,14 @@ generate_cli_sign_list <- function(){
 
 
 
+
 #' Add header string to a list (as first element of the list).
 #' @param alert_list list to be formatted as an 'alert list'.
 #' @param header string that will appear as header of the alert.
 add_header <- function(header, alert_list){
   c(list(header), alert_list)
 }
+
 
 
 

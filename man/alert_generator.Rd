@@ -4,7 +4,7 @@
 \alias{alert_generator}
 \title{Generic that allows to generate error, warning calls based on the specified type and using custom messages.}
 \usage{
-alert_generator(type, alert_message, eval_env, quickalert = TRUE)
+alert_generator(type, alert_message, eval_env, quickalert = TRUE, sign = TRUE)
 }
 \arguments{
 \item{type}{string equal to one of: 'error', 'message' and 'warning'. Determines the type of alert.}
@@ -18,6 +18,8 @@ to which is called. So it indicates the number of frames to look up in the calli
 \item{quickalert}{logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 The generation of plain alerts is useful when using checking functions inside other ones,
 in order to have exclusively the main check to raise quickalert.}
+
+\item{sign}{logical, whether to add the sign to the first element of the alert (default TRUE).}
 }
 \description{
 Generic that allows to generate error, warning calls based on the specified type and using custom messages.
