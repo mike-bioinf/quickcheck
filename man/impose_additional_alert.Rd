@@ -18,7 +18,7 @@ impose_additional_alert(
 
 \item{message}{additional message to be added to the alert.}
 
-\item{margin}{numeric equal to 1 or 2, indicating where to put the additional message (start or end respectively).}
+\item{margin}{numeric equal to 1 or 2, indicating where to add the additional message (start or end respectively).}
 
 \item{raise}{type of the accumulated final alert if any.}
 

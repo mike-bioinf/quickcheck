@@ -138,7 +138,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 #' @export
 check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   check_required_all()
-  check_args_classes(args = c("df", "predicate"), expected_classes = c("data.frame", "function"))
+  check_args_classes("predicate", "function")
   logical_vec <- purrr::map_lgl(df, ~ predicate(.x))
 
   if(inverse){logical_vec <- !logical_vec}
@@ -166,7 +166,7 @@ check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "err
 #' @export
 check_columns_na <- function(df, columns, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   check_required_all()
-  check_args_classes(c("df", "columns"), c("data.frame", "character"))
+  check_args_classes("columns", "character")
   check_columns_presence(df, columns, quickalert = FALSE)
   alert_message <- generate_message(alert_message, "{vec_arg}")
 
