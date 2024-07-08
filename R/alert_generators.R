@@ -58,6 +58,7 @@ alert_generator.list <- function(type, alert_message, eval_env, quickalert = TRU
 
 
 
+
 #' Helper of alert_generator.list. It formats the list message as header plus colored bullet list
 #' with every name or position (in absence of the name) colored and a sequence of elements
 #' (aka the collapsed character vector). The header is by default considered as the first element
@@ -119,16 +120,6 @@ generate_cli_sign_list <- function(){
     message = "i",
     accumulate_message = ""
   )
-}
-
-
-
-
-#' Add header string to a list (as first element of the list).
-#' @param alert_list list to be formatted as an 'alert list'.
-#' @param header string that will appear as header of the alert.
-add_header <- function(header, alert_list){
-  c(list(header), alert_list)
 }
 
 

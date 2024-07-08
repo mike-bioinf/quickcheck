@@ -12,7 +12,6 @@ testthat::test_that("impose_logical_behavior returns expcted logical", {
 
 
 
-
 testthat::test_that("impose_logical_behavior return error when the wrong alert is picked", {
   expect_error(
     object = impose_logical_behavior(expr = check_columns_key(df, columns = c("visit_numb"))),
@@ -21,6 +20,15 @@ testthat::test_that("impose_logical_behavior return error when the wrong alert i
 })
 
 
+
+test_that("impose_logical_behavior force_alert argument works as intended", {
+  expect_message(
+    object = impose_logical_behavior(expr = check_columns_key(df, columns = c("visit_number"), raise = "message"), force_alert = T),
+    class = "quickalert"
+  )
+
+  expect_no_condition(object = impose_logical_behavior(expr = check_columns_presence(df, columns = c("visit_number")), force_alert = T))
+})
 
 
 

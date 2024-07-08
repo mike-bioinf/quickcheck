@@ -1,20 +1,24 @@
-### Impose Boolean returns for check functions
+### Set of wrappers of check functions that alter or add features to their behavior.
+### IMPORTANT NOTE:
 # The tryCatch interrupts the execution of code, therefore if a 'quickalert' condition is
 # hit before an other non 'quickalert' condition, this will not be seen by impose_logical_behavior.
 # This means that alert_generator must be the last call in the check-functions.
 
 
+
 #' Alter the behavior of checking conditions from raising alerts to return boolean values.
 #' @description
 #' This function works as a wrapper of the checking functions and impose them a
-#' 'logical' behavior. This means that they will not raise anymore alerts but instead
-#' they will return boolean values. In greater detail if a 'quickalert' class
-#' condition is hit, then the function return TRUE otherwise FALSE.
+#' 'logical' behavior. This means that they will not raise alerts (unless forced)
+#' but instead they will return boolean values. In greater detail if a 'quickalert'
+#' class condition is hit, then the function return TRUE otherwise FALSE.
 #' @param expr check function call.
+#' @param force_alert logical, whether to signal the quickalert once caught (default FALSE).
+#'  Useful for message and warnings and in situation in which you want to raise the condition
+#'  in addition to obtain the logical.
 #' @return A single logical value.
 #' @export
-impose_logical_behavior <- function(expr){
-  alert <- FALSE
+impose_logical_behavior <- function(expr, force_alert = FALSE){
   logical_return <- FALSE
 
   tryCatch(
@@ -26,11 +30,15 @@ impose_logical_behavior <- function(expr){
           "{cond$message} {cond$body}"
         ))
       }
-      alert <<- TRUE
+      logical_return <<- TRUE
+      if(force_alert) {
+        type_cond <- detect_type_condition(cond)
+        message <- break_condition_message(cond)
+        alert_generator(type = type_cond, alert_message = message, sign = FALSE)
+      }
     }
   )
 
-  if(alert) {logical_return <- TRUE}
   return(logical_return)
 }
 
@@ -109,3 +117,44 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
   )
 }
 
+
+
+
+
+
+
+### HELPERS ==================================================================================================================
+
+#' Add header string to a list (as first element of the list). Helper of impose_accumulation_behavior.
+#' @param alert_list list to be formatted as an 'alert list'.
+#' @param header string that will appear as header of the alert.
+add_header <- function(header, alert_list){
+  c(list(header), alert_list)
+}
+
+
+#' Inspect and return the "classic" nature of conditions. Helper of impose_logical_behavior for re signalling conditions.
+#' Here classic means error, warning or message.
+#' @param condition condition object.
+detect_type_condition <- function(condition){
+  if("error" %in% class(condition)){
+    type_condition <- "error"
+  } else if ("warning" %in% class(condition)){
+     type_condition <- "warning"
+  } else if("message" %in% class(condition)){
+    type_condition <- "message"
+  }
+  return(type_condition)
+}
+
+
+
+#' Retrieve the condition message and breaks it in a character vector based in newline character.
+#' This is helpful since conditionMessage function returns both the message and the body of a condition object
+#' as a single string (quickalerts have been defined using only the message argument, so all is a message strictly speaking).
+#' @param condition condition object.
+break_condition_message <- function(condition){
+  full_message <- conditionMessage(condition)
+  splitted_message <- strsplit(full_message, "\n")[[1]]
+  return(splitted_message)
+}

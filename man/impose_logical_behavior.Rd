@@ -4,17 +4,21 @@
 \alias{impose_logical_behavior}
 \title{Alter the behavior of checking conditions from raising alerts to return boolean values.}
 \usage{
-impose_logical_behavior(expr)
+impose_logical_behavior(expr, force_alert = FALSE)
 }
 \arguments{
 \item{expr}{check function call.}
+
+\item{force_alert}{logical, whether to signal the quickalert once caught (default FALSE).
+Useful for message and warnings and in situation in which you want to raise the condition
+in addition to obtain the logical.}
 }
 \value{
 A single logical value.
 }
 \description{
 This function works as a wrapper of the checking functions and impose them a
-'logical' behavior. This means that they will not raise anymore alerts but instead
-they will return boolean values. In greater detail if a 'quickalert' class
-condition is hit, then the function return TRUE otherwise FALSE.
+'logical' behavior. This means that they will not raise alerts (unless forced)
+but instead they will return boolean values. In greater detail if a 'quickalert'
+class condition is hit, then the function return TRUE otherwise FALSE.
 }
