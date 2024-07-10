@@ -29,7 +29,6 @@ alert_generator.character <- function(type, alert_message, eval_env, quickalert 
     signs <- generate_cli_sign_list()
     names(alert_message)[1] <- signs[[type]]
   }
-
   selected_alert(alert_message, eval_env)
 }
 
@@ -84,7 +83,6 @@ format_cli_list <- function(l, header_sign = NULL){
   if(!is.null(header_sign)){
     names(formatted_vector)[1] <- header_sign
   }
-
   return(formatted_vector)
 }
 

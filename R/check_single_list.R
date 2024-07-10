@@ -27,10 +27,10 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 
 
 
-#' Checks the types of all elements of the list through a  predicate function.
+#' Checks the types of all elements of the list through a predicate function.
 #' @description
-#'  The function doesn't check the argument provided in predicate. Therefore the
-#'  correctness of the provided function fall on the user.
+#' The function doesn't perform any check on the argument provided in predicate.
+#' Therefore the correctness of the provided function fall on the user.
 #' @inheritParams check_uniform_list
 #' @param predicate a predicate function, usually an "is.something" function type.
 #' @details The alert will not points the eventual elements in error if no or some elements names are missing.

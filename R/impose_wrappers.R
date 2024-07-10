@@ -15,7 +15,7 @@
 #' @param expr check function call.
 #' @param force_alert logical, whether to signal the quickalert once caught (default FALSE).
 #'  Useful for message and warnings and in situation in which you want to raise the condition
-#'  in addition to obtain the logical.
+#'  in addition to obtain the boolean value.
 #' @return A single logical value.
 #' @export
 impose_logical_behavior <- function(expr, force_alert = FALSE){
@@ -149,9 +149,9 @@ detect_type_condition <- function(condition){
 
 
 
-#' Retrieve the condition message and breaks it in a character vector based in newline character.
-#' This is helpful since conditionMessage function returns both the message and the body of a condition object
-#' as a single string (quickalerts have been defined using only the message argument, so all is a message strictly speaking).
+#' Retrieve the condition message and breaks it in a character vector based on newline character.
+#' This is helpful since quickalerts have been defined using only the message argument.
+#' Therefore the body of the message is condensed with the message (we work with one single message).
 #' @param condition condition object.
 break_condition_message <- function(condition){
   full_message <- conditionMessage(condition)
