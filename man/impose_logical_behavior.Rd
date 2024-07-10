@@ -11,7 +11,7 @@ impose_logical_behavior(expr, force_alert = FALSE)
 
 \item{force_alert}{logical, whether to signal the quickalert once caught (default FALSE).
 Useful for message and warnings and in situation in which you want to raise the condition
-in addition to obtain the logical.}
+in addition to obtain the boolean value.}
 }
 \value{
 A single logical value.

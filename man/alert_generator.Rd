@@ -2,25 +2,37 @@
 % Please edit documentation in R/alert_generators.R
 \name{alert_generator}
 \alias{alert_generator}
-\title{Generic that allows to generate error, warning calls based on the specified type and using custom messages.}
+\title{Function that allows to signal errors, warnings and messages.}
 \usage{
-alert_generator(type, alert_message, eval_env, quickalert = TRUE, sign = TRUE)
+alert_generator(
+  type,
+  alert_message,
+  eval_env,
+  quickalert = TRUE,
+  sign = TRUE,
+  header = NULL,
+  list_format = FALSE
+)
 }
 \arguments{
-\item{type}{string equal to one of: 'error', 'message' and 'warning'. Determines the type of alert.}
+\item{type}{String equal to one of: 'error', 'warning', 'message', 'accumulate_message'. Determines the type of alert.}
 
-\item{alert_message}{list of character vector or a single character vector that follow the cli
-syntax. If list it is formatted following the scheme explained in format_cli_list.}
+\item{alert_message}{Single character vector that follow the cli format.}
 
-\item{eval_env}{numeric indicating the calling frame in which evaluates the alert in respect
-to which is called. So it indicates the number of frames to look up in the calling stack.}
+\item{eval_env}{Integer indicating the calling frame in which evaluates the alert in respect to where the alert is generated.
+So it indicates the number of frames to look up in the calling stack.}
 
-\item{quickalert}{logical, whether to generate an alert with class "quickalert" or not (default TRUE).
-The generation of plain alerts is useful when using checking functions inside other ones,
-in order to have exclusively the main check to raise quickalert.}
+\item{quickalert}{Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
+The generation of "plain" alerts is useful when the checking functions are used inside other ones.
+This allow the fact that only the main check raises quickalerts.}
 
-\item{sign}{logical, whether to add the sign to the first element of the alert (default TRUE).}
+\item{sign}{Logical, whether to add the sign to the first element of the alert (default TRUE).}
+
+\item{header}{Character string to add at the beginning of the alert message (default NULL).}
+
+\item{list_format}{Logical, whether to apply the list format style, which includes numbers of names
+of the alert message elements to be represented in violet in a bullet list.}
 }
 \description{
-Generic that allows to generate error, warning calls based on the specified type and using custom messages.
+Function that allows to signal errors, warnings and messages.
 }

@@ -14,7 +14,7 @@
 #' @export
 check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   if(is_empty_vec(vec)){
-    alert_message <- generate_message(alert_message, "There are empty values in {vec_arg}")
+    alert_message <- generate_message(alert_message, "There are empty values in {vec_arg}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
   }
   invisible(NULL)
@@ -29,7 +29,7 @@ check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message
 #' @export
 check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   if(any(is.na(vec))){
-    alert_message <- generate_message(alert_message, "There are NAs in {vec_arg}")
+    alert_message <- generate_message(alert_message, "There are NAs in {vec_arg}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
   }
   invisible(NULL)
@@ -48,11 +48,10 @@ check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = 
 check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", raise = "error", alert_message = NULL, na.rm = TRUE, n.evaluation_frame = 2, quickalert = TRUE){
   check_required_all()
   unique_levels <- unique(vec)
-
-  if(na.rm){unique_levels <- stats::na.omit(unique_levels)}
+  if(na.rm) unique_levels <- stats::na.omit(unique_levels)
 
   if(length(unique_levels) != expected_number_levels){
-    alert_message <- generate_message(alert_message, "{expected_number_levels} level{?s} expected but {length(unique_levels)} detected")
+    alert_message <- generate_message(alert_message, "{expected_number_levels} level{?s} expected but {length(unique_levels)} detected.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
   }
 

@@ -17,7 +17,7 @@ check_columns_key(
 \arguments{
 \item{df}{Dataframe passed in the outer function.}
 
-\item{columns}{character vector reporting the names of the columns to test as key.}
+\item{columns}{Character string reporting the column/s name.}
 
 \item{na.rm}{logical (default TRUE), indicating if NA must be excluded prior evaluation.}
 

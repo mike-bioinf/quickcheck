@@ -43,7 +43,6 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 
 
 #' Checks if the specified dataframe columns are suitable as keys of only unique values.
-#' @param columns character vector reporting the names of the columns to test as key.
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior evaluation.
 #' @inheritParams check_columns_presence
 #' @details
@@ -80,10 +79,8 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
 
 
 
-
 #' Checks the presence of the specified values in the selected columns.
 #' @inheritParams check_columns_presence
-#' @param columns character vector of columns names to check
 #' @param col_levels list of character vector reporting the expected levels for each column
 #'  specified in columns. The element of the list must be nominated according to the columns values.
 #' @inherit check_columns_key details
@@ -124,7 +121,6 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
   invisible(NULL)
 }
-
 
 
 
