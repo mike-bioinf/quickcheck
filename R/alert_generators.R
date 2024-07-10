@@ -1,4 +1,4 @@
-#' Function that allows to signal errors, warnings and messages.
+#' Function to signal errors, warnings and messages.
 #' @param type
 #'  String equal to one of: 'error', 'warning', 'message', 'accumulate_message'. Determines the type of alert.
 #' @param alert_message

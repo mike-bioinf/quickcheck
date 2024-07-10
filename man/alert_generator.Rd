@@ -2,7 +2,7 @@
 % Please edit documentation in R/alert_generators.R
 \name{alert_generator}
 \alias{alert_generator}
-\title{Function that allows to signal errors, warnings and messages.}
+\title{Function to signal errors, warnings and messages.}
 \usage{
 alert_generator(
   type,
@@ -34,5 +34,5 @@ This allow the fact that only the main check raises quickalerts.}
 of the alert message elements to be represented in violet in a bullet list.}
 }
 \description{
-Function that allows to signal errors, warnings and messages.
+Function to signal errors, warnings and messages.
 }

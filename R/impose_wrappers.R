@@ -46,11 +46,14 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 #' Allow to accumulate in list non-error alert of checking functions
 #' @description
 #' Imposes an accumulation behavior for a checking function in a loop scenario, in which
-#' the alert raised by the checking function are stored in a list and then displayed.
+#' the alert raised by the checking function are stored in a vector and then displayed.
 #' Works preferably with checking functions that raise accumulated message type for
 #' a better final alert format. It does not work with error since they stop the loop execution.
+#' If an alert message is provided the header is automatically deleted.
+#' So in this case to disply the header this must be placed inside the alert_message.
 #' @param expr check function call.
 #' @param raise type of the accumulated final alert if any.
+#' @param alert_message String reporting the alert message.
 #' @param header string to add as the header of the accumulated alert list.
 #' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
 #'  of the alert message in respect to where the function calling the alert is run. The default points
@@ -58,7 +61,9 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 #' @param quickalert logical, whether the raised alert is of class "quickalert".
 #' @return invisible NULL
 #' @export
-impose_accumulation_behavior <- function(expr, raise = "error", header = NULL, n.evaluation_frame = 2, quickalert = TRUE){
+impose_accumulation_behavior <- function(expr, raise = "error", alert_message = NULL, header = NULL, n.evaluation_frame = 2, quickalert = TRUE){
+  signal_alert <- FALSE
+  list_format <- TRUE
   accumulated_cond <- c()
 
   withCallingHandlers(
@@ -66,15 +71,21 @@ impose_accumulation_behavior <- function(expr, raise = "error", header = NULL, n
     condition = function(cond){
       if(!"quickalert" %in% class(cond)){
         cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
-      } else {
+      } else if(is.null(alert_message)){
         accumulated_cond <<- c(accumulated_cond, cond$message)
+        rlang::cnd_muffle(cond)
+      } else {
+        signal_alert <<- TRUE
+        list_format <<- FALSE
+        header <<- NULL
         rlang::cnd_muffle(cond)
       }
     }
   )
 
-  if(length(accumulated_cond) > 0){
-    alert_generator(raise, accumulated_cond, n.evaluation_frame, quickalert, header = header, list_format = T)
+  if(length(accumulated_cond) > 0 || signal_alert){
+    message <- generate_message(alert_message, accumulated_cond)
+    alert_generator(raise, message, n.evaluation_frame, quickalert, header = header, list_format = list_format)
   }
 
   invisible(NULL)

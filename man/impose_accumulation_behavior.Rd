@@ -7,6 +7,7 @@
 impose_accumulation_behavior(
   expr,
   raise = "error",
+  alert_message = NULL,
   header = NULL,
   n.evaluation_frame = 2,
   quickalert = TRUE
@@ -16,6 +17,8 @@ impose_accumulation_behavior(
 \item{expr}{check function call.}
 
 \item{raise}{type of the accumulated final alert if any.}
+
+\item{alert_message}{String reporting the alert message.}
 
 \item{header}{string to add as the header of the accumulated alert list.}
 
@@ -30,7 +33,9 @@ invisible NULL
 }
 \description{
 Imposes an accumulation behavior for a checking function in a loop scenario, in which
-the alert raised by the checking function are stored in a list and then displayed.
+the alert raised by the checking function are stored in a vector and then displayed.
 Works preferably with checking functions that raise accumulated message type for
 a better final alert format. It does not work with error since they stop the loop execution.
+If an alert message is provided the header is automatically deleted.
+So in this case to disply the header this must be placed inside the alert_message.
 }

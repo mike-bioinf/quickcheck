@@ -4,7 +4,7 @@
 \name{quickcheck-package}
 \alias{quickcheck}
 \alias{quickcheck-package}
-\title{quickcheck: Implementation of Common Checks for single and couple of dataframes}
+\title{quickcheck: Implementation of common cheks for typical data structure}
 \description{
 Implements checks that are performed on a single dataframe or a couple of dataframes, which can be useful to enhance the robustness of other functions.
 }

@@ -40,7 +40,3 @@ if the default alert is desired). So to point to the calling frame of this funct
 \description{
 Checks the presence of the specified values in the selected columns.
 }
-\details{
-Is suggested to not set a custom alert message. This is for the internal working of the function which
-will trigger the custom message for every column that fails the checking.
-}

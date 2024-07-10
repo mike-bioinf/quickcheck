@@ -39,7 +39,3 @@ invisible NULL
 \description{
 Checks the presence of NAs in the specified columns
 }
-\details{
-Is suggested to not set a custom alert message. This is for the internal working of the function which
-will trigger the custom message for every column that fails the checking.
-}

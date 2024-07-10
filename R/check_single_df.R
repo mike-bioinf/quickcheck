@@ -45,19 +45,16 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 #' Checks if the specified dataframe columns are suitable as keys of only unique values.
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior evaluation.
 #' @inheritParams check_columns_presence
-#' @details
-#'  Is suggested to not set a custom alert message. This is for the internal working of the function which
-#'  will trigger the custom message for every column that fails the checking.
 #' @return invisible NULL.
 #' @export
 check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   check_required_all()
   check_columns_presence(df, columns, quickalert = FALSE)
-  alert_message <- generate_message(alert_message, "{vec_arg} --> {col_magenta(err_value)}")
 
   impose_accumulation_behavior(
-    header = "The following values occur {col_red('multiple times')} for the following columns:",
     raise = raise,
+    alert_message = alert_message,
+    header = "The following values occur {col_red('multiple times')} for the following columns:",
     quickalert = quickalert,
     expr = {
       for(n in columns){
@@ -66,7 +63,7 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
           vec_arg = n,
           na.rm = na.rm,
           raise = "accumulate_message",
-          alert_message = alert_message,
+          alert_message = "{vec_arg} --> {col_magenta(err_value)}",
           n.evaluation_frame = n.evaluation_frame
       )}
     }
@@ -83,7 +80,6 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
 #' @inheritParams check_columns_presence
 #' @param col_levels list of character vector reporting the expected levels for each column
 #'  specified in columns. The element of the list must be nominated according to the columns values.
-#' @inherit check_columns_key details
 #' @return NULL
 #' @export
 check_columns_levels <- function(df, columns, col_levels, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
@@ -105,6 +101,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
   impose_accumulation_behavior(
     raise = raise,
+    alert_message = alert_message,
     header = "The following levels are {col_red('missing')} from the reported columns:",
     quickalert = quickalert,
     expr = for(n in columns){
@@ -158,16 +155,15 @@ check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "err
 #' Checks the presence of NAs in the specified columns
 #' @inheritParams check_columns_presence
 #' @return invisible NULL
-#' @inherit check_columns_key details
 #' @export
 check_columns_na <- function(df, columns, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
   check_required_all()
   check_args_classes("columns", "character")
   check_columns_presence(df, columns, quickalert = FALSE)
-  alert_message <- generate_message(alert_message, "{vec_arg}")
 
   impose_accumulation_behavior(
     raise = raise,
+    alert_message = alert_message,
     header = "The following columns {cli::col_red('present NAs')}:",
     quickalert = quickalert,
     expr = for(col in columns){
@@ -175,7 +171,7 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
         vec = df[[col]],
         vec_arg = col,
         raise = "accumulate_message",
-        alert_message = alert_message,
+        alert_message = "{vec_arg}",
         n.evaluation_frame = n.evaluation_frame
       )
     }

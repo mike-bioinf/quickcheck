@@ -59,3 +59,10 @@ testthat::test_that("impose_accumulation_behavior correctly doesn't raise alert"
   expect_null(res)
 })
 
+
+
+
+
+test_that("impose_accumulation_behavior launch one time the provided alert message", {
+  expect_snapshot(check_columns_key(df, c("sex", "visit_number"), raise = "warning", alert_message = "Just one line !!!"))
+})
