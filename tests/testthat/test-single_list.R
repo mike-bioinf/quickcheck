@@ -13,7 +13,7 @@ test_that("if check_uniform_list works", {
 
 
 cli::test_that_cli(
-  desc = "if check_types_list works",
+  desc = "if check_types_list function works",
   {
     clist <- cancer_list[c("visit_number", "patient_id")]
     expect_snapshot_error(x = check_types_list(x = clist, predicate = is.character))

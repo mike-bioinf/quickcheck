@@ -2,9 +2,9 @@
 % Please edit documentation in R/impose_wrappers.R
 \name{break_condition_message}
 \alias{break_condition_message}
-\title{Retrieve the condition message and breaks it in a character vector based in newline character.
-This is helpful since conditionMessage function returns both the message and the body of a condition object
-as a single string (quickalerts have been defined using only the message argument, so all is a message strictly speaking).}
+\title{Retrieve the condition message and breaks it in a character vector based on newline character.
+This is helpful since quickalerts have been defined using only the message argument.
+Therefore the body of the message is condensed with the message (we work with one single message).}
 \usage{
 break_condition_message(condition)
 }
@@ -12,7 +12,7 @@ break_condition_message(condition)
 \item{condition}{condition object.}
 }
 \description{
-Retrieve the condition message and breaks it in a character vector based in newline character.
-This is helpful since conditionMessage function returns both the message and the body of a condition object
-as a single string (quickalerts have been defined using only the message argument, so all is a message strictly speaking).
+Retrieve the condition message and breaks it in a character vector based on newline character.
+This is helpful since quickalerts have been defined using only the message argument.
+Therefore the body of the message is condensed with the message (we work with one single message).
 }

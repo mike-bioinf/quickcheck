@@ -25,10 +25,7 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
     expr = {expr},
     condition = function(cond){
       if(!"quickalert" %in% class(cond)){
-        cli::cli_abort(c(
-          "x" = "The supplied expression have raised an {col_red('unexpected')} alert:",
-          "{cond$message} {cond$body}"
-        ))
+        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
       }
       logical_return <<- TRUE
       if(force_alert) {
@@ -62,7 +59,7 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 #' @return invisible NULL
 #' @export
 impose_accumulation_behavior <- function(expr, raise = "error", header = NULL, n.evaluation_frame = 2, quickalert = TRUE){
-  accumulated_cond <- list()
+  accumulated_cond <- c()
 
   withCallingHandlers(
     expr = {expr},
@@ -70,15 +67,14 @@ impose_accumulation_behavior <- function(expr, raise = "error", header = NULL, n
       if(!"quickalert" %in% class(cond)){
         cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
       } else {
-        accumulated_cond <<- c(accumulated_cond, list(cond$message))
+        accumulated_cond <<- c(accumulated_cond, cond$message)
         rlang::cnd_muffle(cond)
       }
     }
   )
 
   if(length(accumulated_cond) > 0){
-    accumulated_cond <- add_header(header, accumulated_cond)
-    alert_generator(raise, accumulated_cond, n.evaluation_frame, quickalert)
+    alert_generator(raise, accumulated_cond, n.evaluation_frame, quickalert, header = header, list_format = T)
   }
 
   invisible(NULL)
@@ -88,7 +84,7 @@ impose_accumulation_behavior <- function(expr, raise = "error", header = NULL, n
 
 
 
-#' Allow the add a message at the start/end of raised quickalert messages
+#' Adds a message at the start/end of raised quickalert messages.
 #' @inheritParams impose_accumulation_behavior
 #' @param message additional message to be added to the alert.
 #' @param margin numeric equal to 1 or 2, indicating where to add the additional message (start or end respectively).
@@ -106,9 +102,9 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
         cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
       } else {
         if(margin == 1){
-          complete_alert <- c(message, cond$message, cond$body)
+          complete_alert <- c(message, break_condition_message(cond))
         } else {
-          complete_alert <- c(cond$message, cond$body, message)
+          complete_alert <- c(break_condition_message(cond), message)
         }
         alert_generator(raise, complete_alert, n.evaluation_frame, quickalert, sign = FALSE)
         rlang::cnd_muffle(cond)
@@ -123,14 +119,7 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
 
 
 
-### HELPERS ==================================================================================================================
-
-#' Add header string to a list (as first element of the list). Helper of impose_accumulation_behavior.
-#' @param alert_list list to be formatted as an 'alert list'.
-#' @param header string that will appear as header of the alert.
-add_header <- function(header, alert_list){
-  c(list(header), alert_list)
-}
+### HELPERS ============================================================================================================================
 
 
 #' Inspect and return the "classic" nature of conditions. Helper of impose_logical_behavior for re signalling conditions.

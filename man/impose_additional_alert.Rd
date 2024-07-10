@@ -2,7 +2,7 @@
 % Please edit documentation in R/impose_wrappers.R
 \name{impose_additional_alert}
 \alias{impose_additional_alert}
-\title{Allow the add a message at the start/end of raised quickalert messages}
+\title{Adds a message at the start/end of raised quickalert messages.}
 \usage{
 impose_additional_alert(
   expr,
@@ -32,5 +32,5 @@ to this function frame.}
 invisible NULL
 }
 \description{
-Allow the add a message at the start/end of raised quickalert messages
+Adds a message at the start/end of raised quickalert messages.
 }

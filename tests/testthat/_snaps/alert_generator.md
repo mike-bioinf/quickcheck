@@ -7,6 +7,6 @@
     Condition
       [1m[33mError[39m in `impose_accumulation_behavior()`:[22m
       [1m[22m[31mx[39m The following levels are [31mmissing[39m from the reported columns:
-      [35m1[39m: visit_number --> [35mv1[39m
-      [35m2[39m: ppi_treatment --> [35myes[39m
+      [36m1.[39m visit_number --> [35mv1[39m
+      [36m2.[39m ppi_treatment --> [35myes[39m
 

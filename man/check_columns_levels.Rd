@@ -17,7 +17,7 @@ check_columns_levels(
 \arguments{
 \item{df}{Dataframe passed in the outer function.}
 
-\item{columns}{character vector of columns names to check}
+\item{columns}{Character string reporting the column/s name.}
 
 \item{col_levels}{list of character vector reporting the expected levels for each column
 specified in columns. The element of the list must be nominated according to the columns values.}

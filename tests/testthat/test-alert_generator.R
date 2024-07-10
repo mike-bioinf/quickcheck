@@ -1,4 +1,4 @@
-### testing alert_generator dispatch process, list message formatting process and generation of classed alerts.
+### testing alert_generator function.
 
 cli::test_that_cli(
   "List messages are formatted correctly",
@@ -17,16 +17,16 @@ cli::test_that_cli(
 
 
 
-testthat::test_that("alert_generator produce alerts of class", {
+testthat::test_that("alert_generator produce alerts with class", {
   expect_condition(
-    alert_generator.character(type = "message", alert_message = "generic message", quickalert = TRUE),
+    alert_generator(type = "message", alert_message = "generic message", quickalert = TRUE),
     class = "quickalert"
   )
 
   expect_failure(
     suppressMessages({
       expect_condition(
-        alert_generator.character(type = "message", alert_message = "generic message", quickalert = FALSE),
+        alert_generator(type = "message", alert_message = "generic message", quickalert = FALSE),
         class = "quickalert"
       )
     })

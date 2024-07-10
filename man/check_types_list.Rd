@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_list.R
 \name{check_types_list}
 \alias{check_types_list}
-\title{Checks the types of all elements of the list through a  predicate function.}
+\title{Checks the types of all elements of the list through a predicate function.}
 \usage{
 check_types_list(
   x,
@@ -40,8 +40,8 @@ if the default alert is desired). So to point to the calling frame of this funct
 invisible NULL.
 }
 \description{
-The function doesn't check the argument provided in predicate. Therefore the
-correctness of the provided function fall on the user.
+The function doesn't perform any check on the argument provided in predicate.
+Therefore the correctness of the provided function fall on the user.
 }
 \details{
 The alert will not points the eventual elements in error if no or some elements names are missing.
