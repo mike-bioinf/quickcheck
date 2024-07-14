@@ -28,9 +28,10 @@ check_required_all <- function(){
 #' @param numeric_correspondence numeric vector that allows to recycle expected_types following
 #'  its order and the numbers specified in this vector.
 #' @param null logical, whether args can be NULL or not in addiction to the "normal" expected type (default FALSE).
+#' @param alert_message String reporting the alert message. Its formatted by cli_bullets function.
 #' @return NULL
 #' @export
-check_args_primitive_types <- function(args, expected_types, numeric_correspondence = NULL, null = FALSE){
+check_args_primitive_types <- function(args, expected_types, numeric_correspondence = NULL, null = FALSE, alert_message = NULL){
   if(!is.null(numeric_correspondence)){
     expected_types <- control_recycle(args, expected_types, numeric_correspondence)
   } else if(length(args) != length(expected_types)){
@@ -49,10 +50,14 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
   }
 
   if(length(err_args) > 0){
-    cli::cli_abort(c(
-      "x" = "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}: ",
-      "{col_magenta(err_args)}"
-    ))
+    alert <- generate_message(
+      alert_message = alert_message,
+      default_message = c(
+        "x" = "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}: ",
+        "{col_magenta(err_args)}"
+      )
+    )
+    alert_generator("error", alert, 2)
   }
 
   invisible(NULL)
@@ -67,7 +72,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
 #' @param expected_classes character vector with the expected classes (one for argument).
 #' @return NULL
 #' @export
-check_args_classes <- function(args, expected_classes, numeric_correspondence = NULL, null = FALSE){
+check_args_classes <- function(args, expected_classes, numeric_correspondence = NULL, null = FALSE, alert_message = NULL){
   if(!is.null(numeric_correspondence)){
     expected_classes <- control_recycle(args, expected_classes, numeric_correspondence)
   } else if(length(args) != length(expected_classes)){
@@ -75,26 +80,34 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
   }
 
   class_args <- list()
+
   for(a in args){
     class_args[[a]] <- class(rlang::caller_env(n = 1)[[a]])
   }
 
-  if(null){
-    class_args <- lapply(class_args, \(v) c(v, "NULL"))
-  }
-
   err_args <- c()
+
   for(i in seq_along(class_args)){
-    if(!expected_classes[i] %in% class_args[[i]]){
-      err_args <- c(err_args, args[i])
+    if(null){
+      if(!expected_classes[i] %in% class_args[[i]] && expected_classes[i] != "NULL"){
+        err_args <- c(err_args, args[i])
+      }
+    } else {
+     if(!expected_classes[i] %in% class_args[[i]]){
+       err_args <- c(err_args, args[i])
+     }
     }
   }
 
   if(length(err_args) > 0){
-    cli::cli_abort(c(
-      "x" = "The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}: ",
-      "{col_magenta(err_args)}"
-    ))
+    alert <- generate_message(
+      alert_message = alert_message,
+      default_message = c(
+        "x" = "The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:",
+        "{col_magenta(err_args)}"
+      )
+    )
+    alert_generator("error", alert, 2)
   }
 
   invisible(NULL)

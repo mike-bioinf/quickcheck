@@ -39,6 +39,29 @@ check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = 
 
 
 
+#' Checks the presence of duplicated values in a vector.
+#' @inheritParams check_empty_vec
+#' @return invisible NULL
+#' @export
+check_duplicate_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
+  vec <- stats::na.omit(vec)
+  dup <- duplicated(vec)
+  if(any(dup)){
+    dup_values <- vec[dup] |> unique() |> sort()
+    alert_message <- generate_message(
+      alert_message,
+      c("The following {qty(length(dup_values))} value{?s} {?is/are} {cli::col_red('duplicated')} in {vec_arg}:",
+        "{cli::col_magenta(dup_values)}")
+    )
+    alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
+  }
+  invisible(NULL)
+}
+
+
+
+
+
 #' Checks if the number of unique values of a vector is equal to the expected.
 #' @inheritParams check_empty_vec
 #' @param expected_number_levels numeric indicating the expected number of unique values for vec.

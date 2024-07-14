@@ -8,7 +8,8 @@ check_args_classes(
   args,
   expected_classes,
   numeric_correspondence = NULL,
-  null = FALSE
+  null = FALSE,
+  alert_message = NULL
 )
 }
 \arguments{
@@ -20,6 +21,8 @@ check_args_classes(
 its order and the numbers specified in this vector.}
 
 \item{null}{logical, whether args can be NULL or not in addiction to the "normal" expected type (default FALSE).}
+
+\item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.}
 }
 \description{
 Checks the classes of selected arguments of a calling function.

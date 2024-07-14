@@ -2,8 +2,14 @@
 
 
 default_alert_messages <- list(
+  check_args_primitive_types = c("x" = "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}: ",
+                                 "{col_magenta(err_args)}"),
+  check_args_classes = c("x" = "The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:",
+                         "{col_magenta(err_args)}"),
   check_empty_vec = "There are empty values in {vec_arg}.",
   check_na_vec = "There are NAs in {vec_arg}.",
+  check_duplicate_vec = c("The following {qty(length(dup_values))} value{?s} {?is/are} duplicated in {vec_arg}",
+                          "{cli::col_magenta(dup_values)}"),
   check_number_values = "{expected_number_levels} level{?s} expected but {length(unique_levels)} detected.",
   check_presence_values = c("The following {qty(missing_values)} value{?s} {?is/are} missing in {vec_arg}:",
                             "{col_magenta(missing_values)}"),
