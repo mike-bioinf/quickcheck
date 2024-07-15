@@ -2,8 +2,9 @@
 #' @param type
 #'  String equal to one of: 'error', 'warning', 'message', 'accumulate_message'. Determines the type of alert.
 #' @param alert_message
-#'  Single character vector that follow the cli format.
-#' @param eval_env
+#'  Single character vector that follow the cli format. It possible to pass a list of strings to have automatically
+#'  a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).
+#' @param n.evaluation_frame
 #'  Integer indicating the calling frame in which evaluates the alert in respect to where the alert is generated.
 #'  So it indicates the number of frames to look up in the calling stack.
 #' @param quickalert
@@ -15,12 +16,19 @@
 #' @param header
 #'  Character string to add at the beginning of the alert message (default NULL).
 #' @param list_format
-#'  Logical, whether to apply the list format style, which includes numbers of names
+#'  Logical, whether to apply the list format style, which includes numbers or names
 #'  of the alert message elements to be represented in violet in a bullet list.
-alert_generator <- function(type, alert_message, eval_env, quickalert = TRUE, sign = TRUE, header = NULL, list_format = FALSE){
+#' @return Raise a condition.
+#' @export
+alert_generator <- function(type, alert_message, n.evaluation_frame, quickalert = TRUE, sign = TRUE, header = NULL, list_format = FALSE){
   rlang::arg_match(arg = type, values = c("error", "warning", "message", "accumulate_message"), multiple = F)
   alert_funcs <- generate_alertfunc_list()
   my_alert_func <- alert_funcs[[type]]
+
+  if(is.list(alert_message)){
+    list_format <- TRUE
+    alert_message <- purrr::map_chr(alert_message, \(v) paste(v, collapse = " "))
+  }
 
   if(list_format){
     if(is_empty_vec(names(alert_message))){
@@ -44,8 +52,9 @@ alert_generator <- function(type, alert_message, eval_env, quickalert = TRUE, si
     alertclass <- NULL
   }
 
-  my_alert_func(alert_message, eval_env, alertclass)
+  my_alert_func(alert_message, n.evaluation_frame, alertclass)
 }
+
 
 
 
@@ -53,15 +62,17 @@ alert_generator <- function(type, alert_message, eval_env, quickalert = TRUE, si
 
 ### HELPERS ===================================================================================================================================
 
+
 #' Generates a list of aliases of main cli alert functions with intuitive names.
 generate_alertfunc_list <- function(){
   cli_main_list <- list(
-    error = function(alert, eval_env, alertclass) cli::cli_abort(alert, .envir = rlang::caller_env(n = eval_env), class = alertclass),
-    warning = function(alert, eval_env, alertclass) cli::cli_warn(alert, .envir = rlang::caller_env(n = eval_env), class = alertclass),
-    message = function(alert, eval_env, alertclass) cli::cli_inform(alert, .envir = rlang::caller_env(n = eval_env), class = alertclass),
-    accumulate_message = function(alert, eval_env, alertclass) cli::cli_inform(alert, .envir = rlang::caller_env(n = eval_env), class = alertclass)
+    error = function(alert, n.evaluation_frame, alertclass) cli::cli_abort(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass),
+    warning = function(alert, n.evaluation_frame, alertclass) cli::cli_warn(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass),
+    message = function(alert, n.evaluation_frame, alertclass) cli::cli_inform(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass),
+    accumulate_message = function(alert, n.evaluation_frame, alertclass) cli::cli_inform(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass)
   )
 }
+
 
 
 #' Generates a list of cli bullet signs with informative names.
@@ -75,10 +86,21 @@ generate_sign_list <- function(){
 }
 
 
-#' Helper that is used to construct a default alert message if not provided (if NULL).
+
+#' Function to construct a default alert message if not provided (if NULL).
 #' @param alert_message takes in the alert_message argument of the checking function.
 #' @param default_message character vector that is used as default message. Follow cli intax rules.
 generate_message <- function(alert_message, default_message){
-  if(is.null(alert_message)) {alert_message <- default_message}
+  if(is.null(alert_message)) alert_message <- default_message
   return(alert_message)
+}
+
+
+
+#' Function to construct a default header message if not passed via dots.
+#' @param header takes in the header argument of the checking function.
+#' @param default_header string that is used as default message.
+generate_header <- function(header, default_header){
+  if(!is.null(header) && header == "default") header <- default_header
+  return(header)
 }

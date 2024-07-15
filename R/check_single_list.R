@@ -8,16 +8,19 @@
 #' @param flatten logical, whether to flat out the list before before doing the check (default TRUE).
 #' @return invisible NULL.
 #' @export
-check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
-  check_args_primitive_types("x", "list")
+check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
+  check_args_primitive_types("x", "list", quickalert = FALSE)
 
-  if(flatten) {x <- rec_flatten_list(x, till_flat = T)}
+  if(flatten) {
+    x <- rec_flatten_list(x, till_flat = T)
+  }
+
   types <- lapply(x, class)
   res_identity <- purrr::reduce(types, custom_identical)
 
   if(res_identity == "NotExistingCLASS"){
     alert_message <- generate_message(alert_message, "The list is {cli::col_red('not uniform')}.")
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
+    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
 
   invisible(NULL)
@@ -36,10 +39,10 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 #' @details The alert will not points the eventual elements in error if no or some elements names are missing.
 #' @return invisible NULL.
 #' @export
-check_types_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
+check_types_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
   check_required_all()
-  check_args_primitive_types(c("x", "flatten"), c("list", "logical"))
-  check_args_classes("predicate", "function")
+  check_args_primitive_types(c("x", "flatten"), c("list", "logical"), quickalert = FALSE)
+  check_args_classes("predicate", "function", quickalert = FALSE)
 
   if(flatten){
     x <- rec_flatten_list(x, till_flat = T, nam_spec = "{outer}${inner}")
@@ -60,7 +63,7 @@ check_types_list <- function(x, predicate, flatten = TRUE, raise = "error", aler
         c("The following {qty(errors)} element{?s} {?is/are} not of the expected type:", "{cli::col_magenta(errors)}")
       )
     }
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert)
+    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
 
   invisible(NULL)

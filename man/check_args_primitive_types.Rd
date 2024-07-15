@@ -9,7 +9,9 @@ check_args_primitive_types(
   expected_types,
   numeric_correspondence = NULL,
   null = FALSE,
-  alert_message = NULL
+  alert_message = NULL,
+  n.evaluation_frame = 2,
+  quickalert = TRUE
 )
 }
 \arguments{
@@ -23,6 +25,13 @@ its order and the numbers specified in this vector.}
 \item{null}{logical, whether args can be NULL or not in addiction to the "normal" expected type (default FALSE).}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.}
+
+\item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
+of the alert message in respect to where the function calling the alert is run.
+The default value points to the frame below the function frame (to not modify
+if the default alert is desired). So to point to the calling frame of this function you have to set 4.}
+
+\item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 }
 \description{
 Checks the primitive types of the specified arguments of a calling function.

@@ -12,9 +12,20 @@
 # impose_accumulation_behavior launch one time the provided alert message
 
     Code
-      check_columns_key(df, c("sex", "visit_number"), raise = "warning",
-      alert_message = "Just one line !!!")
+      check_columns_key(df = df, columns = c("sex", "visit_number"), raise = "warning",
+      alert_message = "Just one line !!!", header = NULL)
     Condition
       Warning:
       ! Just one line !!!
+
+# The header option works correctly with impose_accumulation behavior
+
+    Code
+      check_columns_key(df = df, columns = c("sex", "visit_number"), raise = "warning",
+      header = "CUSTOM HEADER")
+    Condition
+      Warning:
+      ! CUSTOM HEADER
+      1. sex --> male
+      2. visit_number --> 1, 2, and 3
 

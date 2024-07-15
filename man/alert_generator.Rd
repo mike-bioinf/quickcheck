@@ -7,7 +7,7 @@
 alert_generator(
   type,
   alert_message,
-  eval_env,
+  n.evaluation_frame,
   quickalert = TRUE,
   sign = TRUE,
   header = NULL,
@@ -17,9 +17,10 @@ alert_generator(
 \arguments{
 \item{type}{String equal to one of: 'error', 'warning', 'message', 'accumulate_message'. Determines the type of alert.}
 
-\item{alert_message}{Single character vector that follow the cli format.}
+\item{alert_message}{Single character vector that follow the cli format. It possible to pass a list of strings to have automatically
+a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).}
 
-\item{eval_env}{Integer indicating the calling frame in which evaluates the alert in respect to where the alert is generated.
+\item{n.evaluation_frame}{Integer indicating the calling frame in which evaluates the alert in respect to where the alert is generated.
 So it indicates the number of frames to look up in the calling stack.}
 
 \item{quickalert}{Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
@@ -30,8 +31,11 @@ This allow the fact that only the main check raises quickalerts.}
 
 \item{header}{Character string to add at the beginning of the alert message (default NULL).}
 
-\item{list_format}{Logical, whether to apply the list format style, which includes numbers of names
+\item{list_format}{Logical, whether to apply the list format style, which includes numbers or names
 of the alert message elements to be represented in violet in a bullet list.}
+}
+\value{
+Raise a condition.
 }
 \description{
 Function to signal errors, warnings and messages.

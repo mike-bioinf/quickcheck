@@ -43,7 +43,6 @@ testthat::test_that("impose_accumulation_behavior launch unexpected error alert"
 
 
 
-
 testthat::test_that("impose_accumulation_behavior correctly doesn't raise alert", {
   columns <- c("sex")
   col_levels <- list(sex = c("male"))
@@ -62,7 +61,28 @@ testthat::test_that("impose_accumulation_behavior correctly doesn't raise alert"
 
 
 
-
 test_that("impose_accumulation_behavior launch one time the provided alert message", {
-  expect_snapshot(check_columns_key(df, c("sex", "visit_number"), raise = "warning", alert_message = "Just one line !!!"))
+  expect_snapshot(
+    check_columns_key(
+      df = df,
+      columns = c("sex", "visit_number"),
+      raise = "warning",
+      alert_message = "Just one line !!!",
+      header = NULL
+    )
+  )
+})
+
+
+
+
+test_that("The header option works correctly with impose_accumulation behavior", {
+  expect_snapshot(
+    check_columns_key(
+      df = df,
+      columns = c("sex", "visit_number"),
+      raise = "warning",
+      header = "CUSTOM HEADER"
+    )
+  )
 })
