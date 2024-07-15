@@ -10,7 +10,7 @@
 #' @inheritParams check_columns_presence
 #' @return invisible NULL
 #' @export
-check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 2, ...){
+check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
   if(length(vec1) != length(vec2)){
     alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} have {col_red('different length')}")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
@@ -29,7 +29,7 @@ check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", 
 #' @inheritParams check_length_vecs
 #' @return invisible NULL
 #' @export
-check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 2, ...){
+check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
   if(any(vec1 != vec2)){
     alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} {col_red('are not equal')}")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
@@ -48,7 +48,7 @@ check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2"
 #' @inheritParams check_length_vecs
 #' @return invisible NULL
 #' @export
-check_unordered_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 2, ...){
+check_unordered_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
   missing12 <- vec1[!vec1 %in% vec2]
   missing21 <- vec2[!vec2 %in% vec1]
 

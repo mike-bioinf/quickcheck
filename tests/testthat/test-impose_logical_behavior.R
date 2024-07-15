@@ -1,7 +1,7 @@
 ## tests for impose_logical_behavior
 
 
-testthat::test_that("impose_logical_behavior returns expcted logical", {
+testthat::test_that("impose_logical_behavior returns expected logical value", {
   expect_equal(
     object = impose_logical_behavior(check_columns_presence(df = df, columns = "materasso")),
     expected = TRUE
@@ -14,7 +14,7 @@ testthat::test_that("impose_logical_behavior returns expcted logical", {
 
   expect_error(
     object = impose_logical_behavior(check_presence_values(vec = df[["sex"]], values = "men", raise = "messagesssss")),
-    regexp = '`type` must be one of "error", "warning", "message", or "accumulate_message", not "messagesssss".'
+    regexp = '`type` must be one of "error", "warning", or "message", not "messagesssss".'
   )
 })
 

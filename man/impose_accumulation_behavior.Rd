@@ -9,7 +9,7 @@ impose_accumulation_behavior(
   raise = "error",
   alert_message = NULL,
   header = NULL,
-  n.evaluation_frame = 2,
+  n.evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -37,6 +37,5 @@ invisible NULL
 \description{
 Imposes an accumulation behavior for a checking function in a loop scenario, in which
 the alert raised by the checking function are stored in a list and then displayed.
-Works preferably with checking functions that raise accumulated message type for
-a better final alert format. It does not work with error since they stop the loop execution.
+Works with message or warning conditions. It does not work with error since they stop the loop execution.
 }

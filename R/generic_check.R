@@ -6,7 +6,7 @@
 #' @param expr expression to test. Must return a single boolean value.
 #' @return Invisible NULL
 #' @export
-generic_check <- function(expr, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
+generic_check <- function(expr, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   expr_res <- expr
 
   if(!is.logical(expr_res)){

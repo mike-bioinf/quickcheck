@@ -7,7 +7,7 @@
 # impose_accumulation_behavior launch unexpected error alert
 
     x An unexpected alert is been raised:
-    `type` must be one of "error", "warning", "message", or "accumulate_message", not "messagessss".
+    `type` must be one of "error", "warning", or "message", not "messagessss".
 
 # impose_accumulation_behavior launch one time the provided alert message
 

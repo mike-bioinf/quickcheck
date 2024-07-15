@@ -11,7 +11,7 @@ check_nrow_dfs(
   df2_arg = "df2",
   raise = "error",
   alert_message = NULL,
-  n.evaluation_frame = 2,
+  n.evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -25,19 +25,17 @@ check_nrow_dfs(
 
 \item{df2_arg}{string specifying how to address df2 in the raised messages (default "df2").}
 
-\item{raise}{Character string equal to one of "error", "warning", "message" or "accumulate_message"
-(default error). Set the type of alert that is created. Note: 'accumulate_message' can be ignored
-most of times because it is used internally in combination with impose_accumulate_behavior.
-Either the case it raises a message without the "i" bullet.}
+\item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
+Set the type of alert that is created.}
 
 \item{alert_message}{String reporting the alert message. Default NULL, in this case a standard
 message with the appropriate bullet sign is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
-of the alert message in respect to where the function calling the alert is run.
-The default value points to the frame below the function frame (to not modify
-if the default alert is desired). So to point to the calling frame of this function you have to set 4.}
+of the alert message. The default value points to the frame below the one in which this function "exists"
+(to not modify if the default alert is desired). So to point to the calling frame of this function
+you have to set 2.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 

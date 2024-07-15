@@ -1,12 +1,13 @@
 #' Function to signal errors, warnings and messages.
 #' @param type
-#'  String equal to one of: 'error', 'warning', 'message', 'accumulate_message'. Determines the type of alert.
+#'  String equal to one of: 'error', 'warning' or 'message'. Determines the type of alert.
 #' @param alert_message
 #'  Single character vector that follow the cli format. It possible to pass a list of strings to have automatically
 #'  a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).
 #' @param n.evaluation_frame
-#'  Integer indicating the calling frame in which evaluates the alert in respect to where the alert is generated.
-#'  So it indicates the number of frames to look up in the calling stack.
+#'  Integer indicating the calling frame in which alert is evaluated in respect to where the alert is generated.
+#'  So it indicates the number of frames to look up in the calling stack. By default is zero plus two.
+#'  The addition serves to start counting from zero in the checking functions.
 #' @param quickalert
 #'  Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 #'  The generation of "plain" alerts is useful when the checking functions are used inside other ones.
@@ -20,8 +21,8 @@
 #'  of the alert message elements to be represented in violet in a bullet list.
 #' @return Raise a condition.
 #' @export
-alert_generator <- function(type, alert_message, n.evaluation_frame, quickalert = TRUE, sign = TRUE, header = NULL, list_format = FALSE){
-  rlang::arg_match(arg = type, values = c("error", "warning", "message", "accumulate_message"), multiple = F)
+alert_generator <- function(type, alert_message, n.evaluation_frame = 0, quickalert = TRUE, sign = TRUE, header = NULL, list_format = FALSE){
+  rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
   alert_funcs <- generate_alertfunc_list()
   my_alert_func <- alert_funcs[[type]]
 
@@ -52,7 +53,7 @@ alert_generator <- function(type, alert_message, n.evaluation_frame, quickalert 
     alertclass <- NULL
   }
 
-  my_alert_func(alert_message, n.evaluation_frame, alertclass)
+  my_alert_func(alert_message, n.evaluation_frame + 2, alertclass)
 }
 
 
@@ -68,8 +69,7 @@ generate_alertfunc_list <- function(){
   cli_main_list <- list(
     error = function(alert, n.evaluation_frame, alertclass) cli::cli_abort(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass),
     warning = function(alert, n.evaluation_frame, alertclass) cli::cli_warn(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass),
-    message = function(alert, n.evaluation_frame, alertclass) cli::cli_inform(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass),
-    accumulate_message = function(alert, n.evaluation_frame, alertclass) cli::cli_inform(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass)
+    message = function(alert, n.evaluation_frame, alertclass) cli::cli_inform(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass)
   )
 }
 
@@ -77,12 +77,7 @@ generate_alertfunc_list <- function(){
 
 #' Generates a list of cli bullet signs with informative names.
 generate_sign_list <- function(){
-  cli_sign_list <- list(
-    error = "x",
-    warning = "!",
-    message = "i",
-    accumulate_message = ""
-  )
+  cli_sign_list <- list(error = "x", warning = "!", message = "i")
 }
 
 

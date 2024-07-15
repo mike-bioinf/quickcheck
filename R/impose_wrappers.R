@@ -47,8 +47,7 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 #' @description
 #' Imposes an accumulation behavior for a checking function in a loop scenario, in which
 #' the alert raised by the checking function are stored in a list and then displayed.
-#' Works preferably with checking functions that raise accumulated message type for
-#' a better final alert format. It does not work with error since they stop the loop execution.
+#' Works with message or warning conditions. It does not work with error since they stop the loop execution.
 #' @param expr check function call.
 #' @param raise type of the accumulated final alert if any.
 #' @param alert_message String or list reporting the alert message (by default the function build a list).
@@ -60,7 +59,7 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 #' @param ... To pass additional argument to alert_generator function.
 #' @return invisible NULL
 #' @export
-impose_accumulation_behavior <- function(expr, raise = "error", alert_message = NULL, header = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
+impose_accumulation_behavior <- function(expr, raise = "error", alert_message = NULL, header = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   accumulated_cond <- list()
 
   withCallingHandlers(
@@ -93,7 +92,7 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 #' @param margin numeric equal to 1 or 2, indicating where to add the additional message (start or end respectively).
 #' @return invisible NULL
 #' @export
-impose_additional_alert <- function(expr, message, margin = 1, raise = "error", n.evaluation_frame = 2, quickalert = TRUE){
+impose_additional_alert <- function(expr, message, margin = 1, raise = "error", n.evaluation_frame = 0, quickalert = TRUE){
   if(!margin %in% c(1, 2)){
     cli::cli_abort(c("x" = "margin must be equal to 1 or 2."))
   }

@@ -9,7 +9,7 @@ impose_additional_alert(
   message,
   margin = 1,
   raise = "error",
-  n.evaluation_frame = 2,
+  n.evaluation_frame = 0,
   quickalert = TRUE
 )
 }

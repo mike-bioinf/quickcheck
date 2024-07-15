@@ -7,7 +7,7 @@
 alert_generator(
   type,
   alert_message,
-  n.evaluation_frame,
+  n.evaluation_frame = 0,
   quickalert = TRUE,
   sign = TRUE,
   header = NULL,
@@ -15,13 +15,14 @@ alert_generator(
 )
 }
 \arguments{
-\item{type}{String equal to one of: 'error', 'warning', 'message', 'accumulate_message'. Determines the type of alert.}
+\item{type}{String equal to one of: 'error', 'warning' or 'message'. Determines the type of alert.}
 
 \item{alert_message}{Single character vector that follow the cli format. It possible to pass a list of strings to have automatically
 a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).}
 
-\item{n.evaluation_frame}{Integer indicating the calling frame in which evaluates the alert in respect to where the alert is generated.
-So it indicates the number of frames to look up in the calling stack.}
+\item{n.evaluation_frame}{Integer indicating the calling frame in which alert is evaluated in respect to where the alert is generated.
+So it indicates the number of frames to look up in the calling stack. By default is zero plus two.
+The addition serves to start counting from zero in the checking functions.}
 
 \item{quickalert}{Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 The generation of "plain" alerts is useful when the checking functions are used inside other ones.

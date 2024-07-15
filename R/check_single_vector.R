@@ -6,14 +6,11 @@
 #' @inheritParams check_columns_presence
 #' @param vec Vector to check.
 #' @param vec_arg String indicating how to address vec in the alert message (default 'vec').
-#' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
-#'  of the alert message in respect to where the function calling the alert is run.
-#'  The default value points to the function frame. So it's possible to simply points
-#'  to upper frames (as well as to below frames but is not recommended).
+#' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation of the alert message.
 #' @param ... To pass additional argument to alert_generator function.
 #' @return invisible NULL
 #' @export
-check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
+check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   if(is_empty_vec(vec)){
     alert_message <- generate_message(alert_message, "There are empty values in {vec_arg}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
@@ -28,7 +25,7 @@ check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message
 #' @inheritParams check_empty_vec
 #' @return invisible NULL
 #' @export
-check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
+check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   if(any(is.na(vec))){
     alert_message <- generate_message(alert_message, "There are NAs in {vec_arg}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
@@ -44,7 +41,7 @@ check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = 
 #' @inheritParams check_empty_vec
 #' @return invisible NULL
 #' @export
-check_duplicate_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
+check_duplicate_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   vec <- stats::na.omit(vec)
   dup <- duplicated(vec)
   if(any(dup)){
@@ -69,13 +66,16 @@ check_duplicate_vec <- function(vec, vec_arg = "vec", raise = "error", alert_mes
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior computations.
 #' @return invisible NULL
 #' @export
-check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", na.rm = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
+check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", na.rm = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   unique_levels <- unique(vec)
   if(na.rm) unique_levels <- stats::na.omit(unique_levels)
 
   if(length(unique_levels) != expected_number_levels){
-    alert_message <- generate_message(alert_message, "{expected_number_levels} level{?s} expected but {length(unique_levels)} detected.")
+    alert_message <- generate_message(
+      alert_message,
+      "{expected_number_levels} level{?s} expected but {length(unique_levels)} detected."
+    )
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
 
@@ -91,7 +91,7 @@ check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", na
 #' @param values character vector of values searched in vec.
 #' @return invisible NULL
 #' @export
-check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
+check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   unique_vec <- stats::na.omit(unique(vec))
 
@@ -99,7 +99,9 @@ check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error",
     missing_values <- setdiff(values, unique_vec)
     alert_message <- generate_message(
       alert_message,
-      c("The following {qty(missing_values)} value{?s} {?is/are} missing in {vec_arg}:", "{col_magenta(missing_values)}")
+      c("The following {qty(missing_values)} value{?s} {?is/are} missing in {vec_arg}:",
+        "{col_magenta(missing_values)}"
+      )
     )
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
@@ -110,23 +112,21 @@ check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error",
 
 
 
-
 #' Checks if a vector has all unique values.
 #' @inheritParams check_number_values
 #' @return invisible NULL
 #' @export
-check_unique_values <- function(vec, vec_arg = "vec", na.rm = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE, ...){
-  if(na.rm){
-    value_freqs <- table(vec)
-  } else {
-    value_freqs <- table(vec, useNA = "ifany")
-  }
+check_unique_values <- function(vec, vec_arg = "vec", na.rm = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+  if(na.rm) vec <- stats::na.omit(vec)
+  value_freqs <- table(vec)
 
   if(!all(value_freqs == 1)){
     err_value <- names(value_freqs[value_freqs != 1])
     alert_message <- generate_message(
       alert_message,
-      c("The following {qty(err_value)} value{?s} {?is/are} present {col_red('multiple times')} in {vec_arg}: ", "{col_magenta(err_value)}")
+      c("The following {qty(err_value)} value{?s} {?is/are} present {col_red('multiple times')} in {vec_arg}: ",
+        "{col_magenta(err_value)}"
+      )
     )
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }

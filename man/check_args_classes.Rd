@@ -27,9 +27,9 @@ its order and the numbers specified in this vector.}
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.}
 
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
-of the alert message in respect to where the function calling the alert is run.
-The default value points to the frame below the function frame (to not modify
-if the default alert is desired). So to point to the calling frame of this function you have to set 4.}
+of the alert message. The default value points to the frame below the one in which this function "exists"
+(to not modify if the default alert is desired). So to point to the calling frame of this function
+you have to set 2.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 }
