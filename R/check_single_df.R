@@ -59,6 +59,7 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
     alert_message = alert_message,
     header = header,
     quickalert = quickalert,
+    n.evaluation_frame = n.evaluation_frame,
     ...,
     expr = {
       for(n in columns){
@@ -69,7 +70,6 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
           raise = "message",
           alert_message = "{vec_arg} --> {col_magenta(err_value)}",
           header = NULL,
-          n.evaluation_frame = n.evaluation_frame,
           sign = FALSE
       )}
     }
@@ -113,6 +113,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
     alert_message = alert_message,
     header = header,
     quickalert = quickalert,
+    n.evaluation_frame = n.evaluation_frame,
     ...,
     expr = for(n in columns){
       check_presence_values(
@@ -122,7 +123,6 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
         alert_message = "{vec_arg} --> {col_magenta(missing_values)}",
         header = NULL,
         raise = "message",
-        n.evaluation_frame = n.evaluation_frame,
         sign = FALSE
       )
     }
@@ -151,6 +151,7 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
     alert_message = alert_message,
     header = header,
     quickalert = quickalert,
+    n.evaluation_frame = n.evaluation_frame,
     ...,
     expr = for(col in columns){
       check_na_vec(
@@ -159,7 +160,6 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
         raise = "message",
         alert_message = "{vec_arg}",
         header = NULL,
-        n.evaluation_frame = n.evaluation_frame,
         sign = FALSE
       )
     }

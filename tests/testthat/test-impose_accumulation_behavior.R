@@ -88,3 +88,4 @@ test_that("The header option works correctly with impose_accumulation behavior",
     )
   )
 })
+

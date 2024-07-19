@@ -15,7 +15,8 @@ impose_accumulation_behavior(
 )
 }
 \arguments{
-\item{expr}{check function call.}
+\item{expr}{check function call. It's important that the checking function raises warnings or messages
+since errors cannot be muffled (they will cause unexpected behavior).}
 
 \item{raise}{type of the accumulated final alert if any.}
 

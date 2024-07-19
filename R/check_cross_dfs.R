@@ -1,6 +1,7 @@
 # Checking functions that works on 2 dataframes.
 
 
+
 #' Checks equal number of rows between two dataframes
 #' @param df1 first dataframe.
 #' @param df2 second dataframe.
@@ -16,8 +17,6 @@ check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "
   }
   invisible(NULL)
 }
-
-
 
 
 

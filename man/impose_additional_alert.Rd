@@ -14,7 +14,8 @@ impose_additional_alert(
 )
 }
 \arguments{
-\item{expr}{check function call.}
+\item{expr}{check function call. It's important that the checking function raises warnings or messages
+since errors cannot be muffled (they will cause unexpected behavior).}
 
 \item{message}{additional message to be added to the alert.}
 

@@ -15,7 +15,7 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
   types <- lapply(x, class)
   res_identity <- purrr::reduce(types, custom_identical)
 
-  if(res_identity == "NotExistingCLASS"){
+  if(res_identity == "NotExistingClass"){
     alert_message <- generate_message(alert_message, "The list is {cli::col_red('not uniform')}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
@@ -32,7 +32,7 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 #' The function doesn't perform any check on the argument provided in predicate.
 #' Therefore the correctness of the provided function fall on the user.
 #' @inheritParams check_uniform_list
-#' @param predicate a predicate function, usually an "is.something" function type.
+#' @param predicate A predicate function, usually an "is.something" function.
 #' @details The alert will not points the eventual elements in error if no or some elements names are missing.
 #' @return invisible NULL.
 #' @export
@@ -83,6 +83,6 @@ custom_identical <- function(x, y){
   if(identical(x, y)){
     return(y)
   } else {
-    return("NotExistingCLASS")
+    return("NotExistingClass")
   }
 }

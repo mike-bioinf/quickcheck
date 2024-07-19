@@ -49,7 +49,8 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 #' Imposes an accumulation behavior for a checking function in a loop scenario, in which
 #' the alert raised by the checking function are stored in a list and then displayed.
 #' Works with message or warning conditions. It does not work with error since they stop the loop execution.
-#' @param expr check function call.
+#' @param expr check function call. It's important that the checking function raises warnings or messages
+#'  since errors cannot be muffled (they will cause unexpected behavior).
 #' @param raise type of the accumulated final alert if any.
 #' @param alert_message String or list reporting the alert message (by default the function build a list).
 #' @param header string to add as the header of the accumulated alert list.
