@@ -2,7 +2,7 @@
 % Please edit documentation in R/alert_generators.R
 \name{generate_header}
 \alias{generate_header}
-\title{Function to construct a default header message if not passed via dots.}
+\title{Constructs a default header message if not passed via dots.}
 \usage{
 generate_header(header, default_header)
 }
@@ -12,5 +12,5 @@ generate_header(header, default_header)
 \item{default_header}{string that is used as default message.}
 }
 \description{
-Function to construct a default header message if not passed via dots.
+Constructs a default header message if not passed via dots.
 }

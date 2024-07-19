@@ -1,5 +1,5 @@
 ### Set of wrappers of check functions that alter or add features to their behavior.
-### IMPORTANT NOTE:
+# IMPORTANT NOTE:
 # The tryCatch interrupts the execution of code, therefore if a 'quickalert' condition is
 # hit before an other non 'quickalert' condition, this will not be seen by impose_logical_behavior.
 # This means that alert_generator must be the last call in the check-functions.
@@ -38,6 +38,7 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 
   return(logical_return)
 }
+
 
 
 
@@ -86,6 +87,7 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 
 
 
+
 #' Adds a message at the start/end of raised quickalert messages.
 #' @inheritParams impose_accumulation_behavior
 #' @param message additional message to be added to the alert.
@@ -93,9 +95,7 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 #' @return invisible NULL
 #' @export
 impose_additional_alert <- function(expr, message, margin = 1, raise = "error", n.evaluation_frame = 0, quickalert = TRUE){
-  if(!margin %in% c(1, 2)){
-    cli::cli_abort(c("x" = "margin must be equal to 1 or 2."))
-  }
+  if(!margin %in% c(1, 2)) cli::cli_abort(c("x" = "margin must be equal to 1 or 2."))
 
   withCallingHandlers(
     expr = expr,
@@ -121,7 +121,7 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
 
 
 
-### HELPERS ============================================================================================================================
+### HELPERS ============================================================================================================================================
 
 
 #' Inspect and return the "classic" nature of conditions. Helper of impose_logical_behavior for re signalling conditions.
@@ -149,3 +149,4 @@ break_condition_message <- function(condition){
   splitted_message <- strsplit(full_message, "\n")[[1]]
   return(splitted_message)
 }
+

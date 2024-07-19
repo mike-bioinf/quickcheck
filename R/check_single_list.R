@@ -11,10 +11,7 @@
 check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_args_primitive_types("x", "list", quickalert = FALSE)
 
-  if(flatten) {
-    x <- rec_flatten_list(x, till_flat = T)
-  }
-
+  if(flatten) x <- rec_flatten_list(x, till_flat = T)
   types <- lapply(x, class)
   res_identity <- purrr::reduce(types, custom_identical)
 
@@ -41,18 +38,21 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 #' @export
 check_types_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  check_args_primitive_types(c("x", "flatten"), c("list", "logical"), quickalert = FALSE)
+  check_args_primitive_types(c("x", "flatten"), c("list", "logical"), quickalert = FALSE, sign = FALSE)
   check_args_classes("predicate", "function", quickalert = FALSE)
 
-  if(flatten){
-    x <- rec_flatten_list(x, till_flat = T, nam_spec = "{outer}${inner}")
+  if(flatten) x <- rec_flatten_list(x, till_flat = T, nam_spec = "{outer}${inner}")
+  all_types <- purrr::map_lgl(x, predicate)
+  empty_log <- is_empty_vec(names(x))
+
+  if(empty_log){
+    errors <- 1
+  } else {
+    errors <- names(x)[!all_types]
   }
 
-  all_types <- purrr::map_lgl(x, predicate)
-  errors <- names(x)[!all_types]
-
   if(length(errors) > 0){
-    if(is_empty_vec(names(x))){
+    if(empty_log){
       alert_message <- c(
         "{cli::col_red('Not all elements')} are of the expected type.",
         "i" = "{cli::col_blue('Set or fill')} the missing list element names for a more informative alert."

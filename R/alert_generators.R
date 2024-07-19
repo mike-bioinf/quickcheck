@@ -61,8 +61,9 @@ alert_generator <- function(type, alert_message, n.evaluation_frame = 0, quickal
 
 
 
-### HELPERS ===================================================================================================================================
 
+
+### HELPERS ===================================================================================================================================
 
 #' Generates a list of aliases of main cli alert functions with intuitive names.
 generate_alertfunc_list <- function(){
@@ -82,7 +83,7 @@ generate_sign_list <- function(){
 
 
 
-#' Function to construct a default alert message if not provided (if NULL).
+#' Construct a default alert message if not provided (if NULL).
 #' @param alert_message takes in the alert_message argument of the checking function.
 #' @param default_message character vector that is used as default message. Follow cli intax rules.
 generate_message <- function(alert_message, default_message){
@@ -92,10 +93,22 @@ generate_message <- function(alert_message, default_message){
 
 
 
-#' Function to construct a default header message if not passed via dots.
+#' Constructs a default header message if not passed via dots.
 #' @param header takes in the header argument of the checking function.
 #' @param default_header string that is used as default message.
 generate_header <- function(header, default_header){
   if(!is.null(header) && header == "default") header <- default_header
   return(header)
+}
+
+
+
+#' Raises the evaluation frame number by x if not 0. It's purpose is to skip the checking frame function.
+#' @inheritParams alert_generator
+#' @param up The number added to the frame number.
+raise_custom_frame <- function(n.evaluation_frame, up){
+  if(n.evalutation_frame != 0){
+    n.evalutation_frame <- n.evaluation_frame + up
+  }
+  return(n.evaluation_frame)
 }

@@ -22,6 +22,8 @@ check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "
 
 
 
+
+
 #' Perform an ordered cross-checking between the values of two columns of two dataframes.
 #' @description
 #' The function allows to check the presence of all values of the selected column of one dataframe

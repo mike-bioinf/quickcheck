@@ -12,7 +12,7 @@
 #' @export
 check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
   if(length(vec1) != length(vec2)){
-    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} have {col_red('different length')}")
+    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} have {col_red('different length')}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
   invisible(NULL)
@@ -31,7 +31,7 @@ check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", 
 #' @export
 check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
   if(any(vec1 != vec2)){
-    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} {col_red('are not equal')}")
+    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} {col_red('are not equal')}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
   invisible(NULL)

@@ -16,8 +16,10 @@ check_required_all <- function(){
   if(length(envmiss) > 0){
     cli::cli_abort(c("x" = "{col_red(names(envmiss))} {?is/are} absent but must be supplied."))
   }
-  return(NULL)
+  invisible(NULL)
 }
+
+
 
 
 
@@ -32,7 +34,7 @@ check_required_all <- function(){
 #' @inheritParams check_columns_presence
 #' @return NULL
 #' @export
-check_args_primitive_types <- function(args, expected_types, numeric_correspondence = NULL, null = FALSE, alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
+check_args_primitive_types <- function(args, expected_types, numeric_correspondence = NULL, null = FALSE, alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   if(!is.null(numeric_correspondence)){
     expected_types <- control_recycle(args, expected_types, numeric_correspondence)
   } else if(length(args) != length(expected_types)){
@@ -51,14 +53,9 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
   }
 
   if(length(err_args) > 0){
-    alert <- generate_message(
-      alert_message = alert_message,
-      default_message = c(
-        "x" = "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}: ",
-        "{col_magenta(err_args)}"
-      )
-    )
-    alert_generator("error", alert, n.evaluation_frame, quickalert)
+    alert <- generate_message(alert_message, "{col_magenta(err_args)}")
+    header <- generate_header(header, "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}:")
+    alert_generator("error", alert, n.evaluation_frame, quickalert, header = header, ...)
   }
 
   invisible(NULL)
@@ -73,7 +70,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
 #' @param expected_classes character vector with the expected classes (one for argument).
 #' @return NULL
 #' @export
-check_args_classes <- function(args, expected_classes, numeric_correspondence = NULL, null = FALSE, alert_message = NULL, n.evaluation_frame = 2, quickalert = TRUE){
+check_args_classes <- function(args, expected_classes, numeric_correspondence = NULL, null = FALSE, alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   if(!is.null(numeric_correspondence)){
     expected_classes <- control_recycle(args, expected_classes, numeric_correspondence)
   } else if(length(args) != length(expected_classes)){
@@ -101,14 +98,9 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
   }
 
   if(length(err_args) > 0){
-    alert <- generate_message(
-      alert_message = alert_message,
-      default_message = c(
-        "x" = "The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:",
-        "{col_magenta(err_args)}"
-      )
-    )
-    alert_generator("error", alert, n.evaluation_frame, quickalert)
+    alert <- generate_message(alert_message, "{col_magenta(err_args)}")
+    header <- generate_header(header,"The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:")
+    alert_generator("error", alert, n.evaluation_frame, quickalert, header = header, ...)
   }
 
   invisible(NULL)

@@ -26,8 +26,7 @@ check_columns_key(
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
 Set the type of alert that is created.}
 
-\item{alert_message}{String reporting the alert message. Default NULL, in this case a standard
-message with the appropriate bullet sign is used.
+\item{alert_message}{String reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
 \item{header}{string; if equal to 'default' the default header is used, otherwise the string passed in.}

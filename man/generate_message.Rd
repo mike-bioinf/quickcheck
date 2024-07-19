@@ -2,7 +2,7 @@
 % Please edit documentation in R/alert_generators.R
 \name{generate_message}
 \alias{generate_message}
-\title{Function to construct a default alert message if not provided (if NULL).}
+\title{Construct a default alert message if not provided (if NULL).}
 \usage{
 generate_message(alert_message, default_message)
 }
@@ -12,5 +12,5 @@ generate_message(alert_message, default_message)
 \item{default_message}{character vector that is used as default message. Follow cli intax rules.}
 }
 \description{
-Function to construct a default alert message if not provided (if NULL).
+Construct a default alert message if not provided (if NULL).
 }

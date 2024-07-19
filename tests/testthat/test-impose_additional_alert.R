@@ -1,7 +1,6 @@
 ### tests for impose_additional_alert
 
 
-
 test_that("impose_additional_alert works as intended", {
   expect_snapshot({
     impose_additional_alert(

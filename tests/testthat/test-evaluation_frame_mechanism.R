@@ -7,7 +7,8 @@ cli::test_that_cli(desc = "Testing the functionality of the selection evalution 
         vec = df[["sex"]],
         values = c("maschio"),
         raise = "message",
-        alert_message = "{missing_values} glue substitution is evaluated correctly as maschio"
+        alert_message = "{missing_values} glue substitution is evaluated correctly as maschio",
+        header = NULL
       )
     }
   )},

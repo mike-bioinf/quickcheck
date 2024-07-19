@@ -10,8 +10,10 @@ check_args_primitive_types(
   numeric_correspondence = NULL,
   null = FALSE,
   alert_message = NULL,
-  n.evaluation_frame = 2,
-  quickalert = TRUE
+  header = "default",
+  n.evaluation_frame = 0,
+  quickalert = TRUE,
+  ...
 )
 }
 \arguments{
@@ -26,12 +28,17 @@ its order and the numbers specified in this vector.}
 
 \item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.}
 
+\item{header}{Character string to add at the beginning of the alert message.
+If "default" the default header is used, otherwise the string passed in.}
+
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
 of the alert message. The default value points to the frame below the one in which this function "exists"
 (to not modify if the default alert is desired). So to point to the calling frame of this function
 you have to set 2.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
+
+\item{...}{To pass additional argument to alert_generator function.}
 }
 \description{
 Checks the primitive types of the specified arguments of a calling function.

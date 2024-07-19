@@ -13,3 +13,5 @@ get_default_alert <- function(check_func){
   default_message <- quickcheck::default_alert_messages[[check_func]]
   return(default_message)
 }
+
+
