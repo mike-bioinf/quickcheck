@@ -96,7 +96,10 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 #' @return invisible NULL
 #' @export
 impose_additional_alert <- function(expr, message, margin = 1, raise = "error", n.evaluation_frame = 0, quickalert = TRUE){
-  if(!margin %in% c(1, 2)) cli::cli_abort(c("x" = "margin must be equal to 1 or 2."))
+
+  if(!margin %in% c(1, 2)){
+    cli::cli_abort(c("x" = "margin must be equal to 1 or 2."))
+  }
 
   withCallingHandlers(
     expr = expr,
@@ -114,6 +117,8 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
       }
     }
   )
+
+  invisible(NULL)
 }
 
 
