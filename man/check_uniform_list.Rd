@@ -22,11 +22,11 @@ check_uniform_list(
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
 Set the type of alert that is created.}
 
-\item{alert_message}{String reporting the alert message. Default NULL, in this case a standard message is used.
+\item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
-of the alert message. The default value points to the frame below the one in which this function "exists"
+of the alert message. The default value points to the frame below the one created by this function
 (to not modify if the default alert is desired). So to point to the calling frame of this function
 you have to set 2.}
 

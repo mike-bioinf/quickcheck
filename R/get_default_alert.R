@@ -1,6 +1,7 @@
-#' Get the default alert message raised by a check function
-#' @param check_func string reporting the name of the checking function.
-#' @return Usually a character vector or rarely a list (in case of multiple defaults) of defaults messages.
+#' Get the default alert raised by a check function.
+#' @description The alert compromises header + alert message when a defualt header is present.
+#' @param check_func String reporting the name of the checking function.
+#' @return Usually a character vector or rarely a list (in case of multiple defaults) of defaults alerts.
 #' @export
 get_default_alert <- function(check_func){
   rlang::check_required(check_func)

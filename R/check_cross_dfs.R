@@ -5,14 +5,12 @@
 #' Checks equal number of rows between two dataframes
 #' @param df1 first dataframe.
 #' @param df2 second dataframe.
-#' @param df1_arg string specifying how to address df1 in the raised messages (default "df1").
-#' @param df2_arg string specifying how to address df2 in the raised messages (default "df2").
 #' @inheritParams check_columns_presence
 #' @return NULL
 #' @export
-check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_nrow_dfs <- function(df1, df2, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   if(nrow(df1) != nrow(df2)){
-    alert_message <- generate_message(alert_message, "{col_red('Different number')} of rows between {df1_arg} and {df2_arg}")
+    alert_message <- generate_message(alert_message, "{col_red('Different number')} of rows between df1 and df2.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
   invisible(NULL)
@@ -38,67 +36,69 @@ check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "
 #' @inheritParams check_columns_presence
 #' @return NULL
 #' @export
-check_copresence_dfs <- function(df1, df2, col, direction = "first_in_second", raise = "error", alert_message = NULL, n.evaluation_frame = 0){
+check_presence_dfs <- function(df1, df2, col, direction = "first_in_second", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_classes(c("df1", "df2"), "data.frame", 2, quickalert = FALSE)
   rlang::arg_match(arg = direction, values = c("first_in_second", "second_in_first", "bidirectional"), multiple = FALSE)
+  check_col_arg(df1, df2, col)
 
+  colnames(df2)[colnames(df2) == col[2]] <- col[1]
+  col <- col[1]
+  missing_values1 <- NULL
+  missing_values2 <- NULL
+  header1 <- NULL
+  header2 <- NULL
+
+  if(direction == "first_in_second" || direction == "bidirectional"){
+    missing_values2 <- setdiff(x = df1[[col]], y = df2[[col]])
+  }
+
+  if(direction == "second_in_first" || direction == "bidirectional"){
+    missing_values1 <- setdiff(x = df2[[col]], y = df1[[col]])
+  }
+
+  if(!is.null(missing_values2)){
+    header2 <- "The following {qty(missing_values2)} value{?s} {?is/are} {cli::col_red('missing')} in df2:"
+  }
+
+  if(!is.null(missing_values1)){
+    header1 <- "The following {qty(missing_values1)} value{?s} {?is/are} {cli::col_red('missing')} in df1:"
+    missing_values1 <- c(missing_values1, "\n")
+  }
+
+  if(!is.null(missing_values1) || !is.null(missing_values2)){
+    alert_message <- c(header1, missing_values1, header2, missing_values2)
+    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
+  }
+
+  invisible(NULL)
+}
+
+
+
+
+
+
+
+### HELPER ====================================================================================================================================================
+
+#' Helper of 2 dfs checking functions that checks the different col argument scenario.
+#' @inheritParams check_presence_dfs
+check_col_arg <- function(df1, df2, col){
   if(length(col) > 2){
-    cli::cli_abort(c("x" = "col argument must be of length 1 or 2"))
+    cli::cli_abort(c("x" = "col argument must be of length 1 or 2."))
   }
 
-  if(length(col) == 2){
-    colnames(df2)[colnames(df2) == col[2]] <- col[1]
-    col <- col[1]
-  }
-
-  if(direction == "second_in_first"){
-    new_df1 <- df2
-    new_df2 <- df1
-    df1_ori <- "df2"
-    df2_ori <- "df1"
+  if(length(col) == 1){
+    impose_loop_behavior(
+      x = list(df1 = df1, df2 = df2),
+      check_func = check_columns_presence,
+      check_arg_list = list(columns = col),
+      alert_message = "{col} is {cli::col_red('not found')} in {cli::col_magenta(missing_values)}."
+    )
   } else {
-    new_df1 <- df1
-    new_df2 <- df2
-    df1_ori <- "df1"
-    df2_ori <- "df2"
-  }
-
-
-  if(direction != "bidirectional"){
-    log_comparisons1 <- new_df1[[col]] %in% new_df2[[col]]
-    log_comparisons2 <- TRUE
-  } else {
-    log_comparisons1 <- new_df1[[col]] %in% new_df2[[col]]
-    log_comparisons2 <- new_df2[[col]] %in% new_df1[[col]]
-  }
-
-  if(!all(log_comparisons1) || !all(log_comparisons2)){
-    miss_values1 <- new_df1[[col]][!log_comparisons1]
-    if(is.null(alert_message)){
-      alert_message <- c(
-        "The following {qty(miss_values1)} value{?s} of {col} {qty(miss_values1)} {?is/are} {col_red('missing')} in {df2_ori} but present in {df1_ori}: ",
-        "{col_magenta(miss_values1)}"
-      )
-    }
-
-    if(direction == "bidirectional"){
-      miss_values2 <- new_df2[[col]][!log_comparisons2]
-      if(is.null(alert_message)){
-        alert_message2 <- c(
-          "The following {qty(miss_values2)} value{?s} of {col} {qty(miss_values2)} {?is/are} {col_red('missing')} in {df1_ori} but present in {df2_ori}: ",
-          "{col_magenta(miss_values2)}"
-        )
-      } else {alert_message2 <- NULL}
-    } else {
-      miss_values2 <- NULL
-    }
-
-    if(length(miss_values2) > 0){
-      alert_message <- c(alert_message, "\n", alert_message2)
-    }
-
-    alert_generator(raise, alert_message, n.evaluation_frame)
+    check_columns_presence(df1, columns = col[1], df_arg = "df1")
+    check_columns_presence(df2, columns = col[2], df_arg = "df2")
   }
 
   invisible(NULL)

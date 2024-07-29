@@ -2,8 +2,8 @@
 % Please edit documentation in R/impose_wrappers.R
 \name{detect_type_condition}
 \alias{detect_type_condition}
-\title{Inspect and return the "classic" nature of conditions. Helper of impose_logical_behavior for re signalling conditions.
-Here classic means error, warning or message.}
+\title{Inspect and return the "classic" nature of conditions. Helper of impose_logical_behavior for re-signalling conditions.
+Here classic means error, warning or message classes.}
 \usage{
 detect_type_condition(condition)
 }
@@ -11,6 +11,6 @@ detect_type_condition(condition)
 \item{condition}{condition object.}
 }
 \description{
-Inspect and return the "classic" nature of conditions. Helper of impose_logical_behavior for re signalling conditions.
-Here classic means error, warning or message.
+Inspect and return the "classic" nature of conditions. Helper of impose_logical_behavior for re-signalling conditions.
+Here classic means error, warning or message classes.
 }

@@ -2,16 +2,16 @@
 % Please edit documentation in R/get_default_alert.R
 \name{get_default_alert}
 \alias{get_default_alert}
-\title{Get the default alert message raised by a check function}
+\title{Get the default alert raised by a check function.}
 \usage{
 get_default_alert(check_func)
 }
 \arguments{
-\item{check_func}{string reporting the name of the checking function.}
+\item{check_func}{String reporting the name of the checking function.}
 }
 \value{
-Usually a character vector or rarely a list (in case of multiple defaults) of defaults messages.
+Usually a character vector or rarely a list (in case of multiple defaults) of defaults alerts.
 }
 \description{
-Get the default alert message raised by a check function
+The alert compromises header + alert message when a defualt header is present.
 }

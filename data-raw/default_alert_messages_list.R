@@ -2,9 +2,9 @@
 
 
 default_alert_messages <- list(
-  check_args_primitive_types = c("x" = "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}: ",
+  check_args_primitive_types = c("The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}: ",
                                  "{col_magenta(err_args)}"),
-  check_args_classes = c("x" = "The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:",
+  check_args_classes = c("The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:",
                          "{col_magenta(err_args)}"),
   check_empty_vec = "There are empty values in {vec_arg}.",
   check_na_vec = "There are NAs in {vec_arg}.",

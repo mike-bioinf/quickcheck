@@ -32,7 +32,7 @@ its order and the numbers specified in this vector.}
 If "default" the default header is used, otherwise the string passed in.}
 
 \item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
-of the alert message. The default value points to the frame below the one in which this function "exists"
+of the alert message. The default value points to the frame below the one created by this function
 (to not modify if the default alert is desired). So to point to the calling frame of this function
 you have to set 2.}
 

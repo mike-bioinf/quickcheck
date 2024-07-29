@@ -41,9 +41,11 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
     cli::cli_abort(c("x" = "args and expected_types have {col_red('different lengths')}"))
   }
 
+  calling_env <- rlang::caller_env(n = 1)
   type_args <- c()
+
   for(arg in args){
-    type_args <- c(type_args, typeof(rlang::caller_env(n = 1)[[arg]]))
+    type_args <- c(type_args, typeof(calling_env[[arg]]))
   }
 
   if(null){
@@ -77,10 +79,11 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
     cli::cli_abort(c("x" = "args and expected_classes have different lengths"))
   }
 
+  calling_env <- rlang::caller_env(n = 1)
   class_args <- list()
 
   for(a in args){
-    class_args[[a]] <- class(rlang::caller_env(n = 1)[[a]])
+    class_args[[a]] <- class(calling_env[[a]])
   }
 
   err_args <- c()

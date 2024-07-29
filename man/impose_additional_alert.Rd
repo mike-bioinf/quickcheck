@@ -35,3 +35,7 @@ invisible NULL
 \description{
 Adds a message at the start/end of raised quickalert messages.
 }
+\details{
+The alert sign of the resulting message (if any) is decided by the type of alert raised by the checking function in expr.
+This has been chosen to prevent that one must set sign argument to FALSE for the checking function all times.
+}

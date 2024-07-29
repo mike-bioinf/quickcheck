@@ -7,12 +7,12 @@
 #' @param df_arg String specifying how to address df in the raised messages (default "df").
 #' @param raise Character string equal to one of "error", "warning" or "message" (default error).
 #'  Set the type of alert that is created.
-#' @param alert_message String reporting the alert message. Default NULL, in this case a standard message is used.
+#' @param alert_message Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 #'  It's also possible to pass a list of strings that is displayed as a nominated or numbered list.
 #' @param header Character string to add at the beginning of the alert message.
 #'  If "default" the default header is used, otherwise the string passed in.
 #' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
-#'  of the alert message. The default value points to the frame below the one in which this function "exists"
+#'  of the alert message. The default value points to the frame below the one created by this function
 #'  (to not modify if the default alert is desired). So to point to the calling frame of this function
 #'  you have to set 2.
 #' @param quickalert logical, whether the raised alert has to be of class "quickalert".
@@ -52,7 +52,7 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_columns_presence(df, columns, quickalert = FALSE)
-  header <- generate_header(header, "The following values occur {col_red('multiple times')} for the following columns:")
+  header <- generate_header(header, "The following values occur {cli::col_red('multiple times')} for the following columns:")
 
   impose_accumulation_behavior(
     raise = raise,
@@ -68,7 +68,7 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
           vec_arg = n,
           na.rm = na.rm,
           raise = "message",
-          alert_message = "{vec_arg} --> {col_magenta(err_value)}",
+          alert_message = "{vec_arg} --> {cli::col_magenta(err_value)}",
           header = NULL,
           sign = FALSE
       )}
@@ -100,13 +100,13 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
     vec1 = sort(columns),
     vec2 = sort(names(col_levels)),
     alert_message = c(
-      "columns and col_levels names {col_red('are not the same')}: ",
+      "columns and col_levels names {cli::col_red('are not the same')}: ",
       "i" = "All cols specified in columns must be reported in col_levels."
     ),
     quickalert = FALSE
   )
 
-  header <- generate_header(header, "The following levels are {col_red('missing')} from the reported columns:")
+  header <- generate_header(header, "The following levels are {cli::col_red('missing')} from the reported columns:")
 
   impose_accumulation_behavior(
     raise = raise,
@@ -120,7 +120,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
         vec = df[[n]],
         values = col_levels[[n]],
         vec_arg = n,
-        alert_message = "{vec_arg} --> {col_magenta(missing_values)}",
+        alert_message = "{vec_arg} --> {cli::col_magenta(missing_values)}",
         header = NULL,
         raise = "message",
         sign = FALSE
@@ -189,7 +189,7 @@ check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "err
 
   if(length(false_cols) > 0){
     alert_message <- generate_message(alert_message, "{col_magenta(false_cols)}")
-    header = generate_header(header, "The predicate function {col_red('returned FALSE')} for the following {qty(false_cols)} column{?s}:")
+    header = generate_header(header, "The predicate function {cli::col_red('returned FALSE')} for the following {qty(false_cols)} column{?s}:")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header, ...)
   }
 
