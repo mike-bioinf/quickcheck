@@ -9,13 +9,16 @@
 #' @return NULL
 #' @export
 check_nrow_dfs <- function(df1, df2, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+  check_required_all()
+  check_args_classes(c("df1", "df2"), "data.frame", 2, quickalert = FALSE)
+
   if(nrow(df1) != nrow(df2)){
-    alert_message <- generate_message(alert_message, "{col_red('Different number')} of rows between df1 and df2.")
+    alert_message <- generate_message(alert_message, "{cli::col_red('Different number')} of rows between df1 and df2.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
+
   invisible(NULL)
 }
-
 
 
 
@@ -94,7 +97,8 @@ check_col_arg <- function(df1, df2, col){
       x = list(df1 = df1, df2 = df2),
       check_func = check_columns_presence,
       check_arg_list = list(columns = col),
-      alert_message = "{col} is {cli::col_red('not found')} in {cli::col_magenta(missing_values)}."
+      header = NULL,
+      alert_message = "{check_arg_list[['columns']]} is {cli::col_red('not found')} in {cli::col_magenta(failed_elements)}."
     )
   } else {
     check_columns_presence(df1, columns = col[1], df_arg = "df1")

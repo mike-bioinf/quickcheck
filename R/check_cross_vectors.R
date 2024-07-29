@@ -11,6 +11,7 @@
 #' @return invisible NULL
 #' @export
 check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
+  check_required_all()
   if(length(vec1) != length(vec2)){
     alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} have {col_red('different length')}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
@@ -30,8 +31,9 @@ check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", 
 #' @return invisible NULL
 #' @export
 check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
+  check_required_all()
   if(any(vec1 != vec2)){
-    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} {col_red('are not equal')}.")
+    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} {cli::col_red('are not equal')}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
   invisible(NULL)
@@ -49,32 +51,32 @@ check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2"
 #' @return invisible NULL
 #' @export
 check_unordered_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
-  missing12 <- vec1[!vec1 %in% vec2]
-  missing21 <- vec2[!vec2 %in% vec1]
+  check_required_all()
+  missing12 <- unique(vec1[!vec1 %in% vec2])
+  missing21 <- unique(vec2[!vec2 %in% vec1])
+  message1 <- NULL
+  message2 <- NULL
 
   if(length(missing12) > 0){
     message1 <- c(
       "The following {qty(length(missing12))} value{?s} {?is/are} present in {vec1_arg} but missing in {vec2_arg}:",
-      "{unique(missing12)}",
+      "{missing12}",
       "\n"
     )
-  } else {
-    message1 <- NULL
   }
 
   if(length(missing21) > 0){
     message2 <- c(
       "The following {qty(length(missing21))} value{?s} {?is/are} present in {vec2_arg} but missing in {vec1_arg}:",
-      "{unique(missing21)}"
+      "{missing21}"
     )
-  } else {
-    message2 <- NULL
   }
 
   final_message <- c(message1, message2)
 
   if(!is.null(final_message)){
-    alert_message <- generate_message(alert_message , c("{col_red('Detected differences')}", final_message))
+    final_message <- c("{cli::col_red('Detected differences')}:", final_message)
+    alert_message <- generate_message(alert_message, final_message)
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
 

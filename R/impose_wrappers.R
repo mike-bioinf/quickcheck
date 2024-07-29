@@ -157,8 +157,7 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
 #' @param message additional message to be added to the alert.
 #' @param margin numeric equal to 1 or 2, indicating where to add the additional message (start or end respectively).
 #' @return invisible NULL
-#' @details
-#'  The alert sign of the resulting message (if any) is decided by the type of alert raised by the checking function in expr.
+#' @details The alert sign of the resulting message (if any) is decided by the type of alert raised by the checking function in expr.
 #'  This has been chosen to prevent that one must set sign argument to FALSE for the checking function all times.
 #' @export
 impose_additional_alert <- function(expr, message, margin = 1, raise = "error", n.evaluation_frame = 0, quickalert = TRUE){
