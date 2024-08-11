@@ -21,7 +21,7 @@ check_types_list(
 
 \item{predicate}{A predicate function, usually an "is.something" function.}
 
-\item{flatten}{logical, whether to flat out the list before before doing the check (default TRUE).}
+\item{flatten}{logical, whether to flat out the list before doing the check (default TRUE).}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
 Set the type of alert that is created.}
@@ -49,5 +49,6 @@ The function doesn't perform any check on the argument provided in predicate.
 Therefore the correctness of the provided function fall on the user.
 }
 \details{
-The alert will not points the eventual elements in error if no or some elements names are missing.
+The alert will not points the eventual elements in error if no or some elements names are missing,
+but instead it will raise a more general alert.
 }

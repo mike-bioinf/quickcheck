@@ -127,9 +127,10 @@ check_unique_values <- function(vec, vec_arg = "vec", na.rm = TRUE, raise = "err
 #' @param decreasing Logical indicating whether the expect sorted order is decreasing or not (default FALSE).
 #' @return invisible NULL
 #' @export
-check_sorted_vec <- function(vec, decreasing= F, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_sorted_vec <- function(vec, decreasing = F, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_na_vec(vec, raise = "warning", alert_message = "NAs in vec, they are not considered in the sort check.")
-  if(any(stats::na_omit(vec) != sort(vec, decreasing))){
+  vec <- stats::na.omit(vec)
+  if(any(vec != sort(vec, decreasing))){
     alert_message <- generate_message(alert_message, "{vec_arg} is not sorted.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }

@@ -17,7 +17,7 @@ check_names_list(
 \arguments{
 \item{x}{list.}
 
-\item{flatten}{logical, whether to flat out the list before before doing the check (default TRUE).}
+\item{flatten}{logical, whether to flat out the list before doing the check (default TRUE).}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
 Set the type of alert that is created.}
