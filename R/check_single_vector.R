@@ -21,7 +21,6 @@ check_empty_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message
 
 
 
-
 #' Checks the presence of NAs in a vector.
 #' @inheritParams check_empty_vec
 #' @return invisible NULL
@@ -33,7 +32,6 @@ check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = 
   }
   invisible(NULL)
 }
-
 
 
 
@@ -53,10 +51,8 @@ check_duplicate_vec <- function(vec, vec_arg = "vec", raise = "error", alert_mes
     header <- generate_header(header, "The following {qty(length(dup_values))} value{?s} {?is/are} {cli::col_red('duplicated')} in {vec_arg}:")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header, ...)
   }
-
   invisible(NULL)
 }
-
 
 
 
@@ -79,10 +75,8 @@ check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", na
     )
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
-
   invisible(NULL)
 }
-
 
 
 
@@ -96,17 +90,14 @@ check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", na
 check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   unique_vec <- stats::na.omit(unique(vec))
-
   if(!all(values %in% vec)){
     missing_values <- setdiff(values, unique_vec)
     alert_message <- generate_message(alert_message, "{col_magenta(missing_values)}")
     header <- generate_header(header, "The following {qty(missing_values)} value{?s} {?is/are} {cli::col_red('missing')} in {vec_arg}:")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header, ...)
   }
-
   invisible(NULL)
 }
-
 
 
 
@@ -119,14 +110,29 @@ check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error",
 check_unique_values <- function(vec, vec_arg = "vec", na.rm = TRUE, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   if(na.rm) vec <- stats::na.omit(vec)
   value_freqs <- table(vec)
-
   if(!all(value_freqs == 1)){
     err_value <- names(value_freqs[value_freqs != 1])
     alert_message <- generate_message(alert_message, "{col_magenta(err_value)}")
     header <- generate_header(header, "The following {qty(err_value)} value{?s} {?is/are} present {col_red('multiple times')} in {vec_arg}:")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header, ...)
   }
+  invisible(NULL)
+}
 
+
+
+
+#' Checks if a vector is sorted or not.
+#' @inheritParams check_number_values
+#' @param decreasing Logical indicating whether the expect sorted order is decreasing or not (default FALSE).
+#' @return invisible NULL
+#' @export
+check_sorted_vec <- function(vec, decreasing= F, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+  check_na_vec(vec, raise = "warning", alert_message = "NAs in vec, they are not considered in the sort check.")
+  if(any(stats::na_omit(vec) != sort(vec, decreasing))){
+    alert_message <- generate_message(alert_message, "{vec_arg} is not sorted.")
+    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
+  }
   invisible(NULL)
 }
 

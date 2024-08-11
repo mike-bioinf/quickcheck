@@ -93,9 +93,9 @@ generate_message <- function(alert_message, default_message){
 
 
 
-#' Constructs a default header message if not passed via dots.
+#' Constructs a default header message if equal to "default".
 #' @param header takes in the header argument of the checking function.
-#' @param default_header string that is used as default message.
+#' @param default_header string that is used as default header.
 generate_header <- function(header, default_header){
   if(!is.null(header) && header == "default") header <- default_header
   return(header)
@@ -103,7 +103,7 @@ generate_header <- function(header, default_header){
 
 
 
-#' Raises the evaluation frame number by x if not 0. It's purpose is to skip the checking frame function.
+#' Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip the checking frame function.
 #' @inheritParams alert_generator
 #' @param up The number added to the frame number.
 raise_custom_frame <- function(n.evaluation_frame, up){

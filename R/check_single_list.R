@@ -2,10 +2,10 @@
 
 
 
-#' Checks if the elements of the list are of the same class.
+#' Checks if the list elements are of the same class.
 #' @inheritParams check_columns_presence
 #' @param x list.
-#' @param flatten logical, whether to flat out the list before before doing the check (default TRUE).
+#' @param flatten logical, whether to flat out the list before doing the check (default TRUE).
 #' @return invisible NULL.
 #' @export
 check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
@@ -38,7 +38,8 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 #' @param predicate A predicate function, usually an "is.something" function.
 #' @param header Character string to add at the beginning of the alert message.
 #'  If "default" the default header is used, otherwise the string passed in.
-#' @details The alert will not points the eventual elements in error if no or some elements names are missing.
+#' @details The alert will not points the eventual elements in error if no or some elements names are missing,
+#'  but instead it will raise a more general alert.
 #' @return invisible NULL.
 #' @export
 check_types_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){

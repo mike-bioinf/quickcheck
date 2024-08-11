@@ -15,6 +15,7 @@ default_alert_messages <- list(
                             "{col_magenta(missing_values)}"),
   check_unique_values = c("The following {qty(err_value)} value{?s} {?is/are} present {col_red('multiple times')} in {vec_arg}: ",
                           "{col_magenta(err_value)}"),
+  check_sorted_vec = c("{vec_arg} is not sorted."),
   check_length_vecs = "{vec1_arg} and {vec2_arg} have {col_red('different length')}",
   check_equality_vecs = "{vec1_arg} and {vec2_arg} {col_red('are not equal')}",
   check_unordered_equality_vecs = c(
@@ -40,7 +41,8 @@ default_alert_messages <- list(
     version1 = c("{cli::col_red('Not all elements')} are of the expected type.",
                   "i" = "{cli::col_blue('Set or fill')} the missing list element names for a more informative alert."),
     version2 = c("The following {qty(errors)} element{?s} {?is/are} not of the expected type:", "{cli::col_magenta(errors)}")
-  )
+  ),
+  check_names_list = c("The provided list present {cli::col_red('missing element names')}.")
 )
 
 usethis::use_data(default_alert_messages, overwrite = TRUE)
