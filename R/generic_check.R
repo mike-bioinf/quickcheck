@@ -7,6 +7,7 @@
 #' @return Invisible NULL
 #' @export
 generic_check <- function(expr, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+  rlang::check_required(expr)
   expr_res <- expr
 
   if(!is.logical(expr_res)){
@@ -17,9 +18,9 @@ generic_check <- function(expr, raise = "error", alert_message = NULL, n.evaluat
     cli::cli_abort(c("x" = "expr must evaluates to a {col_red('single')} boolean value."))
   }
 
-  alert_message <- generate_message(alert_message, "expr is not TRUE")
+  alert_message <- generate_message(alert_message, "expr is not TRUE.")
 
-  if(!expr_res) {
+  if(!expr_res){
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
 

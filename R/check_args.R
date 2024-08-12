@@ -113,14 +113,16 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
 #' @description
 #' Allow to easily check for numeric arguments since is not easy to do that relying on classes or primitive types.
 #' @inheritParams check_args_primitive_types
+#' @return NULL
+#' @export
 check_numeric_args <- function(args, null = FALSE, alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   calling_env <- rlang::caller_env(n = 1)
   calling_args <- calling_env[args]
 
   if(null){
-    err_args <- purrr::discard(calling_args, \(a) !is.numeric(a) && !is.null(a))
+    err_args <- purrr::discard(calling_args, \(a) is.numeric(a) || is.null(a))
   } else {
-    err_args <- purrr::discard(calling_args, \(a) !is.numeric(a))
+    err_args <- purrr::discard(calling_args, \(a) is.numeric(a))
   }
 
   if(length(err_args) > 0){
