@@ -44,9 +44,7 @@ you have to set 2.}
 invisible NULL
 }
 \description{
-Checks the unordered equality of two vectors.
-}
-\details{
-The equality is checked thought "\%in\% " in both senses. The vectors orders as well as repeated values have no importance.
-If the order and the repetitions must be considered see "check_equality_vecs" function.
+The equality is checked thought the \%in\% operator in both senses.
+The vectors orders as well as the presence of repeated values have no importance.
+If the order and the repetitions have a role see "check_equality_vecs" function.
 }

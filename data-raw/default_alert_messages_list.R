@@ -6,6 +6,8 @@ default_alert_messages <- list(
                                  "{col_magenta(err_args)}"),
   check_args_classes = c("The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:",
                          "{col_magenta(err_args)}"),
+  check_numeric_args = c("The following {qty(err_args)} argument{?s} {?is/are} {col_red('not numeric')}:",
+                         "{col_magenta(err_args)}."),
   check_empty_vec = "There are empty values in {vec_arg}.",
   check_na_vec = "There are NAs in {vec_arg}.",
   check_duplicate_vec = c("The following {qty(length(dup_values))} value{?s} {?is/are} duplicated in {vec_arg}",

@@ -3,7 +3,6 @@
 #' @description A set of functions useful to check the arguments provided in input by outer functions
 
 
-
 #' Checks for not provided arguments with no default value in the calling function.
 #' @description
 #' Checks the presence of all arguments that have no default values in the upper calling function
@@ -23,7 +22,6 @@ check_required_all <- function(){
 
 
 
-
 #' Checks the primitive types of the specified arguments of a calling function.
 #' @param args character vector reporting the arguments of the outer function to check.
 #' @param expected_types character vector with the expected types.
@@ -38,7 +36,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
   if(!is.null(numeric_correspondence)){
     expected_types <- control_recycle(args, expected_types, numeric_correspondence)
   } else if(length(args) != length(expected_types)){
-    cli::cli_abort(c("x" = "args and expected_types have {col_red('different lengths')}"))
+    cli::cli_abort(c("x" = "args and expected_types have {col_red('different lengths')}."))
   }
 
   calling_env <- rlang::caller_env(n = 1)
@@ -55,14 +53,13 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
   }
 
   if(length(err_args) > 0){
-    alert <- generate_message(alert_message, "{col_magenta(err_args)}")
+    alert <- generate_message(alert_message, "{col_magenta(err_args)}.")
     header <- generate_header(header, "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}:")
     alert_generator("error", alert, n.evaluation_frame, quickalert, header = header, ...)
   }
 
   invisible(NULL)
 }
-
 
 
 
@@ -76,7 +73,7 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
   if(!is.null(numeric_correspondence)){
     expected_classes <- control_recycle(args, expected_classes, numeric_correspondence)
   } else if(length(args) != length(expected_classes)){
-    cli::cli_abort(c("x" = "args and expected_classes have different lengths"))
+    cli::cli_abort(c("x" = "args and expected_classes have different lengths."))
   }
 
   calling_env <- rlang::caller_env(n = 1)
@@ -101,11 +98,36 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
   }
 
   if(length(err_args) > 0){
-    alert <- generate_message(alert_message, "{col_magenta(err_args)}")
+    alert <- generate_message(alert_message, "{col_magenta(err_args)}.")
     header <- generate_header(header,"The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:")
     alert_generator("error", alert, n.evaluation_frame, quickalert, header = header, ...)
   }
 
+  invisible(NULL)
+}
+
+
+
+
+#' Checks the numeric nature of selected arguments of a calling function.
+#' @description
+#' Allow to easily check for numeric arguments since is not easy to do that relying on classes or primitive types.
+#' @inheritParams check_args_primitive_types
+check_numeric_args <- function(args, null = FALSE, alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
+  calling_env <- rlang::caller_env(n = 1)
+  calling_args <- calling_env[args]
+
+  if(null){
+    err_args <- purrr::discard(calling_args, \(a) !is.numeric(a) && !is.null(a))
+  } else {
+    err_args <- purrr::discard(calling_args, \(a) !is.numeric(a))
+  }
+
+  if(length(err_args) > 0){
+    header <- generate_header(header,"The following {qty(err_args)} argument{?s} {?is/are} {col_red('not numeric')}:")
+    alert <- generate_message(alert_message, "{col_magenta(err_args)}.")
+    alert_generator("error", alert, n.evaluation_frame, quickalert, header = header, ...)
+  }
   invisible(NULL)
 }
 

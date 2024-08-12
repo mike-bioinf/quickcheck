@@ -44,9 +44,10 @@ check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2"
 
 
 #' Checks the unordered equality of two vectors.
-#' @details
-#' The equality is checked thought "%in% " in both senses. The vectors orders as well as repeated values have no importance.
-#' If the order and the repetitions must be considered see "check_equality_vecs" function.
+#' @description
+#' The equality is checked thought the %in% operator in both senses.
+#' The vectors orders as well as the presence of repeated values have no importance.
+#' If the order and the repetitions have a role see "check_equality_vecs" function.
 #' @inheritParams check_length_vecs
 #' @return invisible NULL
 #' @export
