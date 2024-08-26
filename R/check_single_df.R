@@ -1,20 +1,22 @@
-# Checking functions that work on single dataframe.
+### Checking functions that work on a single dataframe.
+
 
 
 #' Checks the presence of one or multiple columns in a dataframe
 #' @param df Dataframe passed in the outer function.
 #' @param columns Character string reporting the column/s name.
 #' @param df_arg String specifying how to address df in the raised messages (default "df").
-#' @param raise Character string equal to one of "error", "warning" or "message" (default error).
-#'  Set the type of alert that is created.
-#' @param alert_message Character vector reporting the alert message. Default NULL, in this case a standard message is used.
+#' @param raise
+#'  Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.
+#' @param alert_message
+#'  Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 #'  It's also possible to pass a list of strings that is displayed as a nominated or numbered list.
-#' @param header Character string to add at the beginning of the alert message.
-#'  If "default" the default header is used, otherwise the string passed in.
-#' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
-#'  of the alert message. The default value points to the frame below the one created by this function
-#'  (to not modify if the default alert is desired). So to point to the calling frame of this function
-#'  you have to set 2.
+#' @param header
+#'  Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
+#' @param n.evaluation_frame
+#'  Numeric, defines the number of calling frame to look down for the evaluation of the glue expressions of the alert message.
+#'  The default value points to the frame above the one of this function (to not modify if the default alert is desired).
+#'  So to point to the frame below this function frame you have to set 2.
 #' @param quickalert logical, whether the raised alert has to be of class "quickalert".
 #' @param ... To pass additional argument to alert_generator function.
 #' @return NULL.
@@ -45,7 +47,9 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 
 #' Checks if the specified dataframe columns are suitable as keys of only unique values.
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior evaluation.
-#' @param header string; if equal to 'default' the default header is used, otherwise the string passed in.
+#' @param n.evaluation_frame
+#'  numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+#'  The default value (0) points to this function frame.
 #' @inheritParams check_columns_presence
 #' @return invisible NULL.
 #' @export
@@ -59,7 +63,7 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
     alert_message = alert_message,
     header = header,
     quickalert = quickalert,
-    n.evaluation_frame = n.evaluation_frame,
+    n.evaluation_frame = n.evaluation_frame + 1,
     ...,
     expr = {
       for(n in columns){
@@ -83,24 +87,24 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
 
 
 #' Checks the presence of the specified values in the selected columns.
-#' @inheritParams check_columns_presence
-#' @param col_levels list of character vector reporting the expected levels for each column
-#'  specified in columns. The element of the list must be nominated according to the columns values.
-#' @param header string; if equal to 'default' the default header is used, otherwise the string passed in.
+#' @inheritParams check_columns_key
+#' @param col_levels list of character vector reporting the expected levels for each column specified in columns.
+#'  The element of the list must be nominated according to the columns names which they refer.
 #' @return NULL
 #' @export
 check_columns_levels <- function(df, columns, col_levels, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_primitive_types("col_levels", "list", quickalert = FALSE)
   check_columns_presence(df, columns, quickalert = FALSE)
-  check_empty_vec(vec = names(col_levels), alert_message = "All elements of col_levels must be nominated", quickalert = FALSE)
-  check_length_vecs(columns, names(col_levels), vec1_arg = "columns", vec2_arg = "col_levels", quickalert = FALSE)
+  names_col_levels <- names(col_levels)
+  check_empty_vec(names_col_levels, alert_message = "All elements of col_levels must be nominated.", quickalert = FALSE)
+  check_length_vecs(columns, names_col_levels, vec1_arg = "columns", vec2_arg = "col_levels", quickalert = FALSE)
 
   check_equality_vecs(
     vec1 = sort(columns),
-    vec2 = sort(names(col_levels)),
+    vec2 = sort(names_col_levels),
     alert_message = c(
-      "columns and col_levels names {cli::col_red('are not the same')}: ",
+      "columns and col_levels names {cli::col_red('are not the same')}.",
       "i" = "All cols specified in columns must be reported in col_levels."
     ),
     quickalert = FALSE
@@ -113,7 +117,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
     alert_message = alert_message,
     header = header,
     quickalert = quickalert,
-    n.evaluation_frame = n.evaluation_frame,
+    n.evaluation_frame = n.evaluation_frame + 1,
     ...,
     expr = for(n in columns){
       check_presence_values(
@@ -135,8 +139,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
 
 #' Checks the presence of NAs in the specified columns
-#' @inheritParams check_columns_presence
-#' @param header string; if equal to 'default' the default header is used, otherwise the string passed in.
+#' @inheritParams check_columns_key
 #' @return invisible NULL
 #' @export
 check_columns_na <- function(df, columns, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
@@ -151,7 +154,7 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
     alert_message = alert_message,
     header = header,
     quickalert = quickalert,
-    n.evaluation_frame = n.evaluation_frame,
+    n.evaluation_frame = n.evaluation_frame + 1,
     ...,
     expr = for(col in columns){
       check_na_vec(
@@ -173,7 +176,7 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
 
 
 #' Checks if all columns satisfy the predicate.
-#' @inheritParams check_columns_presence
+#' @inheritParams check_columns_key
 #' @param predicate function that works on vectors and return a single logical value.
 #' @param inverse logical, whether to invert the check direction in the sense that the predicate
 #'  must be not satisfied for all columns (default FALSE).

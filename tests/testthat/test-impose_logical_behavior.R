@@ -21,6 +21,7 @@ testthat::test_that("impose_logical_behavior returns expected logical value", {
 
 
 
+
 testthat::test_that("impose_logical_behavior return error when the wrong alert is picked", {
   expect_error(
     object = impose_logical_behavior(expr = check_columns_key(df, columns = c("visit_numb"))),

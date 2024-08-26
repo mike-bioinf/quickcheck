@@ -6,8 +6,8 @@
 \usage{
 check_sorted_vec(
   vec,
-  decreasing = F,
   vec_arg = "vec",
+  decreasing = F,
   raise = "error",
   alert_message = NULL,
   n.evaluation_frame = 0,
@@ -18,12 +18,11 @@ check_sorted_vec(
 \arguments{
 \item{vec}{Vector to check.}
 
-\item{decreasing}{Logical indicating whether the expect sorted order is decreasing or not (default FALSE).}
-
 \item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
 
-\item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
-Set the type of alert that is created.}
+\item{decreasing}{Logical indicating whether the expect sorted order is decreasing or not (default FALSE).}
+
+\item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}

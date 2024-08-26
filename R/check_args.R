@@ -3,6 +3,7 @@
 #' @description A set of functions useful to check the arguments provided in input by outer functions
 
 
+
 #' Checks for not provided arguments with no default value in the calling function.
 #' @description
 #' Checks the presence of all arguments that have no default values in the upper calling function
@@ -11,13 +12,11 @@
 check_required_all <- function(){
   envlist <- as.list(rlang::caller_env(n = 1))
   envmiss <- purrr::keep(envlist, rlang::is_missing)
-
   if(length(envmiss) > 0){
     cli::cli_abort(c("x" = "{col_red(names(envmiss))} {?is/are} absent but must be supplied."))
   }
   invisible(NULL)
 }
-
 
 
 
@@ -31,7 +30,7 @@ check_required_all <- function(){
 #' @param numeric_correspondence numeric vector that allows to recycle expected_types following
 #'  its order and the numbers specified in this vector.
 #' @param null logical, whether args can be NULL or not in addiction to the "normal" expected type (default FALSE).
-#' @inheritParams check_columns_presence
+#' @inheritParams check_columns_key
 #' @return NULL
 #' @export
 check_args_primitive_types <- function(args, expected_types, numeric_correspondence = NULL, null = FALSE, alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
@@ -134,6 +133,7 @@ check_numeric_args <- function(args, null = FALSE, alert_message = NULL, header 
   }
   invisible(NULL)
 }
+
 
 
 

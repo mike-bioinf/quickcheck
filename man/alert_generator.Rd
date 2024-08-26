@@ -20,9 +20,9 @@ alert_generator(
 \item{alert_message}{Single character vector that follow the cli format. It possible to pass a list of strings to have automatically
 a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).}
 
-\item{n.evaluation_frame}{Integer indicating the calling frame in which the alert is evaluated in respect to where is generated.
+\item{n.evaluation_frame}{Integer indicating the stack frame in which the alert glue expressions are evaluated in respect to where is generated.
 So it indicates the number of frames to look up in the stack. By default is zero plus two.
-The addition is used in order to start counting from zero in the checking functions.}
+The addition is used in order to start counting from zero in the frame of the function that uses this function.}
 
 \item{quickalert}{Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 The generation of "plain" alerts is useful when the checking functions are used inside other ones.

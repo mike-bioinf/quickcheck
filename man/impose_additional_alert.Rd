@@ -14,8 +14,7 @@ impose_additional_alert(
 )
 }
 \arguments{
-\item{expr}{check function call. It's important that the checking function raises warnings or messages
-since errors cannot be muffled (they will cause unexpected behavior).}
+\item{expr}{check function call. It's important that the checking function raises warnings or messages but not errors.}
 
 \item{message}{additional message to be added to the alert.}
 
@@ -23,11 +22,10 @@ since errors cannot be muffled (they will cause unexpected behavior).}
 
 \item{raise}{type of the accumulated final alert if any.}
 
-\item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
-of the alert message in respect to where the function calling the alert is run. The default points
-to this function frame.}
+\item{n.evaluation_frame}{numeric, defines the number of stack frame to look up for the evaluation
+of the glue expressions of the alert message. The default points to this function frame.}
 
-\item{quickalert}{logical, whether the raised alert is of class "quickalert".}
+\item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}
 }
 \value{
 invisible NULL

@@ -3,7 +3,7 @@
 
 
 #' Checks if the list elements are of the same class.
-#' @inheritParams check_columns_presence
+#' @inheritParams check_columns_key
 #' @param x list.
 #' @param flatten logical, whether to flat out the list before doing the check (default TRUE).
 #' @return invisible NULL.
@@ -29,20 +29,20 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 
 
 
-
-#' Checks the types of all elements of the list through a predicate function.
+#' Checks all the elements of the list through a predicate function.
 #' @description
 #' The function doesn't perform any check on the argument provided in predicate.
 #' Therefore the correctness of the provided function fall on the user.
 #' @inheritParams check_uniform_list
 #' @param predicate A predicate function, usually an "is.something" function.
 #' @param header Character string to add at the beginning of the alert message.
-#'  If "default" the default header is used, otherwise the string passed in.
-#' @details The alert will not points the eventual elements in error if no or some elements names are missing,
+#' If "default" the default header is used, otherwise the string passed in.
+#' @details
+#'  The alert will not points the eventual elements in error if no or some elements names are missing,
 #'  but instead it will raise a more general alert.
 #' @return invisible NULL.
 #' @export
-check_types_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_predicate_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_primitive_types(c("x", "flatten"), c("list", "logical"), quickalert = FALSE)
   check_args_classes("predicate", "function", quickalert = FALSE)
@@ -80,7 +80,6 @@ check_types_list <- function(x, predicate, flatten = TRUE, raise = "error", aler
 
 
 
-
 #' Checks that the list have all elements with defined names
 #' @description The function checks for NULL, NA and "".
 #' @inheritParams check_uniform_list
@@ -101,8 +100,6 @@ check_names_list <- function(x, flatten = TRUE, raise = "error", alert_message =
 
   invisible(NULL)
 }
-
-
 
 
 

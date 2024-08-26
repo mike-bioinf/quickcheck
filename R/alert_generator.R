@@ -5,9 +5,9 @@
 #'  Single character vector that follow the cli format. It possible to pass a list of strings to have automatically
 #'  a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).
 #' @param n.evaluation_frame
-#'  Integer indicating the calling frame in which the alert is evaluated in respect to where is generated.
-#'  So it indicates the number of frames to look up in the stack. By default is zero plus two.
-#'  The addition is used in order to start counting from zero in the checking functions.
+#'  Integer indicating the stack frame in which the alert glue expressions are evaluated in respect to where is generated.
+#'  So it indicates the number of frames to look down in the stack. By default is zero plus two.
+#'  The addition is used in order to start counting from zero from the frame of the function that uses this function.
 #' @param quickalert
 #'  Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 #'  The generation of "plain" alerts is useful when the checking functions are used inside other ones.
@@ -106,7 +106,7 @@ generate_header <- function(header, default_header){
 #' Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip stack frames.
 #' @inheritParams alert_generator
 #' @param up The number added to the frame number.
-raise_custom_frame <- function(n.evaluation_frame, up){
+raise_eval_frame <- function(n.evaluation_frame, up){
   if(n.evalutation_frame != 0){
     n.evalutation_frame <- n.evaluation_frame + up
   }

@@ -5,7 +5,7 @@
 #' Checks equal number of rows between two dataframes
 #' @param df1 first dataframe.
 #' @param df2 second dataframe.
-#' @inheritParams check_columns_presence
+#' @inheritParams check_columns_key
 #' @return NULL
 #' @export
 check_nrow_dfs <- function(df1, df2, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
@@ -28,7 +28,6 @@ check_nrow_dfs <- function(df1, df2, raise = "error", alert_message = NULL, n.ev
 #' @description
 #' The function allows to check the presence of all values of the selected column of one dataframe
 #' in the other. If direction equal 'bidirectional' a bidirectional check is performed.
-#'
 #' @param df1 first dataframe.
 #' @param df2 second dataframe.
 #' @param col character vector referring the name of the columns to consider. If of length one
@@ -36,7 +35,7 @@ check_nrow_dfs <- function(df1, df2, raise = "error", alert_message = NULL, n.ev
 #'  for the first dataframe and the other for the second.
 #' @param direction string equal to one of 'first_in_second', 'second_in_first' or 'bidirectional'.
 #'  Set the direction of the comparison.
-#' @inheritParams check_columns_presence
+#' @inheritParams check_columns_key
 #' @return NULL
 #' @export
 check_presence_dfs <- function(df1, df2, col, direction = "first_in_second", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){

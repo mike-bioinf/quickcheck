@@ -108,8 +108,9 @@ check_presence_values <- function(vec, values, vec_arg = "vec", raise = "error",
 check_unique_values <- function(vec, vec_arg = "vec", na.rm = TRUE, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   if(na.rm) vec <- stats::na.omit(vec)
   value_freqs <- table(vec)
-  if(!all(value_freqs == 1)){
-    err_value <- names(value_freqs[value_freqs != 1])
+  unique_log <- value_freqs == 1
+  if(!all(unique_log)){
+    err_value <- names(value_freqs[!unique_log])
     alert_message <- generate_message(alert_message, "{col_magenta(err_value)}")
     header <- generate_header(header, "The following {qty(err_value)} value{?s} {?is/are} present {col_red('multiple times')} in {vec_arg}:")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header, ...)
@@ -125,7 +126,7 @@ check_unique_values <- function(vec, vec_arg = "vec", na.rm = TRUE, raise = "err
 #' @param decreasing Logical indicating whether the expect sorted order is decreasing or not (default FALSE).
 #' @return invisible NULL
 #' @export
-check_sorted_vec <- function(vec, decreasing = F, vec_arg = "vec", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_sorted_vec <- function(vec, vec_arg = "vec",decreasing = F, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_na_vec(vec, raise = "warning", alert_message = "NAs in vec, they are not considered in the sort check.")
   vec <- stats::na.omit(vec)
   if(any(vec != sort(vec, decreasing))){

@@ -23,8 +23,7 @@ check_unique_values(
 
 \item{na.rm}{logical (default TRUE), indicating if NA must be excluded prior computations.}
 
-\item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
-Set the type of alert that is created.}
+\item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}

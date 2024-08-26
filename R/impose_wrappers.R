@@ -49,15 +49,13 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 #' Imposes an accumulation behavior for a checking function in a loop scenario, in which
 #' the alert raised by the checking function are stored in a list and then displayed.
 #' Works with message or warning conditions. It does not work with error since they stop the loop execution.
-#' @param expr check function call. It's important that the checking function raises warnings or messages
-#'  since errors cannot be muffled (they will cause unexpected behavior).
+#' @param expr check function call. It's important that the checking function raises warnings or messages but not errors.
 #' @param raise type of the accumulated final alert if any.
 #' @param alert_message String or list reporting the alert message (by default the function build a list).
 #' @param header string to add as the header of the accumulated alert list.
-#' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
-#'  of the alert message in respect to where the function calling the alert is run. The default points
-#'  to this function frame.
-#' @param quickalert logical, whether the raised alert is of class "quickalert".
+#' @param n.evaluation_frame numeric, defines the number of stack frame to look down for the evaluation
+#'  of the glue expressions of the alert message. The default points to this function frame.
+#' @param quickalert logical, whether the raised alert is of class "quickalert" (default TRUE).
 #' @param ... To pass additional argument to alert_generator function.
 #' @return invisible NULL
 #' @export
@@ -99,9 +97,8 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 #'  as well as 'alert-oriented' arguments (raise, header, quickalert and sign) are already set and therefore must NOT be specified.
 #' @param element_nameroot String reporting the base name to use for the list elements without a name in case
 #'  they must be pointed in the alert message (default "element").
-#' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
-#'  of the alert message in respect to where the function calling the alert is run. The default points
-#'  to this function frame.
+#' @param n.evaluation_frame numeric, defines the number of stack frame to look down for the evaluation
+#'  of the glue expressions of the alert message. The default points to this function frame.
 #' @return invisible NULL
 #' @export
 impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element_nameroot = "element", raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){

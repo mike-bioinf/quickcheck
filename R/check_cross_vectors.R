@@ -7,13 +7,13 @@
 #' @param vec1_arg string indicating how to address vec1 in the raised message (default 'vec1').
 #' @param vec2_arg string indicating how to address vec2 in the raised message (default 'vec2)'.
 #' @param ... not of direct use.
-#' @inheritParams check_columns_presence
+#' @inheritParams check_columns_key
 #' @return invisible NULL
 #' @export
 check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", raise = "error", alert_message = NULL, quickalert = TRUE, n.evaluation_frame = 0, ...){
   check_required_all()
   if(length(vec1) != length(vec2)){
-    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} have {col_red('different length')}.")
+    alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} have {col_red('different lengths')}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
   invisible(NULL)

@@ -15,8 +15,7 @@ impose_accumulation_behavior(
 )
 }
 \arguments{
-\item{expr}{check function call. It's important that the checking function raises warnings or messages
-since errors cannot be muffled (they will cause unexpected behavior).}
+\item{expr}{check function call. It's important that the checking function raises warnings or messages but not errors.}
 
 \item{raise}{type of the accumulated final alert if any.}
 
@@ -24,11 +23,10 @@ since errors cannot be muffled (they will cause unexpected behavior).}
 
 \item{header}{string to add as the header of the accumulated alert list.}
 
-\item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation
-of the alert message in respect to where the function calling the alert is run. The default points
-to this function frame.}
+\item{n.evaluation_frame}{numeric, defines the number of stack frame to look up for the evaluation
+of the glue expressions of the alert message. The default points to this function frame.}
 
-\item{quickalert}{logical, whether the raised alert is of class "quickalert".}
+\item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}
 
 \item{...}{To pass additional argument to alert_generator function.}
 }
