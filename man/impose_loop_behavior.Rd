@@ -2,7 +2,7 @@
 % Please edit documentation in R/impose_wrappers.R
 \name{impose_loop_behavior}
 \alias{impose_loop_behavior}
-\title{Perform the same check to all the elements of a list generating a single summarized alert.}
+\title{Perform the check on all the elements of a list generating a single summarized alert}
 \usage{
 impose_loop_behavior(
   x,
@@ -25,7 +25,7 @@ impose_loop_behavior(
 \item{check_arg_list}{List of arguments to pass to check_func. Importantly the first checking function argument
 as well as 'alert-oriented' arguments (raise, header, quickalert and sign) are already set and therefore must NOT be specified.}
 
-\item{element_nameroot}{String reporting the basename to use for the list elements names without a name in case
+\item{element_nameroot}{String reporting the base name to use for the list elements without a name in case
 they must be pointed in the alert message (default "element").}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error).
@@ -49,6 +49,6 @@ to this function frame.}
 invisible NULL
 }
 \description{
-Iterate the checking function on all the elements of the list and generate informative alert messages,
+Iterates the checking function on all the elements of the list generating informative alert messages,
 that pinpoint the element names/positions for which the checking function failed.
 }

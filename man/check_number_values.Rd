@@ -6,7 +6,7 @@
 \usage{
 check_number_values(
   vec,
-  expected_number_levels,
+  expected_number,
   vec_arg = "vec",
   na.rm = TRUE,
   raise = "error",
@@ -19,7 +19,7 @@ check_number_values(
 \arguments{
 \item{vec}{Vector to check.}
 
-\item{expected_number_levels}{numeric indicating the expected number of unique values for vec.}
+\item{expected_number}{numeric indicating the expected number of vec unique values.}
 
 \item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
 

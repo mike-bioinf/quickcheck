@@ -7,7 +7,6 @@
 
 
 
-
 #' Alter the behavior of checking conditions from raising alerts to return boolean values.
 #' @description
 #' This function works as a wrapper of the checking functions and impose them a
@@ -40,8 +39,6 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 
   return(logical_return)
 }
-
-
 
 
 
@@ -91,20 +88,16 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 
 
 
-
-
-
-#' Perform the same check to all the elements of a list generating a single summarized alert.
+#' Perform the check on all the elements of a list generating a single summarized alert
 #' @description
-#' Iterate the checking function on all the elements of the list and generate informative alert messages,
+#' Iterates the checking function on all the elements of the list generating informative alert messages,
 #' that pinpoint the element names/positions for which the checking function failed.
-#'
 #' @inheritParams check_columns_presence
 #' @param x List which elements will be checked by the check_func.
 #' @param check_func Checking function that will be used on every x element (this will be passed as first argument).
 #' @param check_arg_list List of arguments to pass to check_func. Importantly the first checking function argument
 #'  as well as 'alert-oriented' arguments (raise, header, quickalert and sign) are already set and therefore must NOT be specified.
-#' @param element_nameroot String reporting the basename to use for the list elements names without a name in case
+#' @param element_nameroot String reporting the base name to use for the list elements without a name in case
 #'  they must be pointed in the alert message (default "element").
 #' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation
 #'  of the alert message in respect to where the function calling the alert is run. The default points
@@ -125,10 +118,10 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
       }
     },
     condition = function(cond){
+      failed_element <- get_name(name = listnames[[i]], nameroot = element_nameroot, iteration = i)
       if(!"quickalert" %in% class(cond)){
-        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
+        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised at element {failed_element}:", "{cond$message} {cond$body}"))
       } else {
-        failed_element <- get_name(name = listnames[[i]], nameroot = element_nameroot, iteration = i)
         failed_elements <<- c(failed_elements, failed_element)
         rlang::cnd_muffle(cond)
       }
@@ -143,10 +136,6 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
 
   invisible(NULL)
 }
-
-
-
-
 
 
 
@@ -193,9 +182,6 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
 
 
 
-
-
-
 ### HELPERS ============================================================================================================================================
 
 
@@ -215,7 +201,6 @@ detect_type_condition <- function(condition){
 
 
 
-
 #' Retrieve the condition message and breaks it in a character vector based on newline character.
 #' This is helpful since quickalerts are defined using only the message argument of the cli-signaling functions.
 #' @param condition condition object.
@@ -227,12 +212,11 @@ break_condition_message <- function(condition){
 
 
 
-
-#' Helper of impose_loop_beahvior to check and get the name of the element of a list.
-#' If not set in broad sense it get converted to nameroot pasted to iteration.
-#' @param name name to check
+#' Helper of impose_loop_behavior to check and get the name of the element of a list.
+#' If not set in broad sense it get converted to "nameroot+iteration".
+#' @param name name to check.
 #' @param nameroot basename of the unnamed element.
-#' @param iteration number added to the nameroot to constitute the default element name.
+#' @param iteration number added to the root to constitute the final name.
 get_name <- function(name, nameroot, iteration){
   if(is_empty_vec(name)){
     name <- paste0(nameroot, iteration)

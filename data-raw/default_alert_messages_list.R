@@ -41,7 +41,7 @@ default_alert_messages <- list(
   check_uniform_list = "The list is {cli::col_red('not uniform')}.",
   check_types_list = list(
     version1 = c("{cli::col_red('Not all elements')} are of the expected type.",
-                  "i" = "{cli::col_blue('Set or fill')} the missing list element names for a more informative alert."),
+                  "{cli::col_blue('Set or fill')} the missing list element names for a more informative alert."),
     version2 = c("The following {qty(errors)} element{?s} {?is/are} not of the expected type:", "{cli::col_magenta(errors)}")
   ),
   check_names_list = c("The provided list present {cli::col_red('missing element names')}.")

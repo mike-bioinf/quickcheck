@@ -59,20 +59,18 @@ check_duplicate_vec <- function(vec, vec_arg = "vec", raise = "error", alert_mes
 
 #' Checks if the number of unique values of a vector is equal to the expected.
 #' @inheritParams check_empty_vec
-#' @param expected_number_levels numeric indicating the expected number of unique values for vec.
+#' @param expected_number numeric indicating the expected number of vec unique values.
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior computations.
 #' @return invisible NULL
 #' @export
-check_number_values <- function(vec, expected_number_levels, vec_arg = "vec", na.rm = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_number_values <- function(vec, expected_number, vec_arg = "vec", na.rm = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  unique_levels <- unique(vec)
-  if(na.rm) unique_levels <- stats::na.omit(unique_levels)
-
-  if(length(unique_levels) != expected_number_levels){
-    alert_message <- generate_message(
-      alert_message,
-      "{expected_number_levels} level{?s} expected but {length(unique_levels)} detected."
-    )
+  unique_values <- unique(vec)
+  if(na.rm){
+    unique_values <- stats::na.omit(unique_values)
+  }
+  if(length(unique_values) != expected_number){
+    alert_message <- generate_message(alert_message, "{expected_number} unique value{?s} expected but {length(unique_values)} detected.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
   invisible(NULL)
@@ -136,4 +134,3 @@ check_sorted_vec <- function(vec, decreasing = F, vec_arg = "vec", raise = "erro
   }
   invisible(NULL)
 }
-

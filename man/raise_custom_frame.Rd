@@ -2,17 +2,17 @@
 % Please edit documentation in R/alert_generator.R
 \name{raise_custom_frame}
 \alias{raise_custom_frame}
-\title{Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip the checking frame function.}
+\title{Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip stack frames.}
 \usage{
 raise_custom_frame(n.evaluation_frame, up)
 }
 \arguments{
-\item{n.evaluation_frame}{Integer indicating the calling frame in which alert is evaluated in respect to where the alert is generated.
-So it indicates the number of frames to look up in the calling stack. By default is zero plus two.
-The addition serves to start counting from zero in the checking functions.}
+\item{n.evaluation_frame}{Integer indicating the calling frame in which the alert is evaluated in respect to where is generated.
+So it indicates the number of frames to look up in the stack. By default is zero plus two.
+The addition is used in order to start counting from zero in the checking functions.}
 
 \item{up}{The number added to the frame number.}
 }
 \description{
-Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip the checking frame function.
+Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip stack frames.
 }

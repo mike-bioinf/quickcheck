@@ -2,8 +2,8 @@
 % Please edit documentation in R/check_args.R
 \name{control_recycle}
 \alias{control_recycle}
-\title{Helper of check_primitive_types to control the recycle of expected types and classes.
-Vector2 is recycled according to the numeric correspondence vector.}
+\title{Helper of check_primitive_types and check_args_classes to control the recycle of expected types and classes.
+Vector2 is recycled according to numeric_correspondence vector.}
 \usage{
 control_recycle(vector1, vector2, numeric_correspondence)
 }
@@ -15,6 +15,6 @@ control_recycle(vector1, vector2, numeric_correspondence)
 \item{numeric_correspondence}{number of times the elements of vector2 must be repeated in order.}
 }
 \description{
-Helper of check_primitive_types to control the recycle of expected types and classes.
-Vector2 is recycled according to the numeric correspondence vector.
+Helper of check_primitive_types and check_args_classes to control the recycle of expected types and classes.
+Vector2 is recycled according to numeric_correspondence vector.
 }

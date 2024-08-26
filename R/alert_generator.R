@@ -5,13 +5,13 @@
 #'  Single character vector that follow the cli format. It possible to pass a list of strings to have automatically
 #'  a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).
 #' @param n.evaluation_frame
-#'  Integer indicating the calling frame in which alert is evaluated in respect to where the alert is generated.
-#'  So it indicates the number of frames to look up in the calling stack. By default is zero plus two.
-#'  The addition serves to start counting from zero in the checking functions.
+#'  Integer indicating the calling frame in which the alert is evaluated in respect to where is generated.
+#'  So it indicates the number of frames to look up in the stack. By default is zero plus two.
+#'  The addition is used in order to start counting from zero in the checking functions.
 #' @param quickalert
 #'  Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 #'  The generation of "plain" alerts is useful when the checking functions are used inside other ones.
-#'  This allow the fact that only the main check raises quickalerts.
+#'  This allow that only the main check raises quickalerts.
 #' @param sign
 #'  Logical, whether to add the sign to the first element of the alert (default TRUE).
 #' @param header
@@ -67,7 +67,7 @@ alert_generator <- function(type, alert_message, n.evaluation_frame = 0, quickal
 
 #' Generates a list of aliases of main cli alert functions with intuitive names.
 generate_alertfunc_list <- function(){
-  cli_main_list <- list(
+  list(
     error = function(alert, n.evaluation_frame, alertclass) cli::cli_abort(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass),
     warning = function(alert, n.evaluation_frame, alertclass) cli::cli_warn(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass),
     message = function(alert, n.evaluation_frame, alertclass) cli::cli_inform(alert, .envir = rlang::caller_env(n = n.evaluation_frame), class = alertclass)
@@ -78,7 +78,7 @@ generate_alertfunc_list <- function(){
 
 #' Generates a list of cli bullet signs with informative names.
 generate_sign_list <- function(){
-  cli_sign_list <- list(error = "x", warning = "!", message = "i")
+  list(error = "x", warning = "!", message = "i")
 }
 
 
@@ -103,7 +103,7 @@ generate_header <- function(header, default_header){
 
 
 
-#' Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip the checking frame function.
+#' Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip stack frames.
 #' @inheritParams alert_generator
 #' @param up The number added to the frame number.
 raise_custom_frame <- function(n.evaluation_frame, up){

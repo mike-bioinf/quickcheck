@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_args.R
 \name{check_args_classes}
 \alias{check_args_classes}
-\title{Checks the classes of selected arguments of a calling function.}
+\title{Checks the classes of the selected arguments of a calling function.}
 \usage{
 check_args_classes(
   args,
@@ -26,7 +26,8 @@ its order and the numbers specified in this vector.}
 
 \item{null}{logical, whether args can be NULL or not in addiction to the "normal" expected type (default FALSE).}
 
-\item{alert_message}{String reporting the alert message. Its formatted by cli_bullets function.}
+\item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
+It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
 \item{header}{Character string to add at the beginning of the alert message.
 If "default" the default header is used, otherwise the string passed in.}
@@ -41,5 +42,5 @@ you have to set 2.}
 \item{...}{To pass additional argument to alert_generator function.}
 }
 \description{
-Checks the classes of selected arguments of a calling function.
+Checks the classes of the selected arguments of a calling function.
 }

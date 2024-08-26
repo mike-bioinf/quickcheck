@@ -22,13 +22,15 @@ check_required_all <- function(){
 
 
 
-#' Checks the primitive types of the specified arguments of a calling function.
+#' Checks the internal types of the specified arguments of a calling function.
+#' @description
+#' Checks if the "primitive" (or internal) types obtained by applying the typeof function on the specified arguments are
+#' in concordance with the expected ones.
 #' @param args character vector reporting the arguments of the outer function to check.
 #' @param expected_types character vector with the expected types.
 #' @param numeric_correspondence numeric vector that allows to recycle expected_types following
 #'  its order and the numbers specified in this vector.
 #' @param null logical, whether args can be NULL or not in addiction to the "normal" expected type (default FALSE).
-#' @param alert_message String reporting the alert message. Its formatted by cli_bullets function.
 #' @inheritParams check_columns_presence
 #' @return NULL
 #' @export
@@ -64,7 +66,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
 
 
 
-#' Checks the classes of selected arguments of a calling function.
+#' Checks the classes of the selected arguments of a calling function.
 #' @inheritParams check_args_primitive_types
 #' @param expected_classes character vector with the expected classes (one for argument).
 #' @return NULL
@@ -140,8 +142,8 @@ check_numeric_args <- function(args, null = FALSE, alert_message = NULL, header 
 
 ### HELPERS ===================================================================================================================
 
-#' Helper of check_primitive_types to control the recycle of expected types and classes.
-#' Vector2 is recycled according to the numeric correspondence vector.
+#' Helper of check_primitive_types and check_args_classes to control the recycle of expected types and classes.
+#' Vector2 is recycled according to numeric_correspondence vector.
 #' @param vector1 first vector.
 #' @param vector2 second vector.
 #' @param numeric_correspondence number of times the elements of vector2 must be repeated in order.
