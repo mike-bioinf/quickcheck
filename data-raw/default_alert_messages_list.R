@@ -39,10 +39,10 @@ default_alert_messages <- list(
   check_columns_na = c("The following columns {cli::col_red('present NAs')}:", "{vec_arg}"),
   check_nrow_dfs = "{col_red('Different number')} of rows between {df1_arg} and {df2_arg}",
   check_uniform_list = "The list is {cli::col_red('not uniform')}.",
-  check_types_list = list(
-    version1 = c("{cli::col_red('Not all elements')} are of the expected type.",
+  check_predicate_list = list(
+    version1 = c("{cli::col_red('Not all elements')} satisfy the predicate.",
                   "{cli::col_blue('Set or fill')} the missing list element names for a more informative alert."),
-    version2 = c("The following {qty(errors)} element{?s} {?is/are} not of the expected type:", "{cli::col_magenta(errors)}")
+    version2 = c("The following {qty(errors)} element{?s} {?doesn't/don't} satisfy the predicate:", "{cli::col_magenta(errors)}")
   ),
   check_names_list = c("The provided list present {cli::col_red('missing element names')}.")
 )

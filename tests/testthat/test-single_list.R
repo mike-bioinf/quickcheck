@@ -1,7 +1,7 @@
 ### test for the single list functions.
 
 
-test_that("if check_uniform_list works", {
+test_that("check_uniform_list works", {
   numeric_list <- purrr::keep(cancer_list, is.numeric)
   character_list <- cancer_list[c("sex", "patient_id")]
 
@@ -12,14 +12,12 @@ test_that("if check_uniform_list works", {
 
 
 
-cli::test_that_cli(
-  desc = "if check_predicate_list function works",
+test_that("check_predicate_list function works",
   {
     clist <- cancer_list[c("visit_number", "patient_id")]
-    expect_snapshot_error(x = check_predicate_list(x = clist, predicate = is.character))
+    expect_snapshot_error(check_predicate_list(x = clist, predicate = is.character))
 
     names(clist)[1] <- NA
-    expect_snapshot_error(x = check_predicate_list(x = clist, predicate = is.character))
-  },
-  configs = "ansi"
+    expect_snapshot_error(check_predicate_list(x = clist, predicate = is.character))
+  }
 )
