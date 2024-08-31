@@ -117,7 +117,7 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
 #' @return NULL
 #' @export
 check_numeric_args <- function(args, null = FALSE, alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
-  calling_env <- rlang::caller_env(n = 1)
+  calling_env <- as.list(rlang::caller_env(n = 1))
   calling_args <- calling_env[args]
 
   if(null){
@@ -131,6 +131,7 @@ check_numeric_args <- function(args, null = FALSE, alert_message = NULL, header 
     alert <- generate_message(alert_message, "{col_magenta(err_args)}.")
     alert_generator("error", alert, n.evaluation_frame, quickalert, header = header, ...)
   }
+
   invisible(NULL)
 }
 
