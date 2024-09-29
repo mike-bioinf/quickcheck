@@ -3,6 +3,7 @@
 export(alert_generator)
 export(check_args_classes)
 export(check_args_primitive_types)
+export(check_columns_copresence)
 export(check_columns_key)
 export(check_columns_levels)
 export(check_columns_na)

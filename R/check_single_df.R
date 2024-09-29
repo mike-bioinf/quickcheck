@@ -44,7 +44,6 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 
 
 
-
 #' Checks if the specified dataframe columns are suitable as keys of only unique values.
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior evaluation.
 #' @param n.evaluation_frame
@@ -81,7 +80,6 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
 
   invisible(NULL)
 }
-
 
 
 
@@ -170,7 +168,6 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
 
   invisible(NULL)
 }
-
 
 
 

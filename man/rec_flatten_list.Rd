@@ -4,7 +4,7 @@
 \alias{rec_flatten_list}
 \title{Flatten recursively a list}
 \usage{
-rec_flatten_list(l, num = NULL, till_flat = TRUE, nam_spec = "{outer}_{inner}")
+rec_flatten_list(l, num = NULL, till_flat = TRUE, nam_spec = "{outer}${inner}")
 }
 \arguments{
 \item{l}{list to flatten.}

@@ -7,7 +7,7 @@
 check_presence_dfs(
   df1,
   df2,
-  col,
+  columns,
   direction = "first_in_second",
   raise = "error",
   alert_message = NULL,
@@ -21,7 +21,7 @@ check_presence_dfs(
 
 \item{df2}{second dataframe.}
 
-\item{col}{character vector referring the name of the columns to consider. If of length one
+\item{columns}{character vector with the names of the columns to consider. If of length one
 the single name is assumed for both dataframes. If of length two the first name is assumed
 for the first dataframe and the other for the second.}
 
@@ -33,8 +33,8 @@ Set the direction of the comparison.}
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
-\item{n.evaluation_frame}{numeric, defines the number of stack frame to look up for the evaluation of the glue expressions of the alert message.
-The default value points to the frame of this function.}
+\item{n.evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+The default value (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 

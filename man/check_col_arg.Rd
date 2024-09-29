@@ -2,19 +2,19 @@
 % Please edit documentation in R/check_cross_dfs.R
 \name{check_col_arg}
 \alias{check_col_arg}
-\title{Helper of 2 dfs checking functions that checks the different col argument scenario.}
+\title{Helper of 2 dfs checking functions that checks the different columns argument scenario.}
 \usage{
-check_col_arg(df1, df2, col)
+check_col_arg(df1, df2, columns)
 }
 \arguments{
 \item{df1}{first dataframe.}
 
 \item{df2}{second dataframe.}
 
-\item{col}{character vector referring the name of the columns to consider. If of length one
+\item{columns}{character vector with the names of the columns to consider. If of length one
 the single name is assumed for both dataframes. If of length two the first name is assumed
 for the first dataframe and the other for the second.}
 }
 \description{
-Helper of 2 dfs checking functions that checks the different col argument scenario.
+Helper of 2 dfs checking functions that checks the different columns argument scenario.
 }

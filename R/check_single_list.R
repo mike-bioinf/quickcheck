@@ -1,7 +1,6 @@
 ### Checking functions that work on a single list.
 
 
-
 #' Checks if the list elements are of the same class.
 #' @inheritParams check_columns_key
 #' @param x list.

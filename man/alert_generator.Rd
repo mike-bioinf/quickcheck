@@ -21,8 +21,8 @@ alert_generator(
 a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).}
 
 \item{n.evaluation_frame}{Integer indicating the stack frame in which the alert glue expressions are evaluated in respect to where is generated.
-So it indicates the number of frames to look up in the stack. By default is zero plus two.
-The addition is used in order to start counting from zero in the frame of the function that uses this function.}
+So it indicates the number of frames to look down in the stack. By default is zero plus two.
+The addition is used in order to start counting from zero from the frame of the function that uses this function.}
 
 \item{quickalert}{Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 The generation of "plain" alerts is useful when the checking functions are used inside other ones.

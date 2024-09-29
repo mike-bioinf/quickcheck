@@ -23,7 +23,7 @@ impose_accumulation_behavior(
 
 \item{header}{string to add as the header of the accumulated alert list.}
 
-\item{n.evaluation_frame}{numeric, defines the number of stack frame to look up for the evaluation
+\item{n.evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation
 of the glue expressions of the alert message. The default points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}
