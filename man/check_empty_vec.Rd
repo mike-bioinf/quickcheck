@@ -2,8 +2,7 @@
 % Please edit documentation in R/check_single_vector.R
 \name{check_empty_vec}
 \alias{check_empty_vec}
-\title{Checks the presence of "empty" values in one vector. Empty here is declined in its
-broader meaning indicating NAs, "", NULL and vector of length zero.}
+\title{Checks the presence of "empty" values in a vector}
 \usage{
 check_empty_vec(
   vec,
@@ -25,7 +24,8 @@ check_empty_vec(
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
-\item{n.evaluation_frame}{numeric, defines the number of calling frame to look up for the evaluation of the alert message.}
+\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 
@@ -35,6 +35,6 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 invisible NULL
 }
 \description{
-Checks the presence of "empty" values in one vector. Empty here is declined in its
+Checks the presence of "empty" values in a vector. Empty here is declined in its
 broader meaning indicating NAs, "", NULL and vector of length zero.
 }

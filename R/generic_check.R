@@ -4,6 +4,9 @@
 #' The alert is raise if the provided expression evaluates to FALSE.
 #' @inheritParams check_columns_presence
 #' @param expr expression to test. Must return a single boolean value.
+#' @param n.evaluation_frame
+#'  Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+#'  The default value (0) points to this function frame.
 #' @return Invisible NULL
 #' @export
 generic_check <- function(expr, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){

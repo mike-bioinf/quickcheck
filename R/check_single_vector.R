@@ -1,12 +1,14 @@
 ### Checking functions that works on single vector.
 
 
-#' Checks the presence of "empty" values in one vector. Empty here is declined in its
+
+#' Checks the presence of "empty" values in a vector
+#' @description
+#' Checks the presence of "empty" values in a vector. Empty here is declined in its
 #' broader meaning indicating NAs, "", NULL and vector of length zero.
-#' @inheritParams check_columns_presence
+#' @inheritParams check_columns_key
 #' @param vec Vector to check.
 #' @param vec_arg String indicating how to address vec in the alert message (default 'vec').
-#' @param n.evaluation_frame numeric, defines the number of calling frame to look up for the evaluation of the alert message.
 #' @param ... To pass additional argument to alert_generator function.
 #' @return invisible NULL
 #' @export

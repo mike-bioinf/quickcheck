@@ -30,9 +30,8 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of calling frame to look down for the evaluation of the glue expressions of the alert message.
-The default value points to the frame above the one of this function (to not modify if the default alert is desired).
-So to point to the frame below this function frame you have to set 2.}
+\item{n.evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+The default value (0) points to the frame above this function frame. So to point to the frame below this function frame you have to set 2.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 

@@ -14,16 +14,14 @@
 #' @param header
 #'  Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
 #' @param n.evaluation_frame
-#'  Numeric, defines the number of calling frame to look down for the evaluation of the glue expressions of the alert message.
-#'  The default value points to the frame above the one of this function (to not modify if the default alert is desired).
-#'  So to point to the frame below this function frame you have to set 2.
+#'  numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+#'  The default value (0) points to the frame above this function frame. So to point to the frame below this function frame you have to set 2.
 #' @param quickalert logical, whether the raised alert has to be of class "quickalert".
 #' @param ... To pass additional argument to alert_generator function.
 #' @return NULL.
 #' @export
 check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  alert_message <- generate_message(alert_message, "{col_magenta(missing_values)}")
   header <- generate_header(header, "The following {qty(missing_values)} column{?s} {?is/are} {col_red('missing')} in {vec_arg}:")
 
   check_presence_values(
@@ -47,8 +45,8 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 #' Checks if the specified dataframe columns are suitable as keys of only unique values.
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior evaluation.
 #' @param n.evaluation_frame
-#'  numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
-#'  The default value (0) points to this function frame.
+#'  Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+#'  The default (0) points to this function frame.
 #' @inheritParams check_columns_presence
 #' @return invisible NULL.
 #' @export
