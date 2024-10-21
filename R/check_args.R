@@ -80,15 +80,15 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
   calling_env <- rlang::caller_env(n = 1)
   class_args <- list()
 
-  for(a in args){
-    class_args[[a]] <- class(calling_env[[a]])
+  for(arg in args){
+    class_args[[arg]] <- class(calling_env[[arg]])
   }
 
   err_args <- c()
 
   for(i in seq_along(class_args)){
     if(null){
-      if(!expected_classes[i] %in% class_args[[i]] && expected_classes[i] != "NULL"){
+      if(!expected_classes[i] %in% class_args[[i]] && class_args[[i]] != "NULL"){
         err_args <- c(err_args, args[i])
       }
     } else {
