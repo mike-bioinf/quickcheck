@@ -1,25 +1,25 @@
 # Checking functions that works on 2 dataframes.
 
 
-
 #' Checks equal number of rows between two dataframes
 #' @param df1 first dataframe.
 #' @param df2 second dataframe.
+#' @param df1_arg String specifying how to address first df in the raised messages (default "df1").
+#' @param df2_arg String specifying how to address second df in the raised messages (default "df2").
 #' @inheritParams check_columns_key
 #' @return NULL
 #' @export
-check_nrow_dfs <- function(df1, df2, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  check_args_classes(c("df1", "df2"), "data.frame", 2, quickalert = FALSE)
+  check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)
 
   if(nrow(df1) != nrow(df2)){
-    alert_message <- generate_message(alert_message, "{cli::col_red('Different number')} of rows between df1 and df2.")
+    alert_message <- generate_message(alert_message, "{cli::col_red('Different number')} of rows between {df1_arg} and {df2_arg}.")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
   }
 
   invisible(NULL)
 }
-
 
 
 
@@ -29,15 +29,16 @@ check_nrow_dfs <- function(df1, df2, raise = "error", alert_message = NULL, n.ev
 #' @param header String to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
 #' @returns NULL
 #' @export
-check_columns_copresence <- function(df1, df2, columns = NULL, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", df2_arg = "df2", raise = "error",
+                                     alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  check_args_classes(c("df1", "df2"), "data.frame", 2, quickalert = FALSE)
+  check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)
   check_args_primitive_types("columns", "character", null = T, quickalert = FALSE)
 
   if(!is.null(columns)){
     df1 <- dplyr::select(df1, dplyr::any_of(columns))
     df2 <- dplyr::select(df2, dplyr::any_of(columns))
-    if(length(df1) == 0 && length(df2) == 0) cli::cli_abort("{cli::qty(columns)} {? /None of} {columns} {?is not/is} found in df1 and df2.")
+    if(length(df1) == 0 && length(df2) == 0) cli::cli_abort("{cli::qty(columns)} {? /None of} {columns} {?is not/is} found in {df1_arg} and {df2_arg}.")
   }
 
   all_cols <- c(colnames(df1), colnames(df2))
@@ -54,7 +55,6 @@ check_columns_copresence <- function(df1, df2, columns = NULL, raise = "error", 
 
 
 
-
 #' Perform an ordered cross-checking between the values of two columns of two dataframes.
 #' @description
 #' The function allows to check the presence of all values of the selected column of one dataframe
@@ -68,9 +68,10 @@ check_columns_copresence <- function(df1, df2, columns = NULL, raise = "error", 
 #' @inheritParams check_columns_key
 #' @return NULL
 #' @export
-check_presence_dfs <- function(df1, df2, columns, direction = "first_in_second", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_presence_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", columns, direction = "first_in_second", raise = "error",
+                               alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  check_args_classes(c("df1", "df2"), "data.frame", 2, quickalert = FALSE)
+  check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)
   rlang::arg_match(arg = direction, values = c("first_in_second", "second_in_first", "bidirectional"), multiple = FALSE)
   check_col_arg(df1, df2, columns)
 
@@ -90,11 +91,11 @@ check_presence_dfs <- function(df1, df2, columns, direction = "first_in_second",
   }
 
   if(!is.null(missing_values2)){
-    header2 <- "The following {qty(missing_values2)} value{?s} {?is/are} {cli::col_red('missing')} in df2:"
+    header2 <- "The following {qty(missing_values2)} value{?s} {?is/are} {cli::col_red('missing')} in {df2_arg}:"
   }
 
   if(!is.null(missing_values1)){
-    header1 <- "The following {qty(missing_values1)} value{?s} {?is/are} {cli::col_red('missing')} in df1:"
+    header1 <- "The following {qty(missing_values1)} value{?s} {?is/are} {cli::col_red('missing')} in {df1_arg}:"
     missing_values1 <- c(missing_values1, "\n")
   }
 
@@ -105,7 +106,6 @@ check_presence_dfs <- function(df1, df2, columns, direction = "first_in_second",
 
   invisible(NULL)
 }
-
 
 
 
@@ -136,4 +136,3 @@ check_col_arg <- function(df1, df2, columns){
 
   invisible(NULL)
 }
-
