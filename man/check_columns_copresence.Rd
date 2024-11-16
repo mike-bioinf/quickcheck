@@ -8,6 +8,8 @@ check_columns_copresence(
   df1,
   df2,
   columns = NULL,
+  df1_arg = "df1",
+  df2_arg = "df2",
   raise = "error",
   alert_message = NULL,
   header = "default",
@@ -22,6 +24,10 @@ check_columns_copresence(
 \item{df2}{second dataframe.}
 
 \item{columns}{Character vector of columns to consider. If NULL all columns are considered (default NULL).}
+
+\item{df1_arg}{String specifying how to address first df in the raised messages (default "df1").}
+
+\item{df2_arg}{String specifying how to address second df in the raised messages (default "df2").}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 

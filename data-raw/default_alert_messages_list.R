@@ -34,9 +34,10 @@ default_alert_messages <- list(
                           "{vec_arg} --> {col_magenta(err_value)}"),
   check_columns_levels = c("The following levels are {col_red('missing')} from the reported columns:",
                              "{vec_arg} --> {col_magenta(missing_values)}"),
+  check_columns_na = c("The following columns {cli::col_red('present NAs')}:", "{vec_arg}"),
   check_columns_predicate = c("The predicate function {col_red('returned FALSE')} for the following {qty(false_cols)} column{?s}:",
                               "{col_magenta(false_cols)}"),
-  check_columns_na = c("The following columns {cli::col_red('present NAs')}:", "{vec_arg}"),
+  check_empty_df = c("{df_arg} is empty."),
   check_nrow_dfs = "{col_red('Different number')} of rows between {df1_arg} and {df2_arg}",
   check_uniform_list = "The list is {cli::col_red('not uniform')}.",
   check_predicate_list = list(

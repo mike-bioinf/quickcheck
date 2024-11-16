@@ -1,7 +1,6 @@
 ### Checking functions that work on a single dataframe.
 
 
-
 #' Checks the presence of one or multiple columns in a dataframe
 #' @param df Dataframe passed in the outer function.
 #' @param columns Character string reporting the column/s name.
@@ -41,7 +40,6 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 
 
 
-
 #' Checks if the specified dataframe columns are suitable as keys of only unique values.
 #' @param na.rm logical (default TRUE), indicating if NA must be excluded prior evaluation.
 #' @param n.evaluation_frame
@@ -78,7 +76,6 @@ check_columns_key <- function(df, columns, na.rm = TRUE, raise = "error", alert_
 
   invisible(NULL)
 }
-
 
 
 
@@ -133,7 +130,6 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
 
 
-
 #' Checks the presence of NAs in the specified columns
 #' @inheritParams check_columns_key
 #' @return invisible NULL
@@ -169,7 +165,6 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
 
 
 
-
 #' Checks if all columns satisfy the predicate.
 #' @inheritParams check_columns_key
 #' @param predicate function that works on vectors and return a single logical value.
@@ -187,9 +182,25 @@ check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "err
 
   if(length(false_cols) > 0){
     alert_message <- generate_message(alert_message, "{col_magenta(false_cols)}")
-    header = generate_header(header, "The predicate function {cli::col_red('returned FALSE')} for the following {qty(false_cols)} column{?s}:")
+    header <- generate_header(header, "The predicate function {cli::col_red('returned FALSE')} for the following {qty(false_cols)} column{?s}:")
     alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header, ...)
   }
 
+  invisible(NULL)
+}
+
+
+
+#' Check if the dataframe is empty
+#' @inheritParams check_columns_key
+#' @param df_arg String specifying how to address df in the raised messages (default "df").
+#' @return invisible NULL
+#' @export
+check_empty_df <- function(df, df_arg = "df", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+  rlang::check_required(df)
+  if(nrow(df) == 0L){
+    alert_message <- generate_message(alert_message, "{df_arg} is empty.")
+    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
+  }
   invisible(NULL)
 }
