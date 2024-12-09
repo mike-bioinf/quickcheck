@@ -4,13 +4,21 @@
 \alias{is_empty_vec}
 \title{Checks the presence of null values in a vector in a broader sense.}
 \usage{
-is_empty_vec(vec)
+is_empty_vec(vec, na = TRUE, empty_string = TRUE, len = TRUE, null = TRUE)
 }
 \arguments{
 \item{vec}{vector to test.}
+
+\item{na}{Boolean, indicating whether to perform the check for NAs (default TRUE).}
+
+\item{empty_string}{Boolean, indicating whether to perform the check for empty string "" (default TRUE).}
+
+\item{len}{Boolean, indicating whether to perform the check for 0 length (default TRUE).}
+
+\item{null}{Boolean, indicating whether to perform the check for NULL value (default TRUE).}
 }
 \value{
-A single boolean (FALSE even if one value is empty, TRUE otherwise).
+A single boolean, FALSE even if one value is empty, TRUE otherwise.
 }
 \description{
 Checks the presence of null values in a vector in a broader sense.

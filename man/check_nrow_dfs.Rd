@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_cross_dfs.R
 \name{check_nrow_dfs}
 \alias{check_nrow_dfs}
-\title{Checks equal number of rows between two dataframes}
+\title{Check equal number of rows between two dataframes}
 \usage{
 check_nrow_dfs(
   df1,
@@ -11,7 +11,7 @@ check_nrow_dfs(
   df2_arg = "df2",
   raise = "error",
   alert_message = NULL,
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -30,7 +30,7 @@ check_nrow_dfs(
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
@@ -38,5 +38,5 @@ The default (0) points to this function frame.}
 \item{...}{To pass additional argument to alert_generator function.}
 }
 \description{
-Checks equal number of rows between two dataframes
+Check equal number of rows between two dataframes
 }

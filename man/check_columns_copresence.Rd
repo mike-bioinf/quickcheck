@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_cross_dfs.R
 \name{check_columns_copresence}
 \alias{check_columns_copresence}
-\title{Checks duplicated column names in 2 dataframes}
+\title{Check duplicated column names in two dataframes}
 \usage{
 check_columns_copresence(
   df1,
@@ -13,7 +13,7 @@ check_columns_copresence(
   raise = "error",
   alert_message = NULL,
   header = "default",
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -36,7 +36,7 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{String to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
@@ -44,5 +44,5 @@ The default (0) points to this function frame.}
 \item{...}{To pass additional argument to alert_generator function.}
 }
 \description{
-Checks duplicated column names in 2 dataframes
+Check duplicated column names in two dataframes
 }

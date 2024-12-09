@@ -1,7 +1,7 @@
 # Evalution frame mechanisms works as intended [ansi]
 
     Code
-      check_presence_values(vec = df[["sex"]], values = c("maschio"), raise = "message",
+      check_presence_vec(vec = df[["sex"]], values = c("maschio"), raise = "message",
       alert_message = "{missing_values} glue substitution is evaluated correctly as maschio.",
       header = NULL)
     Message
@@ -12,9 +12,9 @@
     Code
       f <- (function() {
         frame <- "frame_down"
-        check_presence_values(vec = df$sex, values = "maschio", raise = "message",
+        check_presence_vec(vec = df$sex, values = "maschio", raise = "message",
         header = NULL, alert_message = "the glue expression is correctly evaluated in {frame}/frame_up.",
-        n.evaluation_frame = 2)
+        n_evaluation_frame = 2)
       })
       f()
     Message

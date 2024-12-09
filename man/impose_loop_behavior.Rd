@@ -12,7 +12,7 @@ impose_loop_behavior(
   raise = "error",
   alert_message = NULL,
   header = "default",
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -35,7 +35,7 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation
+\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation
 of the glue expressions of the alert message. The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}

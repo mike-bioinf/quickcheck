@@ -13,12 +13,10 @@ testthat::test_that("impose_logical_behavior returns expected logical value", {
   )
 
   expect_error(
-    object = impose_logical_behavior(check_presence_values(vec = df[["sex"]], values = "men", raise = "messagesssss")),
+    object = impose_logical_behavior(check_presence_vec(vec = df[["sex"]], values = "men", raise = "messagesssss")),
     regexp = '`type` must be one of "error", "warning", or "message", not "messagesssss".'
   )
 })
-
-
 
 
 
@@ -28,8 +26,6 @@ testthat::test_that("impose_logical_behavior return error when the wrong alert i
     regexp = "The following column is missing in df: visit_numb"
   )
 })
-
-
 
 
 

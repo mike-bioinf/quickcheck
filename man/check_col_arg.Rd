@@ -11,7 +11,7 @@ check_col_arg(df1, df2, columns)
 
 \item{df2}{second dataframe.}
 
-\item{columns}{character vector with the names of the columns to consider. If of length one
+\item{columns}{Character vector with the names of the columns to consider. If of length one
 the single name is assumed for both dataframes. If of length two the first name is assumed
 for the first dataframe and the other for the second.}
 }

@@ -2,14 +2,16 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_empty_df}
 \alias{check_empty_df}
-\title{Check if the dataframe is empty}
+\title{Check whether the dataframe is empty}
 \usage{
 check_empty_df(
   df,
+  dim = TRUE,
+  null = TRUE,
   df_arg = "df",
   raise = "error",
   alert_message = NULL,
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -17,12 +19,18 @@ check_empty_df(
 \arguments{
 \item{df}{Dataframe passed in the outer function.}
 
+\item{dim}{Boolean, indicating whether to perform the check for 0 length dimensions (rows and columns) (default TRUE).}
+
+\item{null}{Boolean, indicating whether to perform the check for NULL values (default TRUE).}
+
+\item{df_arg}{String specifying how to address df in the raised messages (default "df").}
+
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
@@ -33,5 +41,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Check if the dataframe is empty
+Check whether the dataframe is empty
 }

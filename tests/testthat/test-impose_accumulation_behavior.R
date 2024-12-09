@@ -1,7 +1,6 @@
 ### tests for impose_accumulation_behavior
 
 
-
 testthat::test_that(desc = "impose_accumulation_behavior accumulate alerts", {
   expect_snapshot_error({
     columns <- c("sex", "visit_number")
@@ -9,7 +8,7 @@ testthat::test_that(desc = "impose_accumulation_behavior accumulate alerts", {
     impose_accumulation_behavior(
       header = "this is the header.",
       expr = for(n in columns){
-        check_presence_values(
+        check_presence_vec(
           vec = df[[n]],
           values = col_levels[[n]],
           vec_arg = n,
@@ -24,14 +23,13 @@ testthat::test_that(desc = "impose_accumulation_behavior accumulate alerts", {
 
 
 
-
 testthat::test_that("impose_accumulation_behavior launch unexpected error alert", {
   expect_snapshot_error({
     columns <- c("sex", "visit_number")
     col_levels <- list(sex = c("femmina", "male"))
     impose_accumulation_behavior(
       expr = for(n in columns){
-        check_presence_values(
+        check_presence_vec(
           vec = df[[n]],
           values = col_levels[[n]],
           vec_arg = n,
@@ -50,7 +48,7 @@ testthat::test_that("impose_accumulation_behavior correctly doesn't raise alert"
   col_levels <- list(sex = c("male"))
   res <- impose_accumulation_behavior(
     expr = for(n in columns){
-      check_presence_values(
+      check_presence_vec(
         vec = df[[n]],
         values = col_levels[[n]],
         vec_arg = n,
@@ -59,7 +57,6 @@ testthat::test_that("impose_accumulation_behavior correctly doesn't raise alert"
       )})
   expect_null(res)
 })
-
 
 
 
@@ -74,7 +71,6 @@ test_that("impose_accumulation_behavior launch one time the provided alert messa
     )
   )
 })
-
 
 
 

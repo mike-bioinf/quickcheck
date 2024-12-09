@@ -1,28 +1,18 @@
 #' Checks the presence of null values in a vector in a broader sense.
 #' @param vec vector to test.
-#' @return A single boolean (FALSE even if one value is empty, TRUE otherwise).
+#' @param na Boolean, indicating whether to perform the check for NAs (default TRUE).
+#' @param empty_string Boolean, indicating whether to perform the check for empty string "" (default TRUE).
+#' @param len Boolean, indicating whether to perform the check for 0 length (default TRUE).
+#' @param null Boolean, indicating whether to perform the check for NULL value (default TRUE).
+#' @return A single boolean, FALSE even if one value is empty, TRUE otherwise.
 #' @export
-is_empty_vec <- function(vec){
-
-  if("" %in% vec){
-    return(TRUE)
-  }
-
-  if(is.null(vec)){
-    return(TRUE)
-  }
-
-  if(length(vec) == 0){
-    return(TRUE)
-  }
-
-  if(any(is.na(vec))){
-    return(TRUE)
-  }
-
+is_empty_vec <- function(vec, na = TRUE, empty_string = TRUE, len = TRUE, null = TRUE){
+  if(empty_string && "" %in% vec) return(TRUE)
+  if(null && is.null(vec)) return(TRUE)
+  if(len && length(vec) == 0) return(TRUE)
+  if(na && any(is.na(vec))) return(TRUE)
   return(FALSE)
 }
-
 
 
 

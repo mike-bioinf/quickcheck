@@ -1,27 +1,26 @@
 ### Checking functions that work on a single list.
 
 
-#' Checks if the list elements are of the same class.
+#' Checks whether the list elements are of the same class
 #' @inheritParams check_columns_key
 #' @param x list.
 #' @param flatten logical, whether to flat out the list before doing the check (default TRUE).
 #' @return invisible NULL.
 #' @export
-check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_args_primitive_types(c("x", "flatten"), c("list", "logical"), quickalert = FALSE)
 
-  if(flatten) x <- rec_flatten_list(x, till_flat = T)
+  if(flatten) x <- rec_flatten_list(x, till_flat = TRUE)
   types <- lapply(x, class)
   identity <- purrr::reduce(types, custom_identical)
 
   if(identity == "NotEqualClass"){
     alert_message <- generate_message(alert_message, "The list is {cli::col_red('not uniform')}.")
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
+    alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
   }
 
   invisible(NULL)
 }
-
 
 
 
@@ -38,7 +37,7 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 #'  but instead it will raise a more general alert.
 #' @return invisible NULL.
 #' @export
-check_predicate_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_predicate_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_primitive_types(c("x", "flatten"), c("list", "logical"), quickalert = FALSE)
   check_args_classes("predicate", "function", quickalert = FALSE)
@@ -65,7 +64,7 @@ check_predicate_list <- function(x, predicate, flatten = TRUE, raise = "error", 
       header <- generate_header(header, "The following {qty(errors)} element{?s} {?doesn't/don't} satisfy the predicate:")
       alert_message <- generate_message(alert_message, "{cli::col_magenta(errors)}.")
     }
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header, ...)
+    alert_generator(raise, alert_message, n_evaluation_frame, quickalert, header = header, ...)
   }
 
   invisible(NULL)
@@ -73,27 +72,24 @@ check_predicate_list <- function(x, predicate, flatten = TRUE, raise = "error", 
 
 
 
-
-#' Checks that the list have all elements with defined names
-#' @description The function checks for NULL, NA and "".
+#' Checks that a list has all elements with "defined" names
+#' @description The function checks for NULL, NA and "" erroneous names.
 #' @inheritParams check_uniform_list
 #' @return invisible NULL.
 #' @export
-check_names_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_names_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(x)
   check_args_primitive_types("x", "list", quickalert = FALSE)
 
-  if(flatten) x <- rec_flatten_list(x, till_flat = T)
+  if(flatten) x <- rec_flatten_list(x, till_flat = TRUE)
 
   if(is_empty_vec(names(x))){
     alert_message <- generate_message(alert_message, "The provided list present {cli::col_red('missing element names')}.")
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
+    alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
   }
 
   invisible(NULL)
 }
-
-
 
 
 
@@ -104,9 +100,5 @@ check_names_list <- function(x, flatten = TRUE, raise = "error", alert_message =
 #' @param x first element.
 #' @param y second element.
 custom_identical <- function(x, y){
-  if(identical(x, y)){
-    return(y)
-  } else {
-    return("NotEqualClass")
-  }
+  if(identical(x, y)) return(y) else return("NotEqualClass")
 }

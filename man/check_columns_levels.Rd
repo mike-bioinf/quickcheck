@@ -11,7 +11,7 @@ check_columns_levels(
   raise = "error",
   alert_message = NULL,
   header = "default",
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -21,7 +21,7 @@ check_columns_levels(
 
 \item{columns}{Character string reporting the column/s name.}
 
-\item{col_levels}{list of character vector reporting the expected levels for each column specified in columns.
+\item{col_levels}{List of character vectors reporting the expected levels for each column specified in columns.
 The element of the list must be nominated according to the columns names which they refer.}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
@@ -31,7 +31,7 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}

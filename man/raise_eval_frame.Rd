@@ -4,10 +4,10 @@
 \alias{raise_eval_frame}
 \title{Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip stack frames.}
 \usage{
-raise_eval_frame(n.evaluation_frame, up)
+raise_eval_frame(n_evaluation_frame, up)
 }
 \arguments{
-\item{n.evaluation_frame}{Integer indicating the stack frame in which the alert glue expressions are evaluated in respect to where is generated.
+\item{n_evaluation_frame}{Integer indicating the stack frame in which the alert glue expressions are evaluated in respect to where is generated.
 So it indicates the number of frames to look down in the stack. By default is zero plus two.
 The addition is used in order to start counting from zero from the frame of the function that uses this function.}
 

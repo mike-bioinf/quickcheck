@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_cross_dfs.R
 \name{check_presence_dfs}
 \alias{check_presence_dfs}
-\title{Perform an ordered cross-checking between the values of two columns of two dataframes.}
+\title{Perform an ordered cross-checking between the values of two columns of two dataframes}
 \usage{
 check_presence_dfs(
   df1,
@@ -13,7 +13,7 @@ check_presence_dfs(
   direction = "first_in_second",
   raise = "error",
   alert_message = NULL,
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -27,19 +27,18 @@ check_presence_dfs(
 
 \item{df2_arg}{String specifying how to address second df in the raised messages (default "df2").}
 
-\item{columns}{character vector with the names of the columns to consider. If of length one
+\item{columns}{Character vector with the names of the columns to consider. If of length one
 the single name is assumed for both dataframes. If of length two the first name is assumed
 for the first dataframe and the other for the second.}
 
-\item{direction}{string equal to one of 'first_in_second', 'second_in_first' or 'bidirectional'.
-Set the direction of the comparison.}
+\item{direction}{String equal to one of 'first_in_second', 'second_in_first' or 'bidirectional'. Set the direction of the comparison.}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}

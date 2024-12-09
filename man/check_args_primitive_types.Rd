@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_args.R
 \name{check_args_primitive_types}
 \alias{check_args_primitive_types}
-\title{Checks the internal types of the specified arguments of a calling function.}
+\title{Check the internal types of selected arguments of a calling function}
 \usage{
 check_args_primitive_types(
   args,
@@ -11,7 +11,7 @@ check_args_primitive_types(
   null = FALSE,
   alert_message = NULL,
   header = "default",
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -31,14 +31,17 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 
 \item{...}{To pass additional argument to alert_generator function.}
 }
+\value{
+invisible NULL.
+}
 \description{
-Checks if the "primitive" (or internal) types obtained by applying the typeof function on the specified arguments are
+Checks if the "primitive" or "internal" types obtained by applying the typeof function on the specified arguments are
 in concordance with the expected ones.
 }

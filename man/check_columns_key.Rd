@@ -2,16 +2,16 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_columns_key}
 \alias{check_columns_key}
-\title{Checks if the specified dataframe columns are suitable as keys of only unique values.}
+\title{Checks whether the specified dataframe columns are suitable as keys of only unique values}
 \usage{
 check_columns_key(
   df,
   columns,
-  na.rm = TRUE,
+  na_rm = TRUE,
   raise = "error",
   alert_message = NULL,
   header = "default",
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   ...
 )
@@ -21,7 +21,7 @@ check_columns_key(
 
 \item{columns}{Character string reporting the column/s name.}
 
-\item{na.rm}{logical (default TRUE), indicating if NA must be excluded prior evaluation.}
+\item{na_rm}{Boolean, indicating if NA must be excluded prior evaluation (default TRUE).}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
@@ -30,7 +30,7 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n.evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
@@ -41,5 +41,5 @@ The default (0) points to this function frame.}
 invisible NULL.
 }
 \description{
-Checks if the specified dataframe columns are suitable as keys of only unique values.
+Checks whether the specified dataframe columns are suitable as keys of only unique values
 }

@@ -7,7 +7,7 @@
 alert_generator(
   type,
   alert_message,
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE,
   sign = TRUE,
   header = NULL,
@@ -20,7 +20,7 @@ alert_generator(
 \item{alert_message}{Single character vector that follow the cli format. It possible to pass a list of strings to have automatically
 a numbered or nominated list display (otherwise for character vectors use list_format = TRUE).}
 
-\item{n.evaluation_frame}{Integer indicating the stack frame in which the alert glue expressions are evaluated in respect to where is generated.
+\item{n_evaluation_frame}{Integer indicating the stack frame in which the alert glue expressions are evaluated in respect to where is generated.
 So it indicates the number of frames to look down in the stack. By default is zero plus two.
 The addition is used in order to start counting from zero from the frame of the function that uses this function.}
 
@@ -28,7 +28,9 @@ The addition is used in order to start counting from zero from the frame of the 
 The generation of "plain" alerts is useful when the checking functions are used inside other ones.
 This allow that only the main check raises quickalerts.}
 
-\item{sign}{Logical, whether to add the sign to the first element of the alert (default TRUE).}
+\item{sign}{Logical, whether to add the sign to the first element of the alert (default TRUE).
+Note that in case of errors the "!" sign is used as default by cli. This sign is changed with "X" if sign is TRUE,
+but with sign = FALSE it cannot be suppressed.}
 
 \item{header}{Character string to add at the beginning of the alert message (default NULL).}
 

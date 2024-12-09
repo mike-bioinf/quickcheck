@@ -9,7 +9,7 @@ impose_additional_alert(
   message,
   margin = 1,
   raise = "error",
-  n.evaluation_frame = 0,
+  n_evaluation_frame = 0,
   quickalert = TRUE
 )
 }
@@ -22,7 +22,7 @@ impose_additional_alert(
 
 \item{raise}{type of the accumulated final alert if any.}
 
-\item{n.evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation
+\item{n_evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation
 of the glue expressions of the alert message. The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}

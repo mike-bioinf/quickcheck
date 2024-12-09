@@ -1,7 +1,7 @@
 # Checking functions that works on 2 dataframes.
 
 
-#' Checks equal number of rows between two dataframes
+#' Check equal number of rows between two dataframes
 #' @param df1 first dataframe.
 #' @param df2 second dataframe.
 #' @param df1_arg String specifying how to address first df in the raised messages (default "df1").
@@ -9,13 +9,13 @@
 #' @inheritParams check_columns_key
 #' @return NULL
 #' @export
-check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)
 
   if(nrow(df1) != nrow(df2)){
     alert_message <- generate_message(alert_message, "{cli::col_red('Different number')} of rows between {df1_arg} and {df2_arg}.")
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
+    alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
   }
 
   invisible(NULL)
@@ -23,17 +23,17 @@ check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "
 
 
 
-#' Checks duplicated column names in 2 dataframes
+#' Check duplicated column names in two dataframes
 #' @inheritParams check_nrow_dfs
 #' @param columns Character vector of columns to consider. If NULL all columns are considered (default NULL).
 #' @param header String to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
 #' @returns NULL
 #' @export
 check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", df2_arg = "df2", raise = "error",
-                                     alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
+                                     alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)
-  check_args_primitive_types("columns", "character", null = T, quickalert = FALSE)
+  check_args_primitive_types("columns", "character", null = TRUE, quickalert = FALSE)
 
   if(!is.null(columns)){
     df1 <- dplyr::select(df1, dplyr::any_of(columns))
@@ -47,7 +47,7 @@ check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", 
   if(length(duplicated_cols) > 0){
     header <- generate_header(header, "The following columns are present in both dataframes:")
     alert_message <- generate_message(alert_message, "{cli::col_red(duplicated_cols)}.")
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header)
+    alert_generator(raise, alert_message, n_evaluation_frame, quickalert, header = header)
   }
 
   invisible(NULL)
@@ -55,21 +55,20 @@ check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", 
 
 
 
-#' Perform an ordered cross-checking between the values of two columns of two dataframes.
+#' Perform an ordered cross-checking between the values of two columns of two dataframes
 #' @description
 #' The function allows to check the presence of all values of the selected column of one dataframe
 #' in the other. If direction equal 'bidirectional' a bidirectional check is performed.
 #' @inheritParams check_nrow_dfs
-#' @param columns character vector with the names of the columns to consider. If of length one
+#' @param columns Character vector with the names of the columns to consider. If of length one
 #'  the single name is assumed for both dataframes. If of length two the first name is assumed
 #'  for the first dataframe and the other for the second.
-#' @param direction string equal to one of 'first_in_second', 'second_in_first' or 'bidirectional'.
-#'  Set the direction of the comparison.
+#' @param direction String equal to one of 'first_in_second', 'second_in_first' or 'bidirectional'. Set the direction of the comparison.
 #' @inheritParams check_columns_key
 #' @return NULL
 #' @export
 check_presence_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", columns, direction = "first_in_second", raise = "error",
-                               alert_message = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+                               alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)
   rlang::arg_match(arg = direction, values = c("first_in_second", "second_in_first", "bidirectional"), multiple = FALSE)
@@ -101,7 +100,7 @@ check_presence_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", colum
 
   if(!is.null(missing_values1) || !is.null(missing_values2)){
     alert_message <- c(header1, missing_values1, header2, missing_values2)
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, ...)
+    alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
   }
 
   invisible(NULL)

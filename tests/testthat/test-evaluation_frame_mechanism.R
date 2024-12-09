@@ -4,7 +4,7 @@
 cli::test_that_cli("Evalution frame mechanisms works as intended", configs = "ansi", code = {
   expect_snapshot(
     {
-      check_presence_values(
+      check_presence_vec(
         vec = df[["sex"]],
         values = c("maschio"),
         raise = "message",
@@ -23,13 +23,13 @@ cli::test_that_cli("Evaluation frame mechanisms works as intended (part2)", conf
     {
       f <- function(){
         frame <- "frame_down"
-        check_presence_values(
+        check_presence_vec(
           vec = df$sex,
           values = "maschio",
           raise = "message",
           header = NULL,
           alert_message = "the glue expression is correctly evaluated in {frame}/frame_up.",
-          n.evaluation_frame = 2
+          n_evaluation_frame = 2
         )
       }
       f()

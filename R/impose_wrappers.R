@@ -1,11 +1,11 @@
 ### Set of wrappers of check functions that alter or add features to their behavior.
+
+
+
 # IMPORTANT NOTE:
 # The tryCatch interrupts the execution of code, therefore if a 'quickalert' condition is
 # hit before an other non 'quickalert' condition, this will not be seen by impose_logical_behavior.
 # This means that alert_generator must be the last call in the check-functions.
-
-
-
 
 #' Alter the behavior of checking conditions from raising alerts to return boolean values.
 #' @description
@@ -53,20 +53,20 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 #' @param raise type of the accumulated final alert if any.
 #' @param alert_message String or list reporting the alert message (by default the function build a list).
 #' @param header string to add as the header of the accumulated alert list.
-#' @param n.evaluation_frame numeric, defines the number of stack frame to look down for the evaluation
+#' @param n_evaluation_frame numeric, defines the number of stack frame to look down for the evaluation
 #'  of the glue expressions of the alert message. The default (0) points to this function frame.
 #' @param quickalert logical, whether the raised alert is of class "quickalert" (default TRUE).
 #' @param ... To pass additional argument to alert_generator function.
 #' @return invisible NULL
 #' @export
-impose_accumulation_behavior <- function(expr, raise = "error", alert_message = NULL, header = NULL, n.evaluation_frame = 0, quickalert = TRUE, ...){
+impose_accumulation_behavior <- function(expr, raise = "error", alert_message = NULL, header = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   accumulated_cond <- list()
 
   withCallingHandlers(
     expr = {expr},
     condition = function(cond){
       if(!"quickalert" %in% class(cond)){
-        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
+        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{rlang::cnd_message(cond)}"))
       } else {
         accumulated_cond <<- c(accumulated_cond, list(cond$message))
         rlang::cnd_muffle(cond)
@@ -76,7 +76,7 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 
   if(length(accumulated_cond) > 0){
     message <- generate_message(alert_message, accumulated_cond)
-    alert_generator(raise, message, n.evaluation_frame, quickalert, header = header, ...)
+    alert_generator(raise, message, n_evaluation_frame, quickalert, header = header, ...)
   }
 
   invisible(NULL)
@@ -97,11 +97,11 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 #'  as well as 'alert-oriented' arguments (raise, header, quickalert and sign) are already set and therefore must NOT be specified.
 #' @param element_nameroot String reporting the base name to use for the list elements without a name in case
 #'  they must be pointed in the alert message (default "element").
-#' @param n.evaluation_frame Numeric, defines the number of stack frame to look down for the evaluation
+#' @param n_evaluation_frame Numeric, defines the number of stack frame to look down for the evaluation
 #'  of the glue expressions of the alert message. The default (0) points to this function frame.
 #' @return invisible NULL
 #' @export
-impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element_nameroot = "element", raise = "error", alert_message = NULL, header = "default", n.evaluation_frame = 0, quickalert = TRUE, ...){
+impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element_nameroot = "element", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_args_primitive_types(c("x", "check_arg_list"), "list", 2, quickalert = FALSE)
   check_args_classes("check_func", "function", quickalert = FALSE)
   listnames <- names(x)
@@ -128,7 +128,7 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
   if(length(failed_elements) > 0){
     header <- generate_header(header, "The checking action {cli::col_red('failed')} for the following elements:")
     alert_message <- generate_message(alert_message, "{cli::col_magenta(failed_elements)}.")
-    alert_generator(raise, alert_message, n.evaluation_frame, quickalert, header = header, ...)
+    alert_generator(raise, alert_message, n_evaluation_frame, quickalert, header = header, ...)
   }
 
   invisible(NULL)
@@ -146,7 +146,7 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
 #' @details The alert sign of the resulting message (if any) is decided by the type of alert raised by the checking function in expr.
 #'  This has been chosen to prevent that one must set sign argument to FALSE for the checking function all times.
 #' @export
-impose_additional_alert <- function(expr, message, margin = 1, raise = "error", n.evaluation_frame = 0, quickalert = TRUE){
+impose_additional_alert <- function(expr, message, margin = 1, raise = "error", n_evaluation_frame = 0, quickalert = TRUE){
 
   if(!margin %in% c(1, 2)){
     cli::cli_abort(c("x" = "margin must be equal to 1 or 2."))
@@ -163,7 +163,7 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
         } else {
           complete_alert <- c(break_condition_message(cond), message)
         }
-        alert_generator(raise, complete_alert, n.evaluation_frame, quickalert, sign = FALSE)
+        alert_generator(raise, complete_alert, n_evaluation_frame, quickalert, sign = FALSE)
         rlang::cnd_muffle(cond)
       }
     }
@@ -178,9 +178,7 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
 
 
 
-
 ### HELPERS ============================================================================================================================================
-
 
 #' Inspect and return the "classic" nature of conditions. Helper of impose_logical_behavior for re-signalling conditions.
 #' Here classic means error, warning or message classes.
