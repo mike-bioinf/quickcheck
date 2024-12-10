@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_cross_vecs.R
 \name{check_identical_vecs}
 \alias{check_identical_vecs}
-\title{Checks whether two vectors are identical}
+\title{Check whether two vectors are identical}
 \usage{
 check_identical_vecs(
   vec1,
@@ -38,7 +38,7 @@ The default (0) points to this function frame.}
 \item{...}{not of direct use.}
 }
 \description{
-Checks whether two vectors are identical
+Check whether two vectors are identical
 }
 \details{
 The function checks for \strong{identical} vectors using the identical function.

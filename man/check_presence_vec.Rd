@@ -2,13 +2,12 @@
 % Please edit documentation in R/check_single_vec.R
 \name{check_presence_vec}
 \alias{check_presence_vec}
-\title{Checks the presence of the specified values in a vector.}
+\title{Check the presence of the specified values in a vector.}
 \usage{
 check_presence_vec(
   vec,
   values,
   vec_arg = "vec",
-  na_rm = TRUE,
   raise = "error",
   alert_message = NULL,
   header = "default",
@@ -23,8 +22,6 @@ check_presence_vec(
 \item{values}{Character vector of values searched in vec.}
 
 \item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
-
-\item{na_rm}{Boolean indicating if NAs must be excluded prior checking from both vec and values (default TRUE).}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
@@ -44,5 +41,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Checks the presence of the specified values in a vector.
+Check the presence of the specified values in a vector.
 }

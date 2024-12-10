@@ -15,7 +15,7 @@ default_alert_messages <- list(
     "The following {qty(err_args)} argument{?s} {?is/are} {col_red('not integer-like')}:",
     "{col_magenta(names(err_args))}."),
   check_empty_vec =
-    "There are empty values in {vec_arg}.",
+    "{vec_arg} is or contains an empty entity.",
   check_na_vec =
     "There are NAs in {vec_arg}.",
   check_duplicate_vec = c(

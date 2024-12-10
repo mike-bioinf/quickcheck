@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_list.R
 \name{check_names_list}
 \alias{check_names_list}
-\title{Checks that a list has all elements with "defined" names}
+\title{Check list elements names}
 \usage{
 check_names_list(
   x,
@@ -17,7 +17,7 @@ check_names_list(
 \arguments{
 \item{x}{list.}
 
-\item{flatten}{logical, whether to flat out the list before doing the check (default TRUE).}
+\item{flatten}{Boolean, whether to flat out the list before doing the check (default TRUE).}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
@@ -35,5 +35,6 @@ The default (0) points to this function frame.}
 invisible NULL.
 }
 \description{
-The function checks for NULL, NA and "" erroneous names.
+The function checks whether some list element names are empty.
+In particular it checks for NULL, NA and "" erroneous names.
 }

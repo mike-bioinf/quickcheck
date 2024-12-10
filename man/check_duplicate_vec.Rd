@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_vec.R
 \name{check_duplicate_vec}
 \alias{check_duplicate_vec}
-\title{Checks the presence of duplicated values in a vector.}
+\title{Check the presence of duplicated values in a vector}
 \usage{
 check_duplicate_vec(
   vec,
@@ -41,5 +41,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Checks the presence of duplicated values in a vector.
+Check the presence of duplicated values in a vector
 }

@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_cross_vecs.R
 \name{check_equality_vecs}
 \alias{check_equality_vecs}
-\title{Checks the ordered equality of two vectors}
+\title{Check the ordered equality of two vectors}
 \usage{
 check_equality_vecs(
   vec1,

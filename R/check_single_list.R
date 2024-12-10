@@ -1,10 +1,10 @@
 ### Checking functions that work on a single list.
 
 
-#' Checks whether the list elements are of the same class
+#' Check whether the list elements are of the same class(es)
 #' @inheritParams check_columns_key
 #' @param x list.
-#' @param flatten logical, whether to flat out the list before doing the check (default TRUE).
+#' @param flatten Boolean, whether to flat out the list before doing the check (default TRUE).
 #' @return invisible NULL.
 #' @export
 check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
@@ -24,17 +24,17 @@ check_uniform_list <- function(x, flatten = TRUE, raise = "error", alert_message
 
 
 
-#' Checks all the elements of the list through a predicate function.
+#' Check list elements through a predicate function
 #' @description
 #' The function doesn't perform any check on the argument provided in predicate.
 #' Therefore the correctness of the provided function fall on the user.
 #' @inheritParams check_uniform_list
 #' @param predicate A predicate function, usually an "is.something" function.
-#' @param header Character string to add at the beginning of the alert message.
-#'  If "default" the default header is used, otherwise the string passed in.
+#' @param header Character string to add at the beginning of the alert message. 
+#' If "default" the default header is used, otherwise the string passed in.
 #' @details
-#'  The alert will not points the eventual elements in error if no or some elements names are missing,
-#'  but instead it will raise a more general alert.
+#' The alert will not points the eventual elements in error if no or some elements names are empty,
+#' but instead it will raise a more general alert.
 #' @return invisible NULL.
 #' @export
 check_predicate_list <- function(x, predicate, flatten = TRUE, raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
@@ -72,8 +72,10 @@ check_predicate_list <- function(x, predicate, flatten = TRUE, raise = "error", 
 
 
 
-#' Checks that a list has all elements with "defined" names
-#' @description The function checks for NULL, NA and "" erroneous names.
+#' Check list elements names
+#' @description 
+#' The function checks whether some list element names are empty.
+#' In particular it checks for NULL, NA and "" erroneous names.
 #' @inheritParams check_uniform_list
 #' @return invisible NULL.
 #' @export

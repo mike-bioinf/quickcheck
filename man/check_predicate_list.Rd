@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_list.R
 \name{check_predicate_list}
 \alias{check_predicate_list}
-\title{Checks all the elements of the list through a predicate function.}
+\title{Check list elements through a predicate function}
 \usage{
 check_predicate_list(
   x,
@@ -21,7 +21,7 @@ check_predicate_list(
 
 \item{predicate}{A predicate function, usually an "is.something" function.}
 
-\item{flatten}{logical, whether to flat out the list before doing the check (default TRUE).}
+\item{flatten}{Boolean, whether to flat out the list before doing the check (default TRUE).}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
@@ -46,6 +46,6 @@ The function doesn't perform any check on the argument provided in predicate.
 Therefore the correctness of the provided function fall on the user.
 }
 \details{
-The alert will not points the eventual elements in error if no or some elements names are missing,
+The alert will not points the eventual elements in error if no or some elements names are empty,
 but instead it will raise a more general alert.
 }

@@ -1,7 +1,7 @@
 ### Checking functions that work on a single dataframe.
 
 
-#' Checks the presence of one or multiple columns in a dataframe
+#' Check the presence of one or multiple columns in a dataframe
 #' @param df Dataframe passed in the outer function.
 #' @param columns Character string reporting the column/s name.
 #' @param df_arg String specifying how to address df in the raised messages (default "df").
@@ -40,7 +40,7 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 
 
 
-#' Checks whether the specified dataframe columns are suitable as keys of only unique values
+#' Check whether the specified dataframe columns are suitable as keys of only unique values
 #' @param na_rm
 #'  Boolean, indicating if NA must be excluded prior evaluation (default TRUE).
 #' @param n_evaluation_frame
@@ -80,7 +80,7 @@ check_columns_key <- function(df, columns, na_rm = TRUE, raise = "error", alert_
 
 
 
-#' Checks the presence of the specified values in the selected columns.
+#' Check the presence of the specified values in the selected columns.
 #' @inheritParams check_columns_key
 #' @param col_levels
 #'  List of character vectors reporting the expected levels for each column specified in columns.
@@ -119,7 +119,6 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
       check_presence_vec(
         vec = df[[n]],
         values = col_levels[[n]],
-        na_rm = FALSE,
         vec_arg = n,
         alert_message = "{vec_arg} --> {cli::col_magenta(missing_values)}",
         header = NULL,
@@ -134,7 +133,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
 
 
-#' Checks the presence of NAs in the specified columns
+#' Check the presence of NAs in the specified columns
 #' @inheritParams check_columns_key
 #' @return invisible NULL
 #' @export
@@ -169,7 +168,7 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
 
 
 
-#' Checks if all columns satisfy the predicate.
+#' Check whether dataframe columns satisfy a predicate
 #' @inheritParams check_columns_key
 #' @param predicate function that works on vectors and return a single logical value.
 #' @param inverse logical, whether to invert the check direction in the sense that the predicate

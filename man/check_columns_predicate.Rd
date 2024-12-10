@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_columns_predicate}
 \alias{check_columns_predicate}
-\title{Checks if all columns satisfy the predicate.}
+\title{Check whether dataframe columns satisfy a predicate}
 \usage{
 check_columns_predicate(
   df,
@@ -42,5 +42,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Checks if all columns satisfy the predicate.
+Check whether dataframe columns satisfy a predicate
 }

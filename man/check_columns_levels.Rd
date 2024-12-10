@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_columns_levels}
 \alias{check_columns_levels}
-\title{Checks the presence of the specified values in the selected columns.}
+\title{Check the presence of the specified values in the selected columns.}
 \usage{
 check_columns_levels(
   df,
@@ -39,5 +39,5 @@ The default (0) points to this function frame.}
 \item{...}{To pass additional argument to alert_generator function.}
 }
 \description{
-Checks the presence of the specified values in the selected columns.
+Check the presence of the specified values in the selected columns.
 }

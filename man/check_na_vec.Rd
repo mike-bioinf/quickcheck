@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_vec.R
 \name{check_na_vec}
 \alias{check_na_vec}
-\title{Checks the presence of NAs in a vector.}
+\title{Check the presence of NAs in a vector}
 \usage{
 check_na_vec(
   vec,
@@ -35,5 +35,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Checks the presence of NAs in a vector.
+Check the presence of NAs in a vector
 }

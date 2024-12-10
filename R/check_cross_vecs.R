@@ -1,7 +1,7 @@
 # Checking functions that works on 2 vectors.
 
 
-#' Checks whether two vectors have the same length
+#' Check whether two vectors have the same length
 #' @param vec1 First vector.
 #' @param vec2 Second vector.
 #' @param vec1_arg string indicating how to address vec1 in the raised message (default 'vec1').
@@ -21,7 +21,7 @@ check_length_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2", 
 
 
 
-#' Checks whether two vectors are identical
+#' Check whether two vectors are identical
 #' @details
 #' The function checks for **identical** vectors using the identical function.
 #' @inheritParams check_length_vecs
@@ -37,7 +37,7 @@ check_identical_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2
 
 
 
-#' Checks the ordered equality of two vectors
+#' Check the ordered equality of two vectors
 #' @description
 #' Equality is verified using "==", meaning that both the order of values and the presence of duplicates are taken into account.
 #' To ignore order or duplicates, consider using the "check_unordered_equality_vecs" function.
@@ -67,10 +67,10 @@ check_equality_vecs <- function(vec1, vec2, vec1_arg = "vec1", vec2_arg = "vec2"
 
 
 
-#' Checks the unordered equality of two vectors
+#' Check the unordered equality of two vectors
 #' @description
 #' The equality is checked thought the %in% operator in both senses.
-#' The "%in%" operator alloes for automatic coercion. To control this behaviour see the coerce parameter.
+#' The "%in%" operator uses automatic coercion. To control this behaviour see the coerce parameter.
 #' The vectors orders as well as the presence of repeated values have no importance.
 #' If the order and the repetitions have a role see "check_equality_vecs" function.
 #' @inheritParams check_length_vecs

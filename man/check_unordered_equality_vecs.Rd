@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_cross_vecs.R
 \name{check_unordered_equality_vecs}
 \alias{check_unordered_equality_vecs}
-\title{Checks the unordered equality of two vectors}
+\title{Check the unordered equality of two vectors}
 \usage{
 check_unordered_equality_vecs(
   vec1,
@@ -47,7 +47,7 @@ invisible NULL
 }
 \description{
 The equality is checked thought the \%in\% operator in both senses.
-The "\%in\%" operator alloes for automatic coercion. To control this behaviour see the coerce parameter.
+The "\%in\%" operator uses automatic coercion. To control this behaviour see the coerce parameter.
 The vectors orders as well as the presence of repeated values have no importance.
 If the order and the repetitions have a role see "check_equality_vecs" function.
 }

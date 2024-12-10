@@ -1,10 +1,11 @@
 ### Checking functions that works on single vector.
 
 
-#' Checks the presence of "empty" values in a vector
+#' Check the emptyness of a vector 
 #' @description
-#' Checks the presence of "empty" values in a vector. Empty here is declined in its
-#' broader meaning indicating NAs, "", NULL and vector of length zero.
+#' Checks the emptyness of avector and or the presence of "empty" values in it.
+#' Empty here is declined in its broader meaning indicating NAs, "", NULL and vector of length zero.
+#' This interpretation can be fine tuned using the parameters function.
 #' @inheritParams check_columns_key
 #' @inheritParams is_empty_vec
 #' @param vec Vector to check.
@@ -14,7 +15,7 @@
 check_empty_vec <- function(vec, na = TRUE, empty_string = TRUE, len = TRUE, null = TRUE, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
   if(is_empty_vec(vec, na, empty_string, len, null)){
-    alert_message <- generate_message(alert_message, "There are empty values in {vec_arg}.")
+    alert_message <- generate_message(alert_message, "{vec_arg} is or contains an empty entity.")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
   }
   invisible(NULL)
@@ -22,7 +23,7 @@ check_empty_vec <- function(vec, na = TRUE, empty_string = TRUE, len = TRUE, nul
 
 
 
-#' Checks the presence of NAs in a vector.
+#' Check the presence of NAs in a vector
 #' @inheritParams check_empty_vec
 #' @return invisible NULL
 #' @export
@@ -37,7 +38,7 @@ check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = 
 
 
 
-#' Checks the presence of duplicated values in a vector.
+#' Check the presence of duplicated values in a vector
 #' @inheritParams check_empty_vec
 #' @param header Character string to add at the beginning of the alert message.
 #' @param na_rm Boolean indicating if NA must be excluded prior checking (default TRUE).
@@ -110,24 +111,17 @@ check_length_vec <- function(vec, exact_len = NULL, min_len = NULL, max_len = NU
 
 
 
-#' Checks the presence of the specified values in a vector.
+#' Check the presence of the specified values in a vector.
 #' @inheritParams check_empty_vec
 #' @param values Character vector of values searched in vec.
-#' @param na_rm Boolean indicating if NAs must be excluded prior checking from both vec and values (default TRUE).
 #' @param header Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
 #' @return invisible NULL
 #' @export
-check_presence_vec <- function(vec, values, vec_arg = "vec", na_rm = TRUE, raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
+check_presence_vec <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-
-  if(na_rm) {
-    vec <- stats::na.omit(vec)
-    values <- stats::na.omit(values)
-  }
-
   unique_vec <- unique(vec)
 
-  if(!all(values %in% vec)){
+  if(!all(values %in% unique_vec)){
     missing_values <- setdiff(values, unique_vec)
     alert_message <- generate_message(alert_message, "{col_magenta(missing_values)}")
     header <- generate_header(header, "The following {qty(missing_values)} value{?s} {?is/are} {cli::col_red('missing')} in {vec_arg}:")
@@ -139,7 +133,7 @@ check_presence_vec <- function(vec, values, vec_arg = "vec", na_rm = TRUE, raise
 
 
 
-#' Checks if a vector is sorted or not.
+#' Check whether a vector is sorted or not
 #' @inheritParams check_length_vec
 #' @param decreasing Logical indicating whether the expect sorted order is decreasing or not (default FALSE).
 #' @return invisible NULL

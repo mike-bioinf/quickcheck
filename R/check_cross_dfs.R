@@ -38,7 +38,7 @@ check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", 
   if(!is.null(columns)){
     df1 <- dplyr::select(df1, dplyr::any_of(columns))
     df2 <- dplyr::select(df2, dplyr::any_of(columns))
-    if(length(df1) == 0 && length(df2) == 0) cli::cli_abort("{cli::qty(columns)} {? /None of} {columns} {?is not/is} found in {df1_arg} and {df2_arg}.")
+    if(length(df1) == 0 && length(df2) == 0) cli::cli_abort("{cli::qty(columns)} {? /None of} {columns} {?is not/are} found in {df1_arg} and {df2_arg}.")
   }
 
   all_cols <- c(colnames(df1), colnames(df2))

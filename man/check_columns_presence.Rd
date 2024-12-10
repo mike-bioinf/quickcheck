@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_columns_presence}
 \alias{check_columns_presence}
-\title{Checks the presence of one or multiple columns in a dataframe}
+\title{Check the presence of one or multiple columns in a dataframe}
 \usage{
 check_columns_presence(
   df,
@@ -41,5 +41,5 @@ The default value (0) points to the frame above this function frame. So to point
 NULL.
 }
 \description{
-Checks the presence of one or multiple columns in a dataframe
+Check the presence of one or multiple columns in a dataframe
 }

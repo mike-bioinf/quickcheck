@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_list.R
 \name{check_uniform_list}
 \alias{check_uniform_list}
-\title{Checks whether the list elements are of the same class}
+\title{Check whether the list elements are of the same class(es)}
 \usage{
 check_uniform_list(
   x,
@@ -17,7 +17,7 @@ check_uniform_list(
 \arguments{
 \item{x}{list.}
 
-\item{flatten}{logical, whether to flat out the list before doing the check (default TRUE).}
+\item{flatten}{Boolean, whether to flat out the list before doing the check (default TRUE).}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
@@ -35,5 +35,5 @@ The default (0) points to this function frame.}
 invisible NULL.
 }
 \description{
-Checks whether the list elements are of the same class
+Check whether the list elements are of the same class(es)
 }

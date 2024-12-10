@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_vec.R
 \name{check_sorted_vec}
 \alias{check_sorted_vec}
-\title{Checks if a vector is sorted or not.}
+\title{Check whether a vector is sorted or not}
 \usage{
 check_sorted_vec(
   vec,
@@ -38,5 +38,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Checks if a vector is sorted or not.
+Check whether a vector is sorted or not
 }

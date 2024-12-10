@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_cross_vecs.R
 \name{check_length_vecs}
 \alias{check_length_vecs}
-\title{Checks whether two vectors have the same length}
+\title{Check whether two vectors have the same length}
 \usage{
 check_length_vecs(
   vec1,
@@ -41,5 +41,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Checks whether two vectors have the same length
+Check whether two vectors have the same length
 }

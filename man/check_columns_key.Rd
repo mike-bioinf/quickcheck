@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_columns_key}
 \alias{check_columns_key}
-\title{Checks whether the specified dataframe columns are suitable as keys of only unique values}
+\title{Check whether the specified dataframe columns are suitable as keys of only unique values}
 \usage{
 check_columns_key(
   df,
@@ -41,5 +41,5 @@ The default (0) points to this function frame.}
 invisible NULL.
 }
 \description{
-Checks whether the specified dataframe columns are suitable as keys of only unique values
+Check whether the specified dataframe columns are suitable as keys of only unique values
 }

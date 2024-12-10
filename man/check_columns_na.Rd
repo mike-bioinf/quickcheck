@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_df.R
 \name{check_columns_na}
 \alias{check_columns_na}
-\title{Checks the presence of NAs in the specified columns}
+\title{Check the presence of NAs in the specified columns}
 \usage{
 check_columns_na(
   df,
@@ -38,5 +38,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Checks the presence of NAs in the specified columns
+Check the presence of NAs in the specified columns
 }
