@@ -1,7 +1,8 @@
 #' Check that arguments are supplied
 #' @description
 #' Checks the presence of all arguments that have no default values in the upper calling function
-#' and stops if find some of them, indicating their names. Ensemble version of rlang 'check_required'.
+#' and stops if find some of them, indicating their names. Ensemble version of rlang 'check_required' function.
+#' @return invisible NULL.
 #' @export
 check_required_all <- function(){
   envlist <- as.list(rlang::caller_env(n = 1))
@@ -9,6 +10,29 @@ check_required_all <- function(){
   if(length(envmiss) > 0){
     cli::cli_abort(c("x" = "{col_red(names(envmiss))} {?is/are} absent but must be supplied."))
   }
+  invisible(NULL)
+}
+
+
+
+#' Check incompatible arguments
+#' @description
+#' In rare occasion when one argument is set, others must remain NULL.
+#' This function checks whether not compatible arguments are set in a caller function.
+#' @inheritParams check_args_primitive_types
+#' @return invisible NULL.
+#' @export
+check_args_incompatible <- function(args, alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
+  if(!is.character(args)) cli::cli_abort(c("x" = "args must be of character type"))
+  calling_args <- as.list(rlang::caller_env(1))[args]
+  lgl_null_args <- purrr::map_lgl(calling_args, ~ is.null(.x))
+
+  if(sum(!lgl_null_args) > 1){
+    incompatible_args <- names(lgl_null_args[!lgl_null_args])
+    alert_message <- generate_message(alert_message, "Incompatible arguments detected: {incompatible_args}")
+    alert_generator("error", alert_message, n_evaluation_frame, quickalert, ...)
+  }
+
   invisible(NULL)
 }
 
@@ -66,7 +90,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
 #' @export
 check_args_classes <- function(args, expected_classes, numeric_correspondence = NULL, null = FALSE, alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   if(!is.character(args)) cli::cli_abort(c("x" = "args must be of character type"))
-  
+
   if(!is.null(numeric_correspondence)){
     expected_classes <- control_recycle(args, expected_classes, numeric_correspondence)
   } else if(length(args) != length(expected_classes)){
@@ -134,10 +158,10 @@ check_numeric_args <- function(args, null = FALSE, alert_message = NULL, header 
 
 
 #' Check selected arguments of a calling function to be integer-like
-#' @description 
-#' Allows to check for integer-like arguments according to R tolerance. 
+#' @description
+#' Allows to check for integer-like arguments according to R tolerance.
 #' Integer like numbers are either integer typed value (e.g. 10L) or integer like double (e.g. 10.0).
-#' @details 
+#' @details
 #' Double values with small imprecision like 10.00000000000001 are considered integer due to R's numerical tolerance.
 #' Therefore this function is not optimal in such extreme cases.
 #' @inheritParams check_args_primitive_types
@@ -175,7 +199,7 @@ check_integerish_args <- function(args, null = FALSE, alert_message = NULL, head
 #' @param numeric_correspondence number of times the elements of vector2 must be repeated in order.
 control_recycle <- function(vector1, vector2, numeric_correspondence){
   if(!is.numeric(numeric_correspondence)){
-   cli::cli_abort(c("x" = "numeric_correspondence must be a numeric vector"))
+    cli::cli_abort(c("x" = "numeric_correspondence must be a numeric vector"))
   }
 
   if(length(vector1) != sum(numeric_correspondence)){

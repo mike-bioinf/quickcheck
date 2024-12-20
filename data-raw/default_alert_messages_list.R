@@ -5,6 +5,8 @@ default_alert_messages <- list(
   check_args_primitive_types = c(
     "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}: ",
     "{col_magenta(err_args)}"),
+  check_args_incompatible =
+    "Incompatible arguments detected: {incompatible_args}",
   check_args_classes = c(
     "The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:",
     "{col_magenta(err_args)}"),

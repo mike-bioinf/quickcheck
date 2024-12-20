@@ -2,6 +2,7 @@
 
 export(alert_generator)
 export(check_args_classes)
+export(check_args_incompatible)
 export(check_args_primitive_types)
 export(check_columns_copresence)
 export(check_columns_key)

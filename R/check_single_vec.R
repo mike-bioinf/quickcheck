@@ -1,9 +1,9 @@
 ### Checking functions that works on single vector.
 
 
-#' Check the emptyness of a vector 
+#' Check the emptiness of a vector
 #' @description
-#' Checks the emptyness of avector and or the presence of "empty" values in it.
+#' Checks the emptiness of a vector and or the presence of "empty" values in it.
 #' Empty here is declined in its broader meaning indicating NAs, "", NULL and vector of length zero.
 #' This interpretation can be fine tuned using the parameters function.
 #' @inheritParams check_columns_key
@@ -81,6 +81,7 @@ check_length_vec <- function(vec, exact_len = NULL, min_len = NULL, max_len = NU
   }
 
   check_integerish_args(c("exact_len", "min_len", "max_len"), null = TRUE, quickalert = FALSE)
+
   if(na_rm) vec <- stats::na.omit(vec)
   if(unique) vec <- unique(vec)
 

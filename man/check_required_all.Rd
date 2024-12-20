@@ -6,7 +6,10 @@
 \usage{
 check_required_all()
 }
+\value{
+invisible NULL.
+}
 \description{
 Checks the presence of all arguments that have no default values in the upper calling function
-and stops if find some of them, indicating their names. Ensemble version of rlang 'check_required'.
+and stops if find some of them, indicating their names. Ensemble version of rlang 'check_required' function.
 }
