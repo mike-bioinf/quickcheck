@@ -67,7 +67,7 @@ check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", 
 #' @inheritParams check_columns_key
 #' @return NULL
 #' @export
-check_presence_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", columns, direction = "first_in_second", raise = "error",
+check_presence_dfs <- function(df1, df2, columns, direction = "first_in_second", df1_arg = "df1", df2_arg = "df2", raise = "error",
                                alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)

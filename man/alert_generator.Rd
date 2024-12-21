@@ -9,8 +9,8 @@ alert_generator(
   alert_message,
   n_evaluation_frame = 0,
   quickalert = TRUE,
-  sign = TRUE,
   header = NULL,
+  sign = TRUE,
   list_format = FALSE
 )
 }
@@ -28,11 +28,11 @@ The addition is used in order to start counting from zero from the frame of the 
 The generation of "plain" alerts is useful when the checking functions are used inside other ones.
 This allow that only the main check raises quickalerts.}
 
+\item{header}{Character string to add at the beginning of the alert message (default NULL).}
+
 \item{sign}{Logical, whether to add the sign to the first element of the alert (default TRUE).
 Note that in case of errors the "!" sign is used as default by cli. This sign is changed with "X" if sign is TRUE,
 but with sign = FALSE it cannot be suppressed.}
-
-\item{header}{Character string to add at the beginning of the alert message (default NULL).}
 
 \item{list_format}{Logical, whether to apply the list format style, which includes numbers or names
 of the alert message elements to be represented in violet in a bullet list.}

@@ -9,9 +9,9 @@ check_length_vec(
   exact_len = NULL,
   min_len = NULL,
   max_len = NULL,
-  vec_arg = "vec",
   na_rm = TRUE,
   unique = FALSE,
+  vec_arg = "vec",
   raise = "error",
   alert_message = NULL,
   n_evaluation_frame = 0,
@@ -28,11 +28,11 @@ check_length_vec(
 
 \item{max_len}{Integer indicating the maximum expected vector length (default NULL).}
 
-\item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
-
 \item{na_rm}{Boolean indicating if NA must be excluded prior checking (default TRUE).}
 
-\item{unique}{Boolean indicating whether to perform the check on the unique value of vec (default FALSE).}
+\item{unique}{Boolean indicating whether to perform the check only on unique values (default FALSE).}
+
+\item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 

@@ -23,7 +23,7 @@
 #'  of the alert message elements to be represented in violet in a bullet list.
 #' @return Raise a condition.
 #' @export
-alert_generator <- function(type, alert_message, n_evaluation_frame = 0, quickalert = TRUE, sign = TRUE, header = NULL, list_format = FALSE){
+alert_generator <- function(type, alert_message, n_evaluation_frame = 0, quickalert = TRUE, header = NULL, sign = TRUE, list_format = FALSE){
   rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
   alert_funcs <- generate_alertfunc_list()
   my_alert_func <- alert_funcs[[type]]

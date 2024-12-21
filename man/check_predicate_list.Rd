@@ -7,7 +7,9 @@
 check_predicate_list(
   x,
   predicate,
+  inverse = FALSE,
   flatten = TRUE,
+  xarg = "list",
   raise = "error",
   alert_message = NULL,
   header = "default",
@@ -21,15 +23,18 @@ check_predicate_list(
 
 \item{predicate}{A predicate function, usually an "is.something" function.}
 
+\item{inverse}{Boolean, whether to invert the check direction in the sense that the predicate must be not satisfied for all the elements (default FALSE).}
+
 \item{flatten}{Boolean, whether to flat out the list before doing the check (default TRUE).}
+
+\item{xarg}{String, indicating how to refer x in the alert messages (default "list").}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
-\item{header}{Character string to add at the beginning of the alert message.
-If "default" the default header is used, otherwise the string passed in.}
+\item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
 \item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
@@ -42,10 +47,10 @@ The default (0) points to this function frame.}
 invisible NULL.
 }
 \description{
+Checks whether the predicate returns TRUE for all elements of the list.
 The function doesn't perform any check on the argument provided in predicate.
-Therefore the correctness of the provided function fall on the user.
+Therefore the correctness of the provided function falls on the user.
 }
 \details{
-The alert will not points the eventual elements in error if no or some elements names are empty,
-but instead it will raise a more general alert.
+The alert will not points the eventual elements in error if no or some elements names are empty, but instead it will raise a more general alert.
 }

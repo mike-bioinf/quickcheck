@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_vec.R
 \name{check_empty_vec}
 \alias{check_empty_vec}
-\title{Check the emptyness of a vector}
+\title{Check the emptiness of a vector}
 \usage{
 check_empty_vec(
   vec,
@@ -47,7 +47,7 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Checks the emptyness of avector and or the presence of "empty" values in it.
+Checks the emptiness of a vector and or the presence of "empty" values in it.
 Empty here is declined in its broader meaning indicating NAs, "", NULL and vector of length zero.
 This interpretation can be fine tuned using the parameters function.
 }

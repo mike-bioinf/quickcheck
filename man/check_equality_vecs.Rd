@@ -7,10 +7,12 @@
 check_equality_vecs(
   vec1,
   vec2,
-  vec1_arg = "vec1",
-  vec2_arg = "vec2",
+  unique = FALSE,
+  sort = FALSE,
   recycle = FALSE,
   coerce = FALSE,
+  vec1_arg = "vec1",
+  vec2_arg = "vec2",
   raise = "error",
   alert_message = NULL,
   quickalert = TRUE,
@@ -23,15 +25,19 @@ check_equality_vecs(
 
 \item{vec2}{Second vector.}
 
-\item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
+\item{unique}{Boolean indicating whether to perform the check only on unique values (default FALSE).}
 
-\item{vec2_arg}{string indicating how to address vec2 in the raised message (default 'vec2)'.}
+\item{sort}{Boolean, whether to sort the vectors before performing the check (default FALSE).}
 
 \item{recycle}{Boolean indicating whether to allow vector recycling (default FALSE).}
 
 \item{coerce}{Boolean indicating whether the two vectors can be coerced during the check (default FALSE).
 If FALSE a check on vector classes is performed before the main check. This check is performed using the identical function.
 Therefore the vector classes must be perfectly identical in order to pass the check.}
+
+\item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
+
+\item{vec2_arg}{string indicating how to address vec2 in the raised message (default 'vec2)'.}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
@@ -43,7 +49,7 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 \item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
-\item{...}{not of direct use.}
+\item{...}{To pass additional argument to alert_generator function.}
 }
 \value{
 invisible NULL
@@ -52,5 +58,9 @@ invisible NULL
 Equality is verified using "==", meaning that both the order of values and the presence of duplicates are taken into account.
 To ignore order or duplicates, consider using the "check_unordered_equality_vecs" function.
 In addition the equality operator allows for automating recycling and coercion, behaviors that can be indirectly controlled
-performing preliminary checks using the recycle and coerce parameters.
+performing preliminary checks using the recycle and coerce parameters (check on equality of vector lengths and classes, respectively).
+Note that unique arg has precedence over the recycle one, meaning the duplicate values are removed before the check on lengths is performed.
+}
+\details{
+NAs are always removed since comparisons involving them result always in NAs using the equality operator (a warning is raised).
 }

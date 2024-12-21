@@ -7,6 +7,8 @@
 check_length_vecs(
   vec1,
   vec2,
+  na_rm = FALSE,
+  unique = FALSE,
   vec1_arg = "vec1",
   vec2_arg = "vec2",
   raise = "error",
@@ -20,6 +22,10 @@ check_length_vecs(
 \item{vec1}{First vector.}
 
 \item{vec2}{Second vector.}
+
+\item{na_rm}{Boolean indicating if NA must be excluded prior checking (default FALSE).}
+
+\item{unique}{Boolean indicating whether to perform the check only on unique values (default FALSE).}
 
 \item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
 
@@ -35,7 +41,7 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 \item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
-\item{...}{not of direct use.}
+\item{...}{To pass additional argument to alert_generator function.}
 }
 \value{
 invisible NULL

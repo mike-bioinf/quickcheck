@@ -7,9 +7,10 @@
 check_unordered_equality_vecs(
   vec1,
   vec2,
+  na_rm = FALSE,
+  coerce = FALSE,
   vec1_arg = "vec1",
   vec2_arg = "vec2",
-  coerce = FALSE,
   raise = "error",
   alert_message = NULL,
   quickalert = TRUE,
@@ -22,13 +23,15 @@ check_unordered_equality_vecs(
 
 \item{vec2}{Second vector.}
 
-\item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
-
-\item{vec2_arg}{string indicating how to address vec2 in the raised message (default 'vec2)'.}
+\item{na_rm}{Boolean indicating if NA must be excluded prior checking (default FALSE).}
 
 \item{coerce}{Boolean indicating whether the two vectors can be coerced during the check (default FALSE).
 If FALSE a check on vector classes is performed before the main check. This check is performed using the identical function.
 Therefore the vector classes must be perfectly identical in order to pass the check.}
+
+\item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
+
+\item{vec2_arg}{string indicating how to address vec2 in the raised message (default 'vec2)'.}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
@@ -40,14 +43,14 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 \item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
-\item{...}{not of direct use.}
+\item{...}{To pass additional argument to alert_generator function.}
 }
 \value{
 invisible NULL
 }
 \description{
 The equality is checked thought the \%in\% operator in both senses.
-The "\%in\%" operator uses automatic coercion. To control this behaviour see the coerce parameter.
+The "\%in\%" operator uses automatic coercion. To control this behavior see the coerce parameter.
 The vectors orders as well as the presence of repeated values have no importance.
 If the order and the repetitions have a role see "check_equality_vecs" function.
 }

@@ -7,6 +7,7 @@
 check_uniform_list(
   x,
   flatten = TRUE,
+  xarg = "list",
   raise = "error",
   alert_message = NULL,
   n_evaluation_frame = 0,
@@ -18,6 +19,8 @@ check_uniform_list(
 \item{x}{list.}
 
 \item{flatten}{Boolean, whether to flat out the list before doing the check (default TRUE).}
+
+\item{xarg}{String, indicating how to refer x in the alert messages (default "list").}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 

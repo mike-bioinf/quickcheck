@@ -24,16 +24,27 @@ default_alert_messages <- list(
     "The following {qty(length(dup_values))} value{?s} {?is/are} duplicated in {vec_arg}",
     "{cli::col_magenta(dup_values)}"),
   check_length_vec = c(
-    "Vector of length {exact_len} expected, {length(vec)} detected.",
-    "Vector of minumum length {min_len} expected, {length(vec)} detected.",
-    "Vector of maximimum length {max_len} expected, {length(vec)} detected."),
+    "{vec_arg} of length {exact_len} expected, {length(vec)} detected.",
+    "{vec_arg} of minimum length {min_len} expected, {length(vec)} detected.",
+    "{vec_arg} of maximum length {max_len} expected, {length(vec)} detected."
+    ),
   check_presence_vec = c(
     "The following {qty(missing_values)} value{?s} {?is/are} missing in {vec_arg}:",
     "{col_magenta(missing_values)}"),
   check_sorted_vec =
     "{vec_arg} is not sorted.",
+  check_predicate_vec = c(
+    version1 = c(
+      "{cli::col_red('Not all elements')} [NOT] satisfy the predicate in {vec_arg}.",
+      "{cli::col_blue('Set or fill')} the missing element names for a more informative alert."
+      ),
+    version2 = c(
+      "The following {qty(errors)} element{?s} {?doesn't/don't} satisfy the [inverse of the] predicate in {vec_arg}:",
+      "{cli::col_magenta(errors)}"
+      )
+    ),
   check_length_vecs =
-    "{vec1_arg} and {vec2_arg} have {col_red('different length')}",
+    "{vec1_arg} and {vec2_arg} have {cli::col_red('different length')}",
   check_identical_vecs =
     "{vec1_arg} and {vec2_arg} are {cli::col_red('not identical')}.",
   check_equality_vecs =
@@ -59,19 +70,35 @@ default_alert_messages <- list(
   check_columns_predicate = c(
     "The predicate function {col_red('returned FALSE')} for the following {qty(false_cols)} column{?s}:",
     "{col_magenta(false_cols)}"),
+  check_columns_number = c(
+    "{df_arg} of length {exact_len} expected, {length(df)} detected.",
+    "{df_arg} of minimum length {min_len} expected, {length(df)} detected.",
+    "{df_arg} of maximum length {max_len} expected, {length(df)} detected."
+    ),
   check_empty_df =
     "{df_arg} is empty.",
   check_nrow_dfs =
     "{col_red('Different number')} of rows between {df1_arg} and {df2_arg}",
   check_uniform_list =
-    "The list is {cli::col_red('not uniform')}.",
+    "{xarg} is {cli::col_red('not uniform')}.",
   check_predicate_list = list(
-    version1 = c("{cli::col_red('Not all elements')} satisfy the predicate.",
-                  "{cli::col_blue('Set or fill')} the missing list element names for a more informative alert."),
-    version2 = c("The following {qty(errors)} element{?s} {?doesn't/don't} satisfy the predicate:", "{cli::col_magenta(errors)}")
-  ),
+    version1 = c(
+      "{cli::col_red('Not all elements')} [NOT] satisfy the predicate in {xarg}.",
+      "{cli::col_blue('Set or fill')} the missing element names for a more informative alert."
+      ),
+    version2 = c(
+      "The following {qty(errors)} element{?s} {?doesn't/don't} satisfy the [inverse of the] predicate in {xarg}:",
+      "{cli::col_magenta(errors)}"
+      )
+    ),
   check_names_list =
-    "The provided list present {cli::col_red('missing element names')}."
+    "{xarg} present {cli::col_red('missing element names')}.",
+  check_length_list = c(
+    "{xarg} of length {exact_len} expected, {length(x)} detected.",
+    "{xarg} of minimum length {min_len} expected, {length(x)} detected.",
+    "{xarg} of maximum length {max_len} expected, {length(x)} detected."
+  )
 )
+
 
 usethis::use_data(default_alert_messages, overwrite = TRUE)

@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_vec.R
 \name{check_presence_vec}
 \alias{check_presence_vec}
-\title{Check the presence of the specified values in a vector.}
+\title{Check the presence of specified values in a vector}
 \usage{
 check_presence_vec(
   vec,
@@ -41,5 +41,5 @@ The default (0) points to this function frame.}
 invisible NULL
 }
 \description{
-Check the presence of the specified values in a vector.
+Check the presence of specified values in a vector
 }
