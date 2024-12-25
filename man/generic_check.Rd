@@ -14,7 +14,7 @@ generic_check(
 )
 }
 \arguments{
-\item{expr}{expression to test. Must return a single boolean value.}
+\item{expr}{Expression to test. Must return a single boolean value.}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 
@@ -32,6 +32,6 @@ The default value (0) points to this function frame.}
 Invisible NULL
 }
 \description{
-Allows to test generic hypothesis while having all the additional features of quickcheck.
-The alert is raise if the provided expression evaluates to FALSE.
+Allows to test generic hypothesis and raising conditions while having all the additional features of quickcheck.
+The condition is raised if the supplied expression evaluates to TRUE.
 }

@@ -13,9 +13,9 @@
 #' 'logical' behavior. This means that they will not raise alerts (unless forced)
 #' but instead they will return boolean values. In greater detail if a 'quickalert'
 #' class condition is hit, then the function return TRUE otherwise FALSE.
-#' @param expr check function call.
-#' @param force_alert logical, whether to signal the quickalert once caught (default FALSE).
-#'  Useful for message and warnings and in situation in which you want to raise the condition
+#' @param expr "check_*" function call.
+#' @param force_alert Boolean, whether to signal the quickalert once caught (default FALSE).
+#'  Useful for message and warnings and in situations in which you want to raise the condition
 #'  in addition to obtain the boolean value.
 #' @return A single logical value.
 #' @export
@@ -26,7 +26,7 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
     expr = {expr},
     condition = function(cond){
       if(!"quickalert" %in% class(cond)){
-        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
+        cli::cli_abort(c("x" = "An {cli::col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
       }
       logical_return <<- TRUE
       if(force_alert) {
@@ -44,12 +44,11 @@ impose_logical_behavior <- function(expr, force_alert = FALSE){
 
 
 
-#' Allow to accumulate in list non-error alert of checking functions
+#' Accumulate and then raise non-error quickalerts 
 #' @description
-#' Imposes an accumulation behavior for a checking function in a loop scenario, in which
-#' the alert raised by the checking function are stored in a list and then displayed.
-#' Works with message or warning conditions. It does not work with error since they stop the loop execution.
-#' @param expr check function call. It's important that the checking function raises warnings or messages but not errors.
+#' Imposes an accumulation behavior in which the alerts raised by the check function are stored in a list and then displayed.
+#' Works employing the check function in a loop and only with message and warning conditions, since errors stop the loop execution.
+#' @param expr check function call. It's important that the checking function raises warnings or messages and not errors.
 #' @param raise type of the accumulated final alert if any.
 #' @param alert_message String or list reporting the alert message (by default the function build a list).
 #' @param header string to add as the header of the accumulated alert list.
@@ -66,7 +65,7 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
     expr = {expr},
     condition = function(cond){
       if(!"quickalert" %in% class(cond)){
-        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{rlang::cnd_message(cond)}"))
+        cli::cli_abort(c("x" = "An {cli::col_red('unexpected')} alert is been raised:", "{rlang::cnd_message(cond)}"))
       } else {
         accumulated_cond <<- c(accumulated_cond, list(cond$message))
         rlang::cnd_muffle(cond)
@@ -117,7 +116,7 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
     condition = function(cond){
       failed_element <- get_name(name = listnames[[i]], nameroot = element_nameroot, iteration = i)
       if(!"quickalert" %in% class(cond)){
-        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised at element {failed_element}:", "{cond$message} {cond$body}"))
+        cli::cli_abort(c("x" = "An {cli::col_red('unexpected')} alert is been raised at element {failed_element}:", "{cond$message} {cond$body}"))
       } else {
         failed_elements <<- c(failed_elements, failed_element)
         rlang::cnd_muffle(cond)
@@ -156,7 +155,7 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
     expr = expr,
     condition = function(cond){
       if(!"quickalert" %in% class(cond)){
-        cli::cli_abort(c("x" = "An {col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
+        cli::cli_abort(c("x" = "An {cli::col_red('unexpected')} alert is been raised:", "{cond$message} {cond$body}"))
       } else {
         if(margin == 1){
           complete_alert <- c(message, break_condition_message(cond))

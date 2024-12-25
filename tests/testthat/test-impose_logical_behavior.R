@@ -3,7 +3,7 @@
 
 testthat::test_that("impose_logical_behavior returns expected logical value", {
   expect_equal(
-    object = impose_logical_behavior(check_columns_presence(df = df, columns = "materasso")),
+    object = impose_logical_behavior(check_columns_presence(df = qadf, columns = "materasso")),
     expected = TRUE
   )
 
@@ -13,7 +13,7 @@ testthat::test_that("impose_logical_behavior returns expected logical value", {
   )
 
   expect_error(
-    object = impose_logical_behavior(check_presence_vec(vec = df[["sex"]], values = "men", raise = "messagesssss")),
+    object = impose_logical_behavior(check_presence_vec(vec = qadf[["sex"]], values = "men", raise = "messagesssss")),
     regexp = '`type` must be one of "error", "warning", or "message", not "messagesssss".'
   )
 })
@@ -22,7 +22,7 @@ testthat::test_that("impose_logical_behavior returns expected logical value", {
 
 testthat::test_that("impose_logical_behavior return error when the wrong alert is picked", {
   expect_error(
-    object = impose_logical_behavior(expr = check_columns_key(df, columns = c("visit_numb"))),
+    object = impose_logical_behavior(expr = check_columns_key(qadf, "visit_numb")),
     regexp = "The following column is missing in df: visit_numb"
   )
 })
@@ -31,10 +31,10 @@ testthat::test_that("impose_logical_behavior return error when the wrong alert i
 
 test_that("impose_logical_behavior force_alert argument works as intended", {
   expect_message(
-    object = impose_logical_behavior(expr = check_columns_key(df, columns = c("visit_number"), raise = "message"), force_alert = T),
+    object = impose_logical_behavior(expr = check_columns_key(qadf, columns = c("visit_number"), raise = "message"), force_alert = T),
     class = "quickalert"
   )
 
-  expect_no_condition(impose_logical_behavior(expr = check_columns_presence(df, columns = c("visit_number")), force_alert = T))
+  expect_no_condition(impose_logical_behavior(expr = check_columns_presence(qadf, columns = c("visit_number")), force_alert = T))
 })
 

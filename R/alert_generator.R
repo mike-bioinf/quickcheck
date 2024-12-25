@@ -8,6 +8,8 @@
 #'  Integer indicating the stack frame in which the alert glue expressions are evaluated in respect to where is generated.
 #'  So it indicates the number of frames to look down in the stack. By default is zero plus two.
 #'  The addition is used in order to start counting from zero from the frame of the function that uses this function.
+#'  Be aware that if the glue variables are not found in the pointed frame then the resolution falls under the
+#'  lexical scoping rules starting from the pointed frame.
 #' @param quickalert
 #'  Logical, whether to generate an alert with class "quickalert" or not (default TRUE).
 #'  The generation of "plain" alerts is useful when the checking functions are used inside other ones.
@@ -15,14 +17,13 @@
 #' @param sign
 #'  Logical, whether to add the sign to the first element of the alert (default TRUE).
 #'  Note that in case of errors the "!" sign is used as default by cli. This sign is changed with "X" if sign is TRUE,
-#'  but with sign = FALSE it cannot be suppressed. 
+#'  but with sign = FALSE it cannot be suppressed.
 #' @param header
 #'  Character string to add at the beginning of the alert message (default NULL).
 #' @param list_format
 #'  Logical, whether to apply the list format style, which includes numbers or names
 #'  of the alert message elements to be represented in violet in a bullet list.
 #' @return Raise a condition.
-#' @export
 alert_generator <- function(type, alert_message, n_evaluation_frame = 0, quickalert = TRUE, header = NULL, sign = TRUE, list_format = FALSE){
   rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
   alert_funcs <- generate_alertfunc_list()
@@ -47,7 +48,7 @@ alert_generator <- function(type, alert_message, n_evaluation_frame = 0, quickal
   if(sign){
     signs <- generate_sign_list()
     names(alert_message)[1] <- signs[[type]]
-  } 
+  }
 
   if(quickalert) alertclass <- "quickalert" else alertclass <- NULL
   my_alert_func(alert_message, n_evaluation_frame + 2, alertclass)

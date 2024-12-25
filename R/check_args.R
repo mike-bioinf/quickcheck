@@ -8,7 +8,7 @@ check_required_all <- function(){
   envlist <- as.list(rlang::caller_env(n = 1))
   envmiss <- purrr::keep(envlist, rlang::is_missing)
   if(length(envmiss) > 0){
-    cli::cli_abort(c("x" = "{col_red(names(envmiss))} {?is/are} absent but must be supplied."))
+    cli::cli_abort(c("x" = "{cli::col_red(names(envmiss))} {?is/are} absent but must be supplied."))
   }
   invisible(NULL)
 }
@@ -56,7 +56,7 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
   if(!is.null(numeric_correspondence)){
     expected_types <- control_recycle(args, expected_types, numeric_correspondence)
   } else if(length(args) != length(expected_types)){
-    cli::cli_abort(c("x" = "args and expected_types have {col_red('different lengths')}."))
+    cli::cli_abort(c("x" = "args and expected_types have {cli::col_red('different lengths')}."))
   }
 
   calling_env <- rlang::caller_env(n = 1)
@@ -73,8 +73,8 @@ check_args_primitive_types <- function(args, expected_types, numeric_corresponde
   }
 
   if(length(err_args) > 0){
-    alert <- generate_message(alert_message, "{col_magenta(err_args)}.")
-    header <- generate_header(header, "The following {qty(err_args)} argument{?s} {?is/are} of {col_red('wrong type')}:")
+    alert <- generate_message(alert_message, "{cli::col_magenta(err_args)}.")
+    header <- generate_header(header, "The following {cli::qty(err_args)} argument{?s} {?is/are} of {cli::col_red('wrong type')}:")
     alert_generator("error", alert, n_evaluation_frame, quickalert, header = header, ...)
   }
 
@@ -119,8 +119,8 @@ check_args_classes <- function(args, expected_classes, numeric_correspondence = 
   }
 
   if(length(err_args) > 0){
-    alert <- generate_message(alert_message, "{col_magenta(err_args)}.")
-    header <- generate_header(header,"The following {qty(err_args)} argument{?s} {?doesn't/don't} have the {col_red('expected class')}:")
+    alert <- generate_message(alert_message, "{cli::col_magenta(err_args)}.")
+    header <- generate_header(header,"The following {cli::qty(err_args)} argument{?s} {?doesn't/don't} have the {cli::col_red('expected class')}:")
     alert_generator("error", alert, n_evaluation_frame, quickalert, header = header, ...)
   }
 
@@ -147,8 +147,8 @@ check_numeric_args <- function(args, null = FALSE, alert_message = NULL, header 
   }
 
   if(length(err_args) > 0){
-    header <- generate_header(header, "The following {qty(err_args)} argument{?s} {?is/are} {col_red('not numeric')}:")
-    alert <- generate_message(alert_message, "{col_magenta(names(err_args))}.")
+    header <- generate_header(header, "The following {cli::qty(err_args)} argument{?s} {?is/are} {cli::col_red('not numeric')}:")
+    alert <- generate_message(alert_message, "{cli::col_magenta(names(err_args))}.")
     alert_generator("error", alert, n_evaluation_frame, quickalert, header = header, ...)
   }
 
@@ -179,8 +179,8 @@ check_integerish_args <- function(args, null = FALSE, alert_message = NULL, head
   }
 
   if(length(err_args) > 0){
-    header <- generate_header(header, "The following {qty(err_args)} argument{?s} {?is/are} {col_red('not integer-like')}:")
-    alert <- generate_message(alert_message, "{col_magenta(names(err_args))}.")
+    header <- generate_header(header, "The following {cli::qty(err_args)} argument{?s} {?is/are} {cli::col_red('not integer-like')}:")
+    alert <- generate_message(alert_message, "{cli::col_magenta(names(err_args))}.")
     alert_generator("error", alert, n_evaluation_frame, quickalert, header = header, ...)
   }
 

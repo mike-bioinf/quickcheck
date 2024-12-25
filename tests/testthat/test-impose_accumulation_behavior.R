@@ -9,10 +9,10 @@ testthat::test_that(desc = "impose_accumulation_behavior accumulate alerts", {
       header = "this is the header.",
       expr = for(n in columns){
         check_presence_vec(
-          vec = df[[n]],
+          vec = qadf[[n]],
           values = col_levels[[n]],
           vec_arg = n,
-          alert_message = "{vec_arg} --> {col_magenta(missing_values)}",
+          alert_message = "{vec_arg} --> {cli::col_magenta(missing_values)}",
           header = NULL,
           raise = "message",
           sign = FALSE
@@ -30,10 +30,10 @@ testthat::test_that("impose_accumulation_behavior launch unexpected error alert"
     impose_accumulation_behavior(
       expr = for(n in columns){
         check_presence_vec(
-          vec = df[[n]],
+          vec = qadf[[n]],
           values = col_levels[[n]],
           vec_arg = n,
-          alert_message = "{vec_arg} --> {col_magenta(missing_values)}",
+          alert_message = "{vec_arg} --> {cli::col_magenta(missing_values)}",
           raise = "messagessss"
         )
       })
@@ -49,10 +49,10 @@ testthat::test_that("impose_accumulation_behavior correctly doesn't raise alert"
   res <- impose_accumulation_behavior(
     expr = for(n in columns){
       check_presence_vec(
-        vec = df[[n]],
+        vec = qadf[[n]],
         values = col_levels[[n]],
         vec_arg = n,
-        alert_message = "{vec_arg} --> {col_magenta(missing_values)}",
+        alert_message = "{vec_arg} --> {cli::col_magenta(missing_values)}",
         raise = "message"
       )})
   expect_null(res)
@@ -63,7 +63,7 @@ testthat::test_that("impose_accumulation_behavior correctly doesn't raise alert"
 test_that("impose_accumulation_behavior launch one time the provided alert message", {
   expect_snapshot(
     check_columns_key(
-      df = df,
+      df = qadf,
       columns = c("sex", "visit_number"),
       raise = "warning",
       alert_message = "Just one line !!!",
@@ -77,7 +77,7 @@ test_that("impose_accumulation_behavior launch one time the provided alert messa
 test_that("The header option works correctly with impose_accumulation behavior", {
   expect_snapshot(
     check_columns_key(
-      df = df,
+      df = qadf,
       columns = c("sex", "visit_number"),
       raise = "warning",
       header = "CUSTOM HEADER"

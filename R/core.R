@@ -94,7 +94,7 @@ raise_predicate_error <- function(log_empty_names, errors, string_object, invers
       )
     } else {
       if(inverse) inverse_string <- "inverse of the "
-      header <- generate_header(header, paste0("The following {qty(errors)} element{?s} {?doesn't/don't} satisfy the ", inverse_string, "predicate in ", string_object, ":"))
+      header <- generate_header(header, paste0("The following {cli::qty(length(errors))} element{?s} {?doesn't/don't} satisfy the ", inverse_string, "predicate in ", string_object, ":"))
       alert_message <- generate_message(alert_message, "{cli::col_magenta(errors)}.")
     }
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, header = header, ...)
@@ -116,6 +116,24 @@ raise_predicate_error <- function(log_empty_names, errors, string_object, invers
 clean_vec <- function(vec, na_rm = FALSE, unique = FALSE, sort = FALSE, decreasing = FALSE){
   if(na_rm) vec <- stats::na.omit(vec)
   if(unique) vec <- unique(vec)
-  if(sort) vec <- sort(vec, decreasing)
+  if(sort) vec <- sort(vec, decreasing, na.last = FALSE)
   return(vec)
+}
+
+
+
+#' Checks the presence of null values in a vector in a broader sense.
+#' @param vec vector to test.
+#' @param na Boolean, indicating whether to perform the check for NAs (default TRUE).
+#' @param empty_string Boolean, indicating whether to perform the check for empty string "" (default TRUE).
+#' @param len Boolean, indicating whether to perform the check for 0 length (default TRUE).
+#' @param null Boolean, indicating whether to perform the check for NULL value (default TRUE).
+#' @return A single boolean, FALSE even if one value is empty, TRUE otherwise.
+#' @export
+is_empty_vec <- function(vec, na = TRUE, empty_string = TRUE, len = TRUE, null = TRUE){
+  if(empty_string && "" %in% vec) return(TRUE)
+  if(null && is.null(vec)) return(TRUE)
+  if(len && length(vec) == 0) return(TRUE)
+  if(na && any(is.na(vec))) return(TRUE)
+  return(FALSE)
 }

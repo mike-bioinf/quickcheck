@@ -7,10 +7,10 @@
 impose_logical_behavior(expr, force_alert = FALSE)
 }
 \arguments{
-\item{expr}{check function call.}
+\item{expr}{"check_*" function call.}
 
-\item{force_alert}{logical, whether to signal the quickalert once caught (default FALSE).
-Useful for message and warnings and in situation in which you want to raise the condition
+\item{force_alert}{Boolean, whether to signal the quickalert once caught (default FALSE).
+Useful for message and warnings and in situations in which you want to raise the condition
 in addition to obtain the boolean value.}
 }
 \value{

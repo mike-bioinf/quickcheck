@@ -1,7 +1,7 @@
 # List messages are formatted correctly [ansi]
 
     Code
-      check_columns_levels(df, columns = c("visit_number", "ppi_treatment"),
+      check_columns_levels(qadf, columns = c("visit_number", "ppi_treatment"),
       col_levels = list(visit_number = c("v1", "2", "3"), ppi_treatment = c("yes",
         "no_treatment")))
     Condition

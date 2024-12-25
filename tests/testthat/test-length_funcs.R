@@ -28,5 +28,5 @@ test_that("check_length_list works as intented", {
 
 
 test_that("check_columns_number works as intended", {
-  expect_error(check_columns_number(df, exact_len = 12, min_len = 4, max_len = 22), class = "quickalert")
+  expect_error(check_columns_number(qadf, exact_len = 12, min_len = 4, max_len = 22), class = "quickalert")
 })

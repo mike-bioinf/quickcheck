@@ -5,7 +5,7 @@ cli::test_that_cli("Evalution frame mechanisms works as intended", configs = "an
   expect_snapshot(
     {
       check_presence_vec(
-        vec = df[["sex"]],
+        vec = qadf[["sex"]],
         values = c("maschio"),
         raise = "message",
         alert_message = "{missing_values} glue substitution is evaluated correctly as maschio.",
@@ -24,7 +24,7 @@ cli::test_that_cli("Evaluation frame mechanisms works as intended (part2)", conf
       f <- function(){
         frame <- "frame_down"
         check_presence_vec(
-          vec = df$sex,
+          vec = qadf$sex,
           values = "maschio",
           raise = "message",
           header = NULL,

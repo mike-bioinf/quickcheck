@@ -2,7 +2,7 @@
 % Please edit documentation in R/impose_wrappers.R
 \name{impose_accumulation_behavior}
 \alias{impose_accumulation_behavior}
-\title{Allow to accumulate in list non-error alert of checking functions}
+\title{Accumulate and then raise non-error quickalerts}
 \usage{
 impose_accumulation_behavior(
   expr,
@@ -15,7 +15,7 @@ impose_accumulation_behavior(
 )
 }
 \arguments{
-\item{expr}{check function call. It's important that the checking function raises warnings or messages but not errors.}
+\item{expr}{check function call. It's important that the checking function raises warnings or messages and not errors.}
 
 \item{raise}{type of the accumulated final alert if any.}
 
@@ -34,7 +34,6 @@ of the glue expressions of the alert message. The default (0) points to this fun
 invisible NULL
 }
 \description{
-Imposes an accumulation behavior for a checking function in a loop scenario, in which
-the alert raised by the checking function are stored in a list and then displayed.
-Works with message or warning conditions. It does not work with error since they stop the loop execution.
+Imposes an accumulation behavior in which the alerts raised by the check function are stored in a list and then displayed.
+Works employing the check function in a loop and only with message and warning conditions, since errors stop the loop execution.
 }

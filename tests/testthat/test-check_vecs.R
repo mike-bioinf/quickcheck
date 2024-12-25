@@ -40,12 +40,12 @@ test_that("check_equality_vecs works as expected", {
 
 
 
-test_that("check_unordered_equality_vecs works as expected", {
+test_that("check_matching_vecs works as expected", {
   v1 <- c(1, NA, 2, 3, 4)
   v2 <- c(1, 3, 4, 2)
   v3 <- c("1", NA, "2", "3", "4")
-  expect_error(check_unordered_equality_vecs(v1, v2), class = "quickalert")
-  expect_no_error(check_unordered_equality_vecs(v1, v2, na_rm = TRUE))
-  expect_error(check_unordered_equality_vecs(v1, v3))
-  expect_no_error(check_unordered_equality_vecs(v1, v3, coerce = TRUE))
+  expect_error(check_matching_vecs(v1, v2), class = "quickalert")
+  expect_no_error(check_matching_vecs(v1, v2, na_rm = TRUE))
+  expect_error(check_matching_vecs(v1, v3))
+  expect_no_error(check_matching_vecs(v1, v3, coerce = TRUE))
 })

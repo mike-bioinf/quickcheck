@@ -10,9 +10,12 @@
 #' @inheritParams is_empty_vec
 #' @param vec Vector to check.
 #' @param vec_arg String indicating how to address vec in the alert message (default 'vec').
-#' @return invisible NULL
+#' @return
+#' Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,
+#' the "test" function returns TRUE if the condition would be raised and FALSE otherwise.
 #' @export
-check_empty_vec <- function(vec, na = TRUE, empty_string = TRUE, len = TRUE, null = TRUE, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
+check_empty_vec <- function(vec, na = TRUE, empty_string = TRUE, len = TRUE, null = TRUE, vec_arg = "vec",
+                             raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
   if(is_empty_vec(vec, na, empty_string, len, null)){
     alert_message <- generate_message(alert_message, "{vec_arg} is or contains an empty entity.")
@@ -25,7 +28,7 @@ check_empty_vec <- function(vec, na = TRUE, empty_string = TRUE, len = TRUE, nul
 
 #' Check the presence of NAs in a vector
 #' @inheritParams check_empty_vec
-#' @return invisible NULL
+#' @inherit check_empty_vec return
 #' @export
 check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
@@ -42,7 +45,7 @@ check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = 
 #' @inheritParams check_empty_vec
 #' @param header Character string to add at the beginning of the alert message.
 #' @param na_rm Boolean indicating if NA must be excluded prior checking (default TRUE).
-#' @return invisible NULL
+#' @inherit check_empty_vec return
 #' @export
 check_duplicate_vec <- function(vec, na_rm = TRUE, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
@@ -50,9 +53,9 @@ check_duplicate_vec <- function(vec, na_rm = TRUE, vec_arg = "vec", raise = "err
   dup <- duplicated(vec)
 
   if(any(dup)){
-    dup_values <- vec[dup] |> unique() |> sort()
+    dup_values <- vec[dup] |> unique() |> sort(na.last = FALSE)
     alert_message <- generate_message(alert_message, "{cli::col_magenta(dup_values)}")
-    header <- generate_header(header, "The following {qty(length(dup_values))} value{?s} {?is/are} {cli::col_red('duplicated')} in {vec_arg}:")
+    header <- generate_header(header, "The following {cli::qty(length(dup_values))} value{?s} {?is/are} {cli::col_red('duplicated')} in {vec_arg}:")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, header = header, ...)
   }
 
@@ -71,9 +74,9 @@ check_duplicate_vec <- function(vec, na_rm = TRUE, vec_arg = "vec", raise = "err
 #' @param max_len Integer indicating the maximum expected vector length (default NULL).
 #' @param na_rm Boolean indicating if NA must be excluded prior checking (default TRUE).
 #' @param unique Boolean indicating whether to perform the check only on unique values (default FALSE).
-#' @return invisible NULL
+#' @inherit check_empty_vec return
 #' @export
-check_length_vec <- function(vec, exact_len = NULL, min_len = NULL, max_len = NULL, na_rm = TRUE, unique = FALSE, vec_arg = "vec", 
+check_length_vec <- function(vec, exact_len = NULL, min_len = NULL, max_len = NULL, na_rm = TRUE, unique = FALSE, vec_arg = "vec",
                               raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
   check_len_args(exact_len, min_len, max_len)
@@ -93,7 +96,7 @@ check_length_vec <- function(vec, exact_len = NULL, min_len = NULL, max_len = NU
 #' @inheritParams check_empty_vec
 #' @param values Character vector of values searched in vec.
 #' @param header Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
-#' @return invisible NULL
+#' @inherit check_empty_vec return
 #' @export
 check_presence_vec <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
@@ -101,8 +104,8 @@ check_presence_vec <- function(vec, values, vec_arg = "vec", raise = "error", al
 
   if(!all(values %in% unique_vec)){
     missing_values <- setdiff(values, unique_vec)
-    alert_message <- generate_message(alert_message, "{col_magenta(missing_values)}")
-    header <- generate_header(header, "The following {qty(missing_values)} value{?s} {?is/are} {cli::col_red('missing')} in {vec_arg}:")
+    alert_message <- generate_message(alert_message, "{cli::col_magenta(missing_values)}")
+    header <- generate_header(header, "The following {cli::qty(length(missing_values))} value{?s} {?is/are} {cli::col_red('missing')} in {vec_arg}:")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, header = header, ...)
   }
 
@@ -114,7 +117,7 @@ check_presence_vec <- function(vec, values, vec_arg = "vec", raise = "error", al
 #' Check whether a vector is sorted or not
 #' @inheritParams check_length_vec
 #' @param decreasing Boolean indicating whether the expect sorted order is decreasing or not (default FALSE).
-#' @return invisible NULL
+#' @inherit check_empty_vec return
 #' @export
 check_sorted_vec <- function(vec, decreasing = FALSE, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
@@ -132,14 +135,14 @@ check_sorted_vec <- function(vec, decreasing = FALSE, vec_arg = "vec", raise = "
 
 
 #' Check vector elements through a predicate function
-#' @description 
+#' @description
 #' Checks whether the predicate returns TRUE for all elements of the vector.
 #' The function doesn't perform any check on the argument provided in predicate.
 #' Therefore the correctness of the provided function falls on the user.
 #' @inheritParams check_predicate_list
 #' @inheritParams check_empty_vec
-#' @return invisible NULL
-#' @export 
+#' @inherit check_empty_vec return
+#' @export
 check_predicate_vec <- function(vec, predicate, inverse = FALSE, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ... ){
   check_required_all()
   check_args_classes("predicate", "function", quickalert = FALSE)
