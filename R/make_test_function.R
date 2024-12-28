@@ -18,19 +18,34 @@ make_test_function <- function(check_fun, env = parent.frame()){
 
 ### Single vector --------------------------------------------------------------------------------------
 
+#' @rdname check_vector
+#' @export
+test_vector <- make_test_function("check_vector")
+
+
+#' @rdname check_names
+#' @export
+test_names <- make_test_function("check_names")
+
+
+#' @rdname check_atomic_vec
+#' @export
+test_atomic_vec <- make_test_function("check_atomic_vec")
+
+
 #' @rdname check_empty_vec
 #' @export
-test_na_vec <- make_test_function("check_empty_vec")
+test_empty_vec <- make_test_function("check_empty_vec")
 
 
 #' @rdname check_na_vec
 #' @export
-test_empty_vec <- make_test_function("check_na_vec")
+test_na_vec <- make_test_function("check_na_vec")
 
 
 #' @rdname check_duplicate_vec
 #' @export
-test_duplicated_vec <- make_test_function("check_duplicate_vec")
+test_duplicate_vec <- make_test_function("check_duplicate_vec")
 
 
 #' @rdname check_length_vec
@@ -51,6 +66,11 @@ test_sorted_vec <- make_test_function("check_sorted_vec")
 #' @rdname check_predicate_vec
 #' @export
 test_predicate_vec <- make_test_function("check_predicate_vec")
+
+
+#' @rdname check_absence_vec
+#' @export
+test_absence_vec <- make_test_function("check_absence_vec")
 
 
 
@@ -101,11 +121,6 @@ test_uniform_list <- make_test_function("check_uniform_list")
 #' @rdname check_predicate_list
 #' @export
 test_predicate_list <- make_test_function("check_predicate_list")
-
-
-#' @rdname check_names_list
-#' @export
-test_names_list<- make_test_function("check_names_list")
 
 
 #' @rdname check_length_list

@@ -26,7 +26,7 @@ The default value (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass the additional parameters sign, list_format and header (if not in the formals parameters).}
 }
 \value{
 Invisible NULL

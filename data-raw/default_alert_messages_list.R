@@ -20,13 +20,16 @@ default_alert_messages <- list(
   check_integerish_args = c(
     "The following {cli::qty(err_args)} argument{?s} {?is/are} {cli::col_red('not integer-like')}:",
     "{cli::col_magenta(names(err_args))}."),
+  check_atomic_vec =
+    "{vec_arg} is not an atomic vector.",
   check_empty_vec =
     "{vec_arg} is or contains an empty entity.",
   check_na_vec =
     "There are NAs in {vec_arg}.",
   check_duplicate_vec = c(
     "The following {cli::qty(length(dup_values))} value{?s} {?is/are} duplicated in {vec_arg}",
-    "{cli::col_magenta(dup_values)}"),
+    "{cli::col_magenta(dup_values)}"
+    ),
   check_length_vec = c(
     "{vec_arg} of length {exact_len} expected, {length(vec)} detected.",
     "{vec_arg} of minimum length {min_len} expected, {length(vec)} detected.",
@@ -34,9 +37,14 @@ default_alert_messages <- list(
     ),
   check_presence_vec = c(
     "The following {cli::qty(length(missing_values))} value{?s} {?is/are} missing in {vec_arg}:",
-    "{cli::col_magenta(missing_values)}"),
+    "{cli::col_magenta(missing_values)}"
+    ),
   check_sorted_vec =
     "{vec_arg} is not sorted.",
+  check_absence_vec = c(
+    "The following {cli::qty(length(unexpected_values))} value{?s} {?is/are} {cli::col_red('not absent')} in {vec_arg}:",
+    "{cli::col_magenta(unexpected_values)}"
+    ),
   check_predicate_vec = c(
     version1 = c(
       "{cli::col_red('Not all elements')} |NOT| satisfy the predicate in {vec_arg}.",
@@ -105,8 +113,6 @@ default_alert_messages <- list(
       "{cli::col_magenta(errors)}"
       )
     ),
-  check_names_list =
-    "{xarg} present {cli::col_red('missing element names')}.",
   check_length_list = c(
     "{xarg} of length {exact_len} expected, {length(x)} detected.",
     "{xarg} of minimum length {min_len} expected, {length(x)} detected.",

@@ -7,7 +7,7 @@ cli::test_that_cli("List messages are formatted correctly", {
     x = check_columns_levels(
       qadf,
       columns = c("visit_number", "ppi_treatment"),
-      col_levels = list(visit_number = c("v1", "2", "3"), ppi_treatment = c("yes", "no_treatment"))
+      col_levels = list(visit_number = c(1, 2, 3), ppi_treatment = c("yes", "no_treatment"))
     )
   )},
   configs = "ansi"
@@ -15,11 +15,8 @@ cli::test_that_cli("List messages are formatted correctly", {
 
 
 
-testthat::test_that("alert_generator produce alerts with class", {
-  expect_condition(
-    alert_generator(type = "message", alert_message = "generic message", quickalert = TRUE),
-    class = "quickalert"
-  )
+test_that("alert_generator produce alerts with class", {
+  expect_condition(alert_generator(type = "message", alert_message = "generic message", quickalert = TRUE), class = "quickalert")
 
   expect_failure(
     suppressMessages({

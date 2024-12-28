@@ -23,17 +23,17 @@ impose_accumulation_behavior(
 
 \item{header}{string to add as the header of the accumulated alert list.}
 
-\item{n_evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation
+\item{n_evaluation_frame}{Intergerish, defines the number of stack frame to look down for the evaluation
 of the glue expressions of the alert message. The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass additional parameters to alert_generator function.}
 }
 \value{
 invisible NULL
 }
 \description{
-Imposes an accumulation behavior in which the alerts raised by the check function are stored in a list and then displayed.
-Works employing the check function in a loop and only with message and warning conditions, since errors stop the loop execution.
+Imposes an accumulation behavior in which quickalerts are stored in a list, which is used to raise a condition.
+Works only with messages and warnings (not errors).
 }

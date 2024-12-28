@@ -60,15 +60,12 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 \item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass the additional parameters sign, list_format and header (if not in the formals parameters).}
 }
 \value{
 Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,
 the "test" function returns TRUE if the condition would be raised and FALSE otherwise.
 }
 \description{
-Check whether two vectors are identical
-}
-\details{
 The function checks for identical vectors using the "identical" function.
 }

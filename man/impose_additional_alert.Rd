@@ -2,7 +2,7 @@
 % Please edit documentation in R/impose_wrappers.R
 \name{impose_additional_alert}
 \alias{impose_additional_alert}
-\title{Adds a message at the start/end of raised quickalert messages.}
+\title{Adds alert messages at the start or end of raised quickalert messages}
 \usage{
 impose_additional_alert(
   expr,
@@ -10,30 +10,30 @@ impose_additional_alert(
   margin = 1,
   raise = "error",
   n_evaluation_frame = 0,
-  quickalert = TRUE
+  quickalert = TRUE,
+  ...
 )
 }
 \arguments{
 \item{expr}{check function call. It's important that the checking function raises warnings or messages and not errors.}
 
-\item{message}{additional message to be added to the alert.}
+\item{message}{String to add to the alert message.}
 
-\item{margin}{numeric equal to 1 or 2, indicating where to add the additional message (start or end respectively).}
+\item{margin}{Numeric equal to 1 or 2, indicating where to add the additional message (start or end respectively).}
 
 \item{raise}{type of the accumulated final alert if any.}
 
-\item{n_evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation
+\item{n_evaluation_frame}{Intergerish, defines the number of stack frame to look down for the evaluation
 of the glue expressions of the alert message. The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}
+
+\item{...}{To pass additional parameters to alert_generator function.}
 }
 \value{
 invisible NULL
 }
 \description{
-Adds a message at the start/end of raised quickalert messages.
-}
-\details{
-The alert sign of the resulting message (if any) is decided by the type of alert raised by the checking function in expr.
-This has been chosen to prevent that one must set sign argument to FALSE for the checking function all times.
+This wrapper works only with messages and warnings and not errors.
+Note that this is not enforced by the function and therefore the responsability fall on the user.
 }

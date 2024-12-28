@@ -22,7 +22,10 @@ test_that("check_columns_levels works as intented", {
   expect_error(check_columns_levels(qadf, columns = "sex", col_levels = list("male")), regexp = "All elements of col_levels must be nominated.")
   expect_error(check_columns_levels(qadf, "sex", list(sexx = "male")), regexp = "All cols specified in columns must be reported in col_levels.")
   expect_no_error(check_columns_levels(qadf, "sex", list(sex = "male")))
-  expect_snapshot_error(check_columns_levels(qadf, c("sex", "visit_number"), col_levels = list(sex = "M", visit_number = "V1")))
+  suppressWarnings({
+    expect_snapshot_error(check_columns_levels(qadf, c("sex", "visit_number"), col_levels = list(sex = "M", visit_number = "5")))
+  })
+  expect_snapshot_error(check_columns_levels(qadf, c("sex", "visit_number"), col_levels = list(sex = "M", visit_number = 5)))
 })
 
 
@@ -41,3 +44,10 @@ test_that("check_columns_predicate works as intented", {
   expect_no_error(check_columns_predicate(numeric_qadf, is.numeric))
   expect_error(check_columns_predicate(numeric_qadf, is.numeric, inverse = TRUE), class = "quickalert", regexp = "inverse of")
 })
+
+
+
+test_that("check_columns_number works as intended", {
+  expect_error(check_columns_number(qadf, exact_len = 12, min_len = 4, max_len = 22), class = "quickalert")
+})
+

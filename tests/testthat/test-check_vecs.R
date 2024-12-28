@@ -29,13 +29,16 @@ test_that("check_equality_vecs works as expected", {
   v3 <- c(1, 1, NA, 2)
   v4 <- c(1L, 1L, NA, 2L)
   v5 <- c(2, 1, 1)
-  expect_error(check_equality_vecs(v1, v2))
   expect_no_error(check_equality_vecs(v1, v2, recycle = TRUE))
   expect_no_error(check_equality_vecs(v1, v2, unique = TRUE))
-  suppressWarnings(expect_error(check_equality_vecs(v3, v4), regexp = "classes are different"))
   suppressWarnings(expect_no_error(check_equality_vecs(v3, v4, coerce = TRUE)))
   suppressWarnings(expect_error(check_equality_vecs(v3, v5), class = "quickalert"))
   suppressWarnings(expect_no_error(check_equality_vecs(v3, v5, sort = TRUE)))
+  # auxiliary checks works as expected
+  mes <- "right_frame"
+  suppressWarnings(expect_error(check_equality_vecs(v3, v4, alert_message = "{mes}", n_evaluation_frame = 1), regexp = mes, class = "quickalert"))
+  expect_error(check_equality_vecs(v1, v2, alert_message = "{mes}", n_evaluation_frame = 1), regexp = mes, class = "quickalert")
+  expect_message(check_equality_vecs(v1, v2, raise = "message"), class = "quickalert")
 })
 
 
@@ -46,6 +49,9 @@ test_that("check_matching_vecs works as expected", {
   v3 <- c("1", NA, "2", "3", "4")
   expect_error(check_matching_vecs(v1, v2), class = "quickalert")
   expect_no_error(check_matching_vecs(v1, v2, na_rm = TRUE))
-  expect_error(check_matching_vecs(v1, v3))
   expect_no_error(check_matching_vecs(v1, v3, coerce = TRUE))
+  # auxiliary check works as expected
+  mes <- "right_frame"
+  expect_error(check_matching_vecs(v1, v3, alert_message = "{mes}", n_evaluation_frame = 1), regexp = mes, class = "quickalert")
+  expect_message(check_matching_vecs(v1, v3, raise = "message"), class = "quickalert")
 })

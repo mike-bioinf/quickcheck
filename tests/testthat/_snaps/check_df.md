@@ -18,5 +18,11 @@
 
     x The following levels are missing from the reported columns:
     1. sex --> M
-    2. visit_number --> V1
+    2. visit_number --> 5
+
+---
+
+    x The following levels are missing from the reported columns:
+    1. sex --> M
+    2. visit_number --> 5
 

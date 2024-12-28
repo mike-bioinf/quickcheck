@@ -13,7 +13,8 @@
 
     Code
       impose_additional_alert(expr = check_columns_key(qadf, c("sex", "visit_number"),
-      raise = "warning"), message = "additional_part", margin = 2, raise = "warning")
+      raise = "warning", sign = FALSE), message = "additional_part", margin = 2,
+      raise = "warning")
     Condition <quickalert>
       Warning:
       ! The following values occur multiple times for the following columns:

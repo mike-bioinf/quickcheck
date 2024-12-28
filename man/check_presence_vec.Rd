@@ -43,12 +43,12 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
-The default (0) points to this function frame.}
+\item{n_evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+The default value (0) points to the frame above this function frame. So to point to the frame below this function frame you have to set 2.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass the additional parameters sign, list_format and header (if not in the formals parameters).}
 }
 \value{
 Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,
@@ -56,4 +56,7 @@ the "test" function returns TRUE if the condition would be raised and FALSE othe
 }
 \description{
 Check the presence of specified values in a vector
+}
+\details{
+vec and values vectors must share the same set of classes (this is enforced via "identical" function).
 }

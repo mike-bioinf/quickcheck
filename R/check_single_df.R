@@ -5,26 +5,16 @@
 #' @param df Dataframe passed in the outer function.
 #' @param columns Character string reporting the column/s name.
 #' @param df_arg String specifying how to address df in the raised messages (default "df").
-#' @param raise
-#'  Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.
-#' @param alert_message
-#'  Character vector reporting the alert message. Default NULL, in this case a standard message is used.
-#'  It's also possible to pass a list of strings that is displayed as a nominated or numbered list.
-#' @param header
-#'  Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
-#' @param n_evaluation_frame
-#'  numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
-#'  The default value (0) points to the frame above this function frame. So to point to the frame below this function frame you have to set 2.
-#' @param quickalert logical, whether the raised alert has to be of class "quickalert".
-#' @param ... To pass additional argument to alert_generator function.
-#' @inherit check_empty_vec return
+#' @param header String added at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
+#' @inheritParams check_atomic_vec
+#' @inherit check_atomic_vec return
 #' @export
 check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_args_classes("df", "data.frame", quickalert = FALSE)
   header <- generate_header(header, "The following {cli::qty(length(missing_values))} column{?s} {?is/are} {cli::col_red('missing')} in {vec_arg}:")
 
-  check_presence_vec(
+  internal_check_presence_vec(
     vec = colnames(df),
     values = columns,
     vec_arg = df_arg,
@@ -48,7 +38,7 @@ check_columns_presence <- function(df, columns, df_arg = "df", raise = "error", 
 #'  Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 #'  The default (0) points to this function frame.
 #' @inheritParams check_columns_presence
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_columns_key <- function(df, columns, na_rm = TRUE, raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
@@ -87,7 +77,7 @@ check_columns_key <- function(df, columns, na_rm = TRUE, raise = "error", alert_
 #' @param col_levels
 #'  List of character vectors reporting the expected levels for each column specified in columns.
 #'  The element of the list must be nominated according to the columns names which they refer.
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_columns_levels <- function(df, columns, col_levels, raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
@@ -119,7 +109,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
     n_evaluation_frame = n_evaluation_frame + 1,
     ...,
     expr = for(n in columns){
-      check_presence_vec(
+      internal_check_presence_vec(
         vec = df[[n]],
         values = col_levels[[n]],
         vec_arg = n,
@@ -138,7 +128,7 @@ check_columns_levels <- function(df, columns, col_levels, raise = "error", alert
 
 #' Check the presence of NAs in the specified columns
 #' @inheritParams check_columns_key
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_columns_na <- function(df, columns, raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
@@ -175,7 +165,7 @@ check_columns_na <- function(df, columns, raise = "error", alert_message = NULL,
 #' @inheritParams check_columns_presence
 #' @param predicate Function that works on vectors and returns a single logical value.
 #' @param inverse Boolean, whether to invert the check direction in the sense that the predicate must be not satisfied for all columns (default FALSE).
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
@@ -208,7 +198,7 @@ check_columns_predicate <- function(df, predicate, inverse = FALSE, raise = "err
 #' @param exact_len Integer indicating the exact expected number of columns (default NULL).
 #' @param min_len Integer indicating the minimum expected number of columns (default NULL).
 #' @param max_len Integer indicating the maximum expected number of columns (default NULL).
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_columns_number <- function(df, exact_len = NULL, min_len = NULL, max_len = NULL, df_arg = "df", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(df)
@@ -228,7 +218,7 @@ check_columns_number <- function(df, exact_len = NULL, min_len = NULL, max_len =
 #' @param dim Boolean, indicating whether to perform the check for 0 length dimensions (rows and columns) (default TRUE).
 #' @param null Boolean, indicating whether to perform the check for NULL values (default TRUE).
 #' @param df_arg String specifying how to address df in the raised messages (default "df").
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_empty_df <- function(df, dim = TRUE, null = TRUE, df_arg = "df", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(df)

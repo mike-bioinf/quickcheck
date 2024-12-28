@@ -41,7 +41,7 @@ test_matching_vecs(
 \item{na_rm}{Boolean indicating if NA must be excluded prior checking (default FALSE).}
 
 \item{coerce}{Boolean indicating whether the two vectors can be coerced during the check (default FALSE).
-If FALSE a check on vector classes is performed before the main check. This check is performed using the identical function.
+If FALSE a check on vector classes is performed before the "main" check. This check is performed using the identical function.
 Therefore the vector classes must be perfectly identical in order to pass the check.}
 
 \item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
@@ -58,7 +58,7 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 \item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass the additional parameters sign, list_format and header (if not in the formals parameters).}
 }
 \value{
 Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,
@@ -68,5 +68,5 @@ the "test" function returns TRUE if the condition would be raised and FALSE othe
 The equality is checked thought the matching \%in\% operator in both senses.
 The "\%in\%" operator uses automatic coercion. To control this behavior see the coerce parameter.
 The vectors orders as well as the presence of repeated values have no importance.
-If the order and the repetitions have a role see "check_equality_vecs" function.
+If the order and repetitions have a role see "check_equality_vecs" function.
 }

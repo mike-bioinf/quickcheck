@@ -7,7 +7,7 @@
 #' @param df1_arg String specifying how to address first df in the raised messages (default "df1").
 #' @param df2_arg String specifying how to address second df in the raised messages (default "df2").
 #' @inheritParams check_columns_key
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
@@ -27,7 +27,7 @@ check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "
 #' @inheritParams check_nrow_dfs
 #' @param columns Character vector of columns to consider. If NULL all columns are considered (default NULL).
 #' @param header String to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", df2_arg = "df2", raise = "error",
                                      alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
@@ -69,7 +69,7 @@ check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", 
 #' @param coerce
 #'  Boolean indicating whether the 2 columns can be coerced during the check (default FALSE).
 #' @inheritParams check_columns_key
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_presence_dfs <- function(df1, df2, columns, coerce = FALSE, direction = "first_in_second", df1_arg = "df1", df2_arg = "df2", raise = "error",
                                alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){

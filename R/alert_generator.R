@@ -90,12 +90,11 @@ generate_header <- function(header, default_header){
 }
 
 
-#' Raises the evaluation frame number by x if not 0. It's purpose is to allow to skip stack frames.
+#' Raises the evaluation frame number by x if not 0. 
+#' It's purpose is to allow to skip stack frames in a invisibly manner for the user.
 #' @inheritParams alert_generator
 #' @param up The number added to the frame number.
-raise_eval_frame <- function(n_evaluation_frame, up){
-  if(n.evalutation_frame != 0){
-    n.evalutation_frame <- n_evaluation_frame + up
-  }
+raise_custom_frame <- function(n_evaluation_frame, up){
+  if(n_evaluation_frame != 0) n_evaluation_frame <- n_evaluation_frame + up
   return(n_evaluation_frame)
 }

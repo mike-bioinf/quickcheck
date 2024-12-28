@@ -1,5 +1,6 @@
 ### internal functions for check_length_* functions -------------------------------------------------------------
 
+
 #' Internal check for .*_len arguments of check_length_vec and check_length_list
 #' @inheritParams check_length_vec
 check_len_args <- function(exact_len, min_len, max_len){
@@ -61,7 +62,7 @@ apply_predicate <- function(object, predicate, inverse){
 }
 
 
-#' Retrieve and returns the elements in error. 
+#' Retrieve and returns the elements in error.
 #' Wants in input a boolena indicating if the vector/list has empty names.
 #' In this last case it returns a value 1 as error.
 #' @param object Vector or list.
@@ -89,7 +90,7 @@ raise_predicate_error <- function(log_empty_names, errors, string_object, invers
       header <- NULL
       if(inverse) inverse_string <- "NOT "
       alert_message <- c(
-        paste0("{cli::col_red('Not all elements')} ", inverse_string, "satisfy the predicate in ", string_object, "."), 
+        paste0("{cli::col_red('Not all elements')} ", inverse_string, "satisfy the predicate in ", string_object, "."),
         "i" = "{cli::col_blue('Set or fill')} the missing element names for a more informative alert."
       )
     } else {
@@ -105,7 +106,7 @@ raise_predicate_error <- function(log_empty_names, errors, string_object, invers
 
 
 
-### internal functions for vector functions ----------------------------------------------------------------------------
+### internal functions for check_*_vec functions ----------------------------------------------------------------------------
 
 #' Manage sorting, NAs and duplicates removal for a vector.
 #' @param vec Input vector.
@@ -122,18 +123,30 @@ clean_vec <- function(vec, na_rm = FALSE, unique = FALSE, sort = FALSE, decreasi
 
 
 
-#' Checks the presence of null values in a vector in a broader sense.
-#' @param vec vector to test.
-#' @param na Boolean, indicating whether to perform the check for NAs (default TRUE).
-#' @param empty_string Boolean, indicating whether to perform the check for empty string "" (default TRUE).
-#' @param len Boolean, indicating whether to perform the check for 0 length (default TRUE).
-#' @param null Boolean, indicating whether to perform the check for NULL value (default TRUE).
-#' @return A single boolean, FALSE even if one value is empty, TRUE otherwise.
-#' @export
-is_empty_vec <- function(vec, na = TRUE, empty_string = TRUE, len = TRUE, null = TRUE){
-  if(empty_string && "" %in% vec) return(TRUE)
-  if(null && is.null(vec)) return(TRUE)
-  if(len && length(vec) == 0) return(TRUE)
-  if(na && any(is.na(vec))) return(TRUE)
-  return(FALSE)
+
+### General ---------------------------------------------------------------------------------------------------------------------
+
+#' Alternative version of the %in% operator that checks on identical set of classes for vec1 and vec2.
+#' If the set of classes is different (not identical) then returns a vector of FALSE raising a warning.
+#' @param vec1 First vector.
+#' @param vec2 Second vector.
+#' @return A logical vector.
+`%IN%` <- function(vec1, vec2){
+  if(is.null(vec1) || is.null(vec2)) force_alert <- FALSE else force_alert <- TRUE
+
+  unequal_class <- impose_logical_behavior(
+    {
+      internal_check_identical_vecs(
+        vec1 = class(vec1),
+        vec2 = class(vec2),
+        raise = "warning",
+        alert_message = c("The two vectors have {.strong  DIFFERENT} set of classes", "A vector of FALSE is automatically returned.")
+      )
+    },
+    force_alert = force_alert,
+    strip_quickalert = TRUE
+  )
+  
+  if(unequal_class) return(rep(FALSE, length(vec1)))
+  return(vec1 %in% vec2)
 }

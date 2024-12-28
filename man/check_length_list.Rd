@@ -56,12 +56,12 @@ The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass the additional parameters sign, list_format and header (if not in the formals parameters).}
 }
 \value{
 Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,
 the "test" function returns TRUE if the condition would be raised and FALSE otherwise.
 }
 \description{
-Checks whether the expectations on the list lenght hold.
+Checks whether the expectations on the list length hold.
 }

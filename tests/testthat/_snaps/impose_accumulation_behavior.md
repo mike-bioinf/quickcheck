@@ -2,11 +2,10 @@
 
     x this is the header.
     1. sex --> femmina
-    2. visit_number --> visit1 and vis3
+    2. visit_number --> 10 and 20
 
 # impose_accumulation_behavior launch unexpected error alert
 
-    x An unexpected alert is been raised:
     `type` must be one of "error", "warning", or "message", not "messagessss".
 
 # impose_accumulation_behavior launch one time the provided alert message

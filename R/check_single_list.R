@@ -6,7 +6,7 @@
 #' @param x list.
 #' @param flatten Boolean, whether to flat out the list before doing the check (default TRUE).
 #' @param xarg String, indicating how to refer x in the alert messages (default "list").
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_uniform_list <- function(x, flatten = TRUE, xarg = "list", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_args_primitive_types("x", "list", quickalert = FALSE)
@@ -36,7 +36,7 @@ check_uniform_list <- function(x, flatten = TRUE, xarg = "list", raise = "error"
 #' @param header Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
 #' @details
 #' The alert will not points the eventual elements in error if no or some elements names are empty, but instead it will raise a more general alert.
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_predicate_list <- function(x, predicate, inverse = FALSE, flatten = TRUE, xarg = "list", raise = "error",
                                   alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
@@ -53,34 +53,12 @@ check_predicate_list <- function(x, predicate, inverse = FALSE, flatten = TRUE, 
 
 
 
-#' Check list elements names
-#' @description
-#' Checks whether the names attibutes or some list element names are empty.
-#' In particular it checks for NULL attribute names, and NA and "" erroneous names.
-#' @inheritParams check_uniform_list
-#' @inherit check_empty_vec return
-#' @export
-check_names_list <- function(x, flatten = TRUE, xarg = "list", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
-  rlang::check_required(x)
-  check_args_primitive_types("x", "list", quickalert = FALSE)
-  if(flatten) x <- rec_flatten_list(x, till_flat = TRUE)
-
-  if(is_empty_vec(names(x))){
-    alert_message <- generate_message(alert_message, "{xarg} present {cli::col_red('missing element names')}.")
-    alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
-  }
-
-  invisible(NULL)
-}
-
-
-
 #' Check the length of a list
 #' @description
-#' Checks whether the expectations on the list lenght hold.
+#' Checks whether the expectations on the list length hold.
 #' @inheritParams check_uniform_list
 #' @inheritParams check_length_vec
-#' @inherit check_empty_vec return
+#' @inherit check_atomic_vec return
 #' @export
 check_length_list <- function(x, exact_len = NULL, min_len = NULL, max_len = NULL, flatten = TRUE, xarg = "list",
                                 raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){

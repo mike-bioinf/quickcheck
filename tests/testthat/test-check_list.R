@@ -20,3 +20,13 @@ test_that("check_predicate_list function works", {
   expect_snapshot_error(check_predicate_list(x = clist, predicate = is.character, inverse = TRUE))
 })
 
+
+
+test_that("check_length_list works as intented", {
+  l1 <- list(1, 2, 3, 4, 4, 4, 4, 4)
+  expect_error(
+    object = check_length_list(l1, max_len = 5, xarg = "List"),
+    regexp = "List of maximum length 5 expected, 8 detected.",
+    class = "quickalert"
+  )
+})

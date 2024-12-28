@@ -22,30 +22,30 @@ impose_loop_behavior(
 
 \item{check_func}{Checking function that will be used on every x element (this will be passed as first argument).}
 
-\item{check_arg_list}{List of arguments to pass to check_func. Importantly the first checking function argument
-as well as 'alert-oriented' arguments (raise, header, quickalert and sign) are already set and therefore must NOT be specified.}
+\item{check_arg_list}{List of arguments to pass to check_func.
+Note that this list must not contain 'quickalert-oriented' arguments (raise, header, quickalert and sign),
+neither the objects on which the checks are done, since these are automatically set.}
 
-\item{element_nameroot}{String reporting the base name to use for the list elements without a name in case
-they must be pointed in the alert message (default "element").}
+\item{element_nameroot}{String reporting the base name to use for the list elements with an empty name (default "element").}
 
-\item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
+\item{raise}{type of the accumulated final alert if any.}
 
-\item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
-It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
+\item{alert_message}{String or list reporting the alert message (by default the function build a list).}
 
-\item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
+\item{header}{string to add as the header of the accumulated alert list.}
 
-\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation
+\item{n_evaluation_frame}{Intergerish, defines the number of stack frame to look down for the evaluation
 of the glue expressions of the alert message. The default (0) points to this function frame.}
 
-\item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
+\item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass additional parameters to alert_generator function.}
 }
 \value{
 invisible NULL
 }
 \description{
-Iterates the checking function on all the elements of the list generating informative alert messages,
-that pinpoint the element names/positions for which the checking function failed.
+Iterates the checking function on all the elements of the list generating alerts
+that pinpoint the list names/positions for which the checking function failed.
+In greater detail, the names are used if not-empty otherwise the positions.
 }

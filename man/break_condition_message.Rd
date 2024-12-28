@@ -3,7 +3,7 @@
 \name{break_condition_message}
 \alias{break_condition_message}
 \title{Retrieve the condition message and breaks it in a character vector based on newline character.
-This is helpful since quickalerts are defined using only the message argument of the cli-signaling functions.}
+This is helpful since quickalerts are defined using only the message argument of the cli-signaling function.}
 \usage{
 break_condition_message(condition)
 }
@@ -12,5 +12,5 @@ break_condition_message(condition)
 }
 \description{
 Retrieve the condition message and breaks it in a character vector based on newline character.
-This is helpful since quickalerts are defined using only the message argument of the cli-signaling functions.
+This is helpful since quickalerts are defined using only the message argument of the cli-signaling function.
 }

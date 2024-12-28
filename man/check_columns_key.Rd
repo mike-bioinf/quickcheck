@@ -41,14 +41,14 @@ test_columns_key(
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
-\item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
+\item{header}{String added at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
 \item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass the additional parameters sign, list_format and header (if not in the formals parameters).}
 }
 \value{
 Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,

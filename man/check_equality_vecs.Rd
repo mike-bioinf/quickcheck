@@ -46,10 +46,10 @@ test_equality_vecs(
 
 \item{sort}{Boolean, whether to sort the vectors before performing the check (default FALSE).}
 
-\item{recycle}{Boolean indicating whether to allow vector recycling (default FALSE).}
+\item{recycle}{Boolean indicating whether to allow vector recycling (default FALSE). If False a check on vectro lengths is performed before the "main" check}
 
 \item{coerce}{Boolean indicating whether the two vectors can be coerced during the check (default FALSE).
-If FALSE a check on vector classes is performed before the main check. This check is performed using the identical function.
+If FALSE a check on vector classes is performed before the "main" check. This check is performed using the identical function.
 Therefore the vector classes must be perfectly identical in order to pass the check.}
 
 \item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
@@ -66,7 +66,7 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 \item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 The default (0) points to this function frame.}
 
-\item{...}{To pass additional argument to alert_generator function.}
+\item{...}{To pass the additional parameters sign, list_format and header (if not in the formals parameters).}
 }
 \value{
 Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,
@@ -76,8 +76,8 @@ the "test" function returns TRUE if the condition would be raised and FALSE othe
 Equality is verified using "==", meaning that both the order of values and the presence of duplicates are taken into account.
 To ignore order or duplicates, consider using the "check_matching_vecs" function.
 In addition the equality operator allows for automating recycling and coercion, behaviors that can be indirectly controlled
-performing preliminary checks using the recycle and coerce parameters (check on equality of vector lengths and classes, respectively).
-Note that unique and sort args have precedence over the recycle one, meaning the reciclying is done after sorting and duplicates removal.
+performing additional checks using the recycle and coerce parameters (check on vector lengths and classes, respectively).
+Note that unique and sort params have precedence over recycle, meaning the reciclying is done after sorting and duplicates removal.
 }
 \details{
 NAs are always removed since comparisons involving them result always in NAs using the equality operator (a warning is raised).
