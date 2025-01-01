@@ -15,18 +15,18 @@ impose_accumulation_behavior(
 )
 }
 \arguments{
-\item{expr}{check function call. It's important that the checking function raises warnings or messages and not errors.}
+\item{expr}{Check function call. It's important that the checking function raises warnings or messages and not errors.}
 
-\item{raise}{type of the accumulated final alert if any.}
+\item{raise}{Type of the accumulated final alert if any.}
 
 \item{alert_message}{String or list reporting the alert message (by default the function build a list).}
 
-\item{header}{string to add as the header of the accumulated alert list.}
+\item{header}{String to add as the header of the accumulated alert list.}
 
 \item{n_evaluation_frame}{Intergerish, defines the number of stack frame to look down for the evaluation
 of the glue expressions of the alert message. The default (0) points to this function frame.}
 
-\item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}
+\item{quickalert}{Logical, whether the raised alert is of class "quickalert" (default TRUE).}
 
 \item{...}{To pass additional parameters to alert_generator function.}
 }

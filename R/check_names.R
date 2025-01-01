@@ -24,8 +24,8 @@ check_names <- function(x, xarg = "x", null_check = FALSE, zero_len_check = FALS
     cli::cli_abort(c("x" = "{what} is not found as attribute of {xarg}."))
   }
 
-  if(what %in% c("names", "colnames")) get_name <- names else get_name <- rownames
-  vec_name <- get_name(x)
+  if(what %in% c("names", "colnames")) get_names <- names else get_names <- rownames
+  vec_name <- get_names(x)
 
   internal_check_vector(
     vec = vec_name,

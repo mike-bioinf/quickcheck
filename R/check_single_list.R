@@ -15,7 +15,7 @@ check_uniform_list <- function(x, flatten = TRUE, xarg = "list", raise = "error"
   types <- lapply(x, class)
   identity <- purrr::reduce(types, custom_identical)
 
-  if(identity == "NotEqualClass"){
+  if(identity == "not_identical_class"){
     alert_message <- generate_message(alert_message, "{xarg} is {cli::col_red('not uniform')}.")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
   }
@@ -80,5 +80,5 @@ check_length_list <- function(x, exact_len = NULL, min_len = NULL, max_len = NUL
 #' @param x first element.
 #' @param y second element.
 custom_identical <- function(x, y){
-  if(identical(x, y)) return(y) else return("NotEqualClass")
+  if(identical(x, y)) return(y) else return("not_identical_class")
 }

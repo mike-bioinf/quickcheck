@@ -15,18 +15,18 @@ impose_additional_alert(
 )
 }
 \arguments{
-\item{expr}{check function call. It's important that the checking function raises warnings or messages and not errors.}
+\item{expr}{Check function call. It's important that the checking function raises warnings or messages and not errors.}
 
 \item{message}{String to add to the alert message.}
 
 \item{margin}{Numeric equal to 1 or 2, indicating where to add the additional message (start or end respectively).}
 
-\item{raise}{type of the accumulated final alert if any.}
+\item{raise}{Type of the accumulated final alert if any.}
 
 \item{n_evaluation_frame}{Intergerish, defines the number of stack frame to look down for the evaluation
 of the glue expressions of the alert message. The default (0) points to this function frame.}
 
-\item{quickalert}{logical, whether the raised alert is of class "quickalert" (default TRUE).}
+\item{quickalert}{Logical, whether the raised alert is of class "quickalert" (default TRUE).}
 
 \item{...}{To pass additional parameters to alert_generator function.}
 }

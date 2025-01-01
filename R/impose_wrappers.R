@@ -41,13 +41,13 @@ impose_logical_behavior <- function(expr, force_alert = FALSE, strip_quickalert 
 #' @description
 #' Imposes an accumulation behavior in which quickalerts are stored in a list, which is used to raise a condition.
 #' Works only with messages and warnings (not errors).
-#' @param expr check function call. It's important that the checking function raises warnings or messages and not errors.
-#' @param raise type of the accumulated final alert if any.
+#' @param expr Check function call. It's important that the checking function raises warnings or messages and not errors.
+#' @param raise Type of the accumulated final alert if any.
 #' @param alert_message String or list reporting the alert message (by default the function build a list).
-#' @param header string to add as the header of the accumulated alert list.
+#' @param header String to add as the header of the accumulated alert list.
 #' @param n_evaluation_frame Intergerish, defines the number of stack frame to look down for the evaluation
 #'  of the glue expressions of the alert message. The default (0) points to this function frame.
-#' @param quickalert logical, whether the raised alert is of class "quickalert" (default TRUE).
+#' @param quickalert Logical, whether the raised alert is of class "quickalert" (default TRUE).
 #' @param ... To pass additional parameters to alert_generator function.
 #' @return invisible NULL
 #' @export
@@ -94,7 +94,7 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
   additional_params <- names(check_arg_list)
 
   if(!is.null(additional_params)){
-    check_empty_vec(additional_params, na = TRUE, empty_string = TRUE, quickalert = FALSE)
+    internal_check_empty_vec(additional_params, na = TRUE, empty_string = TRUE, quickalert = FALSE)
     internal_check_absence_vec(
       vec = additional_params,
       values = c("raise", "header", "quickalert", "sign"),
