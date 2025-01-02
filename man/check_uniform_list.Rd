@@ -7,7 +7,7 @@
 \usage{
 check_uniform_list(
   x,
-  flatten = TRUE,
+  flatten = FALSE,
   xarg = "list",
   raise = "error",
   alert_message = NULL,
@@ -18,7 +18,7 @@ check_uniform_list(
 
 test_uniform_list(
   x,
-  flatten = TRUE,
+  flatten = FALSE,
   xarg = "list",
   raise = "error",
   alert_message = NULL,
@@ -28,7 +28,7 @@ test_uniform_list(
 )
 }
 \arguments{
-\item{x}{list.}
+\item{x}{List to check.}
 
 \item{flatten}{Boolean, whether to flat out the list before doing the check (default TRUE).}
 
@@ -39,8 +39,8 @@ test_uniform_list(
 \item{alert_message}{Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 It's also possible to pass a list of strings that is displayed as a nominated or numbered list.}
 
-\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
-The default (0) points to this function frame.}
+\item{n_evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+The default value (0) points to the frame above this function frame. So to point to the frame below this function frame you have to set 2.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 

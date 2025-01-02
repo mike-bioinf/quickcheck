@@ -9,7 +9,7 @@ check_predicate_list(
   x,
   predicate,
   inverse = FALSE,
-  flatten = TRUE,
+  flatten = FALSE,
   xarg = "list",
   raise = "error",
   alert_message = NULL,
@@ -23,7 +23,7 @@ test_predicate_list(
   x,
   predicate,
   inverse = FALSE,
-  flatten = TRUE,
+  flatten = FALSE,
   xarg = "list",
   raise = "error",
   alert_message = NULL,
@@ -34,7 +34,7 @@ test_predicate_list(
 )
 }
 \arguments{
-\item{x}{list.}
+\item{x}{List to check.}
 
 \item{predicate}{A predicate function, usually an "is.something" function.}
 
@@ -51,8 +51,8 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
-The default (0) points to this function frame.}
+\item{n_evaluation_frame}{numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+The default value (0) points to the frame above this function frame. So to point to the frame below this function frame you have to set 2.}
 
 \item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
 
@@ -65,7 +65,7 @@ the "test" function returns TRUE if the condition would be raised and FALSE othe
 \description{
 Checks whether the predicate returns TRUE for all elements of the list.
 The function doesn't perform any check on the argument provided in predicate.
-Therefore the correctness of the provided function falls on the user.
+Therefore the correctness of the provided predicate falls on the user.
 }
 \details{
 The alert will not points the eventual elements in error if no or some elements names are empty, but instead it will raise a more general alert.

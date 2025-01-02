@@ -100,6 +100,7 @@ raise_predicate_error <- function(log_empty_names, errors, string_object, invers
     }
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, header = header, ...)
   }
+
   invisible(NULL)
 }
 

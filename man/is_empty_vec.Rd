@@ -2,7 +2,7 @@
 % Please edit documentation in R/check_single_vec.R
 \name{is_empty_vec}
 \alias{is_empty_vec}
-\title{Checks the presence of null values in a vector in a broader sense.}
+\title{Checks the presence of null values in a vector in a broad sense.}
 \usage{
 is_empty_vec(vec, null = TRUE, len = TRUE, na = TRUE, empty_string = TRUE)
 }
@@ -21,5 +21,5 @@ is_empty_vec(vec, null = TRUE, len = TRUE, na = TRUE, empty_string = TRUE)
 A single boolean, FALSE even if one value is empty, TRUE otherwise.
 }
 \description{
-Checks the presence of null values in a vector in a broader sense.
+Checks the presence of null values in a vector in a broad sense.
 }

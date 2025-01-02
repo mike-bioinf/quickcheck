@@ -17,9 +17,9 @@
 #' @param decreasing Boolean, should the sort check be performed in decreasing order? (default FALSE).
 #' @param unique Boolean, should be vec a vector of unique values (default FALSE).
 #' @param na_rm_unique Boolean, should the NAs be removed for the unique-check (default FALSE).
-#' @param exact_len Integer, indicating the exact expected vector length (default NULL).
-#' @param min_len Integer, indicating the minimum expected vector length (default NULL).
-#' @param max_len Integer, indicating the maximum expected vector length (default NULL).
+#' @param exact_len Integer(ish), indicating the exact expected vector length (default NULL).
+#' @param min_len Integer(ish), indicating the minimum expected vector length (default NULL).
+#' @param max_len Integer(ish), indicating the maximum expected vector length (default NULL).
 #' @param unique_len Boolean, should the length-check be performed on only the unique values of vec (default FALSE).
 #' @param na_rm_len Boolean, should the NAs be removed for the length-check (default FALSE).
 #' @param include Vector of values wich presence is checked (default NULL).
@@ -87,12 +87,12 @@ check_atomic_vec <- function(vec, vec_arg = "vec", raise = "error", alert_messag
 
 
 
-#' Checks the presence of null values in a vector in a broader sense.
+#' Checks the presence of null values in a vector in a broad sense.
 #' @param vec vector to test.
-#' @param na Boolean, indicating whether to perform the check for NAs (default TRUE).
-#' @param empty_string Boolean, indicating whether to perform the check for empty string "" (default TRUE).
-#' @param len Boolean, indicating whether to perform the check for 0 length (default TRUE).
 #' @param null Boolean, indicating whether to perform the check for NULL value (default TRUE).
+#' @param na Boolean, indicating whether to perform the check for NAs (default TRUE).
+#' @param len Boolean, indicating whether to perform the check for 0 length (default TRUE).
+#' @param empty_string Boolean, indicating whether to perform the check for empty string "" (default TRUE).
 #' @return A single boolean, FALSE even if one value is empty, TRUE otherwise.
 #' @export
 is_empty_vec <- function(vec, null = TRUE, len = TRUE, na = TRUE, empty_string = TRUE){

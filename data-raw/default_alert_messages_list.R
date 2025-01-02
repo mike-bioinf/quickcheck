@@ -101,6 +101,8 @@ default_alert_messages <- list(
     "The following {cli::qty(length(number_missing1))} value{?s} {?is/are} {cli::col_red('missing')} in {df1_arg}:",
     "{missing_values1}"
     ),
+  check_empty_list =
+    "{xarg} is empty.",
   check_uniform_list =
     "{xarg} is {cli::col_red('not uniform')}.",
   check_predicate_list = list(

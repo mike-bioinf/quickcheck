@@ -114,6 +114,16 @@ test_empty_df <- make_test_function("check_empty_df")
 
 ### Single list ---------------------------------------------------------------------
 
+#' @rdname check_list
+#' @export
+test_list <- make_test_function("check_list")
+
+
+#' @rdname check_empty_list
+#' @export
+test_empty_list <- make_test_function("check_empty_list")
+
+
 #' @rdname check_uniform_list
 #' @export
 test_uniform_list <- make_test_function("check_uniform_list")

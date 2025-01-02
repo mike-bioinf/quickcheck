@@ -204,7 +204,6 @@ check_columns_number <- function(df, exact_len = NULL, min_len = NULL, max_len =
   rlang::check_required(df)
   check_args_classes("df", "data.frame", quickalert = FALSE)
   check_len_args(exact_len, min_len, max_len)
-
   ncols <- length(df)
   combined_message <- core_length_test(ncols, exact_len, min_len, max_len, df_arg)
   raise_length_alert(raise, combined_message, alert_message, n_evaluation_frame+1, quickalert, ...)

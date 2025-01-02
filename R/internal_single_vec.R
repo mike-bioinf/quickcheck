@@ -26,8 +26,8 @@ internal_check_vector <- function(vec, vec_arg = "vec", null_check = FALSE, zero
 #' Internal check of check_empty_vec
 #' @inheritParams check_empty_vec
 internal_check_empty_vec <- function(vec, null = TRUE, len = TRUE, na = TRUE, empty_string = TRUE, vec_arg = "vec",
-                                    raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
-   if(is_empty_vec(vec, null, len, na, empty_string)){
+                                      raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
+  if(is_empty_vec(vec, null, len, na, empty_string)){
     alert_message <- generate_message(alert_message, "{vec_arg} is or contains an empty entity.")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
   }

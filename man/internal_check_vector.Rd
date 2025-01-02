@@ -51,11 +51,11 @@ internal_check_vector(
 
 \item{na_rm_unique}{Boolean, should the NAs be removed for the unique-check (default FALSE).}
 
-\item{exact_len}{Integer, indicating the exact expected vector length (default NULL).}
+\item{exact_len}{Integer(ish), indicating the exact expected vector length (default NULL).}
 
-\item{min_len}{Integer, indicating the minimum expected vector length (default NULL).}
+\item{min_len}{Integer(ish), indicating the minimum expected vector length (default NULL).}
 
-\item{max_len}{Integer, indicating the maximum expected vector length (default NULL).}
+\item{max_len}{Integer(ish), indicating the maximum expected vector length (default NULL).}
 
 \item{unique_len}{Boolean, should the length-check be performed on only the unique values of vec (default FALSE).}
 
