@@ -16,6 +16,7 @@ check_vector(
   inverse = FALSE,
   sorted = FALSE,
   decreasing = FALSE,
+  strict_sorted = TRUE,
   unique = FALSE,
   na_rm_unique = FALSE,
   exact_len = NULL,
@@ -38,6 +39,7 @@ test_vector(
   inverse = FALSE,
   sorted = FALSE,
   decreasing = FALSE,
+  strict_sorted = TRUE,
   unique = FALSE,
   na_rm_unique = FALSE,
   exact_len = NULL,
@@ -69,6 +71,8 @@ test_vector(
 \item{sorted}{Boolean, is vec sorted? (default FALSE).}
 
 \item{decreasing}{Boolean, should the sort check be performed in decreasing order? (default FALSE).}
+
+\item{strict_sorted}{Boolean, should the sort check consider the numerical instability for the numeric vector (default TRUE).}
 
 \item{unique}{Boolean, should be vec a vector of unique values (default FALSE).}
 

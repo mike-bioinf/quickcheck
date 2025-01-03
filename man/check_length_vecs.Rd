@@ -42,9 +42,9 @@ test_lenght_vecs(
 
 \item{unique}{Boolean indicating whether to perform the check only on unique values (default FALSE).}
 
-\item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
+\item{vec1_arg}{String indicating how to address vec1 in the raised message (default 'vec1').}
 
-\item{vec2_arg}{string indicating how to address vec2 in the raised message (default 'vec2)'.}
+\item{vec2_arg}{String indicating how to address vec2 in the raised message (default 'vec2)'.}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 

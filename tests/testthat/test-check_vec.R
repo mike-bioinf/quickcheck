@@ -72,13 +72,15 @@ test_that("check_sorted_vec works as expected", {
   expect_error(check_sorted_vec(v1, decreasing = TRUE), class = "quickalert")
   v1 <- c(1, 2, 3, NA)
   expect_warning(check_sorted_vec(v1), regexp = "NAs in vec, they are not considered in the sort check.")
-  # floats instability causes no problems
+  # NULL vector is considered sorted
+  expect_no_error(check_sorted_vec(NULL))
+  # floats instability is correctly addressed
   v <- c(1.9 - 0.900000000001, 1)
-  expect_no_error(check_sorted_vec(v))
-  expect_no_error(check_sorted_vec(v, decreasing = TRUE))
+  expect_error(check_sorted_vec(v, decreasing = TRUE, strict = TRUE), class = "quickalert")
+  expect_no_error(check_sorted_vec(v, decreasing = TRUE, strict = FALSE))
   # the vector attributes are ignored
   v2 <- stats::na.omit(v1)
-  expect_no_error(check_sorted_vec(v2))
+  expect_no_error(check_sorted_vec(v2, strict = FALSE))
   # evaluation frame mechanisms works
   mes <- "right_frame"
   suppressWarnings(expect_error(check_sorted_vec(v1, decreasing = TRUE, alert_message = "{mes}", n_evaluation_frame = 1), regexp = mes))

@@ -52,9 +52,9 @@ test_equality_vecs(
 If FALSE a check on vector classes is performed before the "main" check. This check is performed using the identical function.
 Therefore the vector classes must be perfectly identical in order to pass the check.}
 
-\item{vec1_arg}{string indicating how to address vec1 in the raised message (default 'vec1').}
+\item{vec1_arg}{String indicating how to address vec1 in the raised message (default 'vec1').}
 
-\item{vec2_arg}{string indicating how to address vec2 in the raised message (default 'vec2)'.}
+\item{vec2_arg}{String indicating how to address vec2 in the raised message (default 'vec2)'.}
 
 \item{raise}{Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.}
 

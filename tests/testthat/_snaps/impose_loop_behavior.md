@@ -1,12 +1,12 @@
 # impose_loop_behavior raise errors for incorrect inputs
 
-    x The following argument doesn't have the expected class:
-    x.
+    x The following expectations are not met:
+    1. x) ACTUAL = tbl_df, tbl, and data.frame | EXPECTED = list
 
 ---
 
-    x The following argument doesn't have the expected class:
-    check_arg_list.
+    x The following expectations are not met:
+    1. check_arg_list) ACTUAL = double | EXPECTED = list
 
 # impose_loop_behavior works correctly
 

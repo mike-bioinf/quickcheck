@@ -4,7 +4,8 @@
 test_that("check_columns_copresence works as intended", {
   expect_error(check_columns_copresence(qadf1, qadf2, columns = "visit_number"), class = "quickalert")
   expect_no_error(check_columns_copresence(qadf1, qadf2, columns = "bmi"))
-  expect_error(check_columns_copresence(qadf1, qadf2, columns = "other"), regexp = "other is not found in df1 and df2")
+  # does not check for passed columns names
+  expect_no_error(check_columns_copresence(qadf1, qadf2, columns = "not_existent"))
 })
 
 

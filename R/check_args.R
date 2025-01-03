@@ -2,10 +2,11 @@
 #' @description
 #' Checks the presence of all arguments that have no default values in the upper calling function
 #' and stops if find some of them, indicating their names. Ensemble version of rlang 'check_required' function.
+#' @details To check the missingness of the caller frame bindings, this function evaluates the promises.
 #' @return invisible NULL.
 #' @export
 check_required_all <- function(){
-  envlist <- as.list(rlang::caller_env(n = 1))
+  envlist <- as.list(rlang::caller_env(1))
   envmiss <- purrr::keep(envlist, rlang::is_missing)
   if(length(envmiss) > 0){
     cli::cli_abort(c("x" = "{cli::col_red(names(envmiss))} {?is/are} absent but must be supplied."))
@@ -26,16 +27,17 @@ check_args_incompatible <- function(args, alert_message = NULL, n_evaluation_fra
   rlang::check_required(args)
   if(!is.character(args)) cli::cli_abort(c("x" = "args must be a character vector."))
 
-  calling_list <- as.list(rlang::caller_env(1))
+   # do NOT convert into a list since these will evaluate expressions passed as argument in the calling func
+  calling_env <- rlang::caller_env(1)
 
   internal_check_presence_vec(
-    vec = names(calling_list),
+    vec = names(calling_env),
     values = args,
     header = "The following {cli::qty(length(missing_values))} argument{?s} {?is/are} {cli::col_red('not found')} in the caller function:",
     quickalert = FALSE
   )
 
-  calling_args <- calling_list[args]
+  calling_args <- rlang::env_get_list(calling_env, args)
   lgl_null_args <- purrr::map_lgl(calling_args, is.null)
 
   if(sum(!lgl_null_args) > 1){
@@ -71,7 +73,7 @@ check_args_incompatible <- function(args, alert_message = NULL, n_evaluation_fra
 #' Character vector indicating which functions to use to get the actual types/class on which the expectation must be checked.
 #' Must be of the same length of args or of length 1. If of length one the vector is recycled to args length.
 #' Possible values are:
-#' 'typeof': declare the use of the "typeof" function,
+#' 'typeof': declare the use of the "typeof" function (default),
 #' 'class': declare the use of the "class" function,
 #' 'integerish': declare a check internally performed via class_integerish returning "integerish" for rlang-defined-integerish objects.
 #' @param recycle_expected_types
@@ -104,16 +106,17 @@ check_args <- function(args, expected_types, null = FALSE, flag = FALSE, with = 
     internal_check_length_vecs(args, expected_types, alert_message = "args and expected_types have different lengths.", quickalert = FALSE)
   }
 
-  calling_list <- as.list(rlang::caller_env(n = 1))
+  # do NOT convert into a list since these will evaluate expressions passed as arguments in the caller function
+  calling_env <- rlang::caller_env(n = 1)
 
   internal_check_presence_vec(
-    vec = names(calling_list),
+    vec = names(calling_env),
     values = args,
     header = "The following {cli::qty(length(missing_values))} argument{?s} {?is/are} {cli::col_red('not found')} in the caller function:",
     quickalert = FALSE
   )
 
-  calling_args <- calling_list[args]
+  calling_args <- rlang::env_get_list(calling_env, args)
   params <- names(calling_args)
 
   list_check <- list(calling_args, expected_types, null, flag, with, params)

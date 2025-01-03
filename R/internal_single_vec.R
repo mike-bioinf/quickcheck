@@ -1,7 +1,7 @@
 #' Internal check of check_vector
 #' @inheritParams check_vector
 internal_check_vector <- function(vec, vec_arg = "vec", null_check = FALSE, zero_len_check = FALSE, na_check = FALSE, empty_string_check = FALSE,
-                          predicate = NULL, inverse = FALSE, sorted = FALSE, decreasing = FALSE, unique = FALSE, na_rm_unique = FALSE,
+                          predicate = NULL, inverse = FALSE, sorted = FALSE, decreasing = FALSE, strict_sorted = TRUE,  unique = FALSE, na_rm_unique = FALSE,
                           exact_len = NULL, min_len = NULL, max_len = NULL, unique_len = FALSE, na_rm_len = FALSE, include = NULL, exclude = NULL){
   check_atomic_vec(vec, vec_arg)
   
@@ -10,7 +10,7 @@ internal_check_vector <- function(vec, vec_arg = "vec", null_check = FALSE, zero
   }
 
   if(!is.null(predicate)) internal_check_predicate_vec(vec, predicate, inverse, vec_arg)
-  if(sorted) internal_check_sorted_vec(vec, decreasing, vec_arg)
+  if(sorted) internal_check_sorted_vec(vec, decreasing, strict_sorted, vec_arg)
   if(unique) internal_check_duplicate_vec(vec, na_rm_unique, vec_arg)
 
   if(!is.null(exact_len) || !is.null(min_len) || !is.null(max_len)){
@@ -49,15 +49,21 @@ internal_check_predicate_vec <- function(vec, predicate, inverse = FALSE, vec_ar
 
 #' Internal check of check_sorted_vec
 #' @inheritParams check_sorted_vec
-internal_check_sorted_vec <- function(vec, decreasing = FALSE, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
+internal_check_sorted_vec <- function(vec, decreasing = FALSE, strict = TRUE, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_na_vec(vec, raise = "warning", alert_message = "NAs in vec, they are not considered in the sort check.", quickalert = FALSE)
   vec_known <- stats::na.omit(vec)
 
-  # full-NA vectors, vectors with only one not-NA value and with 0 or 1 elements are considered sorted
+  # NULL, full-NA vectors, vectors with only one not-NA value and with 0 or 1 elements are considered sorted
   if(length(vec_known) < 2) return(NULL)
   sorted_vec_known <- sort(vec_known, decreasing)
 
-  if(!isTRUE(all.equal(vec_known, sorted_vec_known, check.attributes = FALSE, check.names = FALSE))){
+  if(strict){
+    is_sorted_vec <- all(vec_known == sorted_vec_known)
+  } else {
+    is_sorted_vec <- isTRUE(all.equal(vec_known, sorted_vec_known, check.attributes = FALSE, check.names = FALSE))
+  }
+
+  if(!is_sorted_vec){
     alert_message <- generate_message(alert_message, "{vec_arg} is not sorted.")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
   }

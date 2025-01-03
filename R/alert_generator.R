@@ -19,13 +19,18 @@
 #'  Note that in case of errors the "!" sign is used as default by cli. This sign is changed with "X" if sign is TRUE,
 #'  but with sign = FALSE it cannot be suppressed.
 #' @param header
-#'  Character string to add at the beginning of the alert message (default NULL).
+#'  Character string to add at the beginning of the alert message (default NULL). 
+#'  Can be also a character vector, in this case cosecutive elementes will be displayed on consecutive lines.
 #' @param list_format
 #'  Logical, whether to apply the list format style, which includes numbers or names
 #'  of the alert message elements to be represented in violet in a bullet list.
 #' @return Raise a condition.
 alert_generator <- function(type, alert_message, n_evaluation_frame = 0, quickalert = TRUE, header = NULL, sign = TRUE, list_format = FALSE){
   rlang::arg_match(arg = type, values = c("error", "warning", "message"), multiple = F)
+  rlang::check_required(type)
+  rlang::check_required(alert_message)
+  check_alert_generator_args(n_evaluation_frame, quickalert, header, sign, list_format)
+
   alert_funcs <- generate_alertfunc_list()
   my_alert_func <- alert_funcs[[type]]
 
@@ -54,6 +59,31 @@ alert_generator <- function(type, alert_message, n_evaluation_frame = 0, quickal
   my_alert_func(alert_message, n_evaluation_frame + 2, alertclass)
 }
 
+
+
+#' Checks alert generator arguments
+#' @inheritParams alert_generator
+check_alert_generator_args <- function(n_evaluation_frame, quickalert, header, sign, list_format){
+  if(!rlang::is_integerish(n_evaluation_frame) || length(n_evaluation_frame) > 1 || n_evaluation_frame < 0){
+    cli::cli_abort(c("x" = "n_evalution frame must be a {cli::col_red('single positive integerish')} value."))
+  }
+
+  if(!is.logical(quickalert) || length(quickalert) > 1){
+    cli::cli_abort(c("x" = "quickalert muste be a {cli::col_red('single logical')} value."))
+  }
+
+  if(!is.null(header) && !is.character(header)){
+    cli::cli_abort(c("x" = "header must be a {cli::col_red('string or character vector')}."))
+  }
+
+  if(!is.logical(sign) || length(sign) > 1){
+    cli::cli_abort(c("x" = "sign must be a {cli::col_red('single logical')} value."))
+  }
+
+  if(!is.logical(list_format) || length(list_format) > 1){
+    cli::cli_abort(c("x" = "list_format must be a {cli::col_red('single logical')} value."))
+  }
+}
 
 
 #' Generates a list of aliases of main cli alert functions with intuitive names.

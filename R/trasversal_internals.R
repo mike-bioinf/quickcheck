@@ -7,7 +7,15 @@ check_len_args <- function(exact_len, min_len, max_len){
   if(is.null(exact_len) && is.null(min_len) && is.null(max_len)){
     cli::cli_abort(c("x" = "At least one of exact_len, min_len and max_len arguments must be set!"))
   }
-  check_integerish_args(c("exact_len", "min_len", "max_len"), null = TRUE, quickalert = FALSE)
+  check_args(
+    args = c("exact_len", "min_len", "max_len"),
+    expected_types = "integerish",
+    flag = TRUE,
+    null = TRUE,
+    with = "check_integerish",
+    recycle_expected_types = 3,
+    quickalert = FALSE
+  )
 }
 
 

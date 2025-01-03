@@ -8,6 +8,7 @@
 check_sorted_vec(
   vec,
   decreasing = FALSE,
+  strict = TRUE,
   vec_arg = "vec",
   raise = "error",
   alert_message = NULL,
@@ -19,6 +20,7 @@ check_sorted_vec(
 test_sorted_vec(
   vec,
   decreasing = FALSE,
+  strict = TRUE,
   vec_arg = "vec",
   raise = "error",
   alert_message = NULL,
@@ -31,6 +33,10 @@ test_sorted_vec(
 \item{vec}{Vector to check.}
 
 \item{decreasing}{Boolean indicating whether the expect sorted order is decreasing (default FALSE).}
+
+\item{strict}{Boolean indicating whether to consider numeric instability in the check (default TRUE).
+If FALSE the vector is compared to it's sorted version using "all_equal" instead of the "==" operator.
+This helps to mitigate issues with floating-point precision, utilizing the default tolerance.}
 
 \item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
 
@@ -54,7 +60,5 @@ the "test" function returns TRUE if the condition would be raised and FALSE othe
 Check whether a vector is sorted
 }
 \details{
-NAs in the vector are ignored during the check. A zero-length vector is treated as sorted.
-Internally, the check is performed by comparing the vector to its sorted version.
-The comparison is conducted using the \code{all.equal} function to mitigate issues with floating-point precision, utilizing the default tolerance.
+NAs in the vector are ignored during the check. NULL and zero-length vector is treated as sorted.
 }

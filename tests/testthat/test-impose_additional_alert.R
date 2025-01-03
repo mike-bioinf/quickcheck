@@ -34,5 +34,3 @@ test_that("impose_additional_alert evalution frame mechanisms works", {
     regexp = "additional_part"
   )
 })
-
-

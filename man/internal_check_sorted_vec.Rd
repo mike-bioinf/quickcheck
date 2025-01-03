@@ -7,6 +7,7 @@
 internal_check_sorted_vec(
   vec,
   decreasing = FALSE,
+  strict = TRUE,
   vec_arg = "vec",
   raise = "error",
   alert_message = NULL,
@@ -19,6 +20,10 @@ internal_check_sorted_vec(
 \item{vec}{Vector to check.}
 
 \item{decreasing}{Boolean indicating whether the expect sorted order is decreasing (default FALSE).}
+
+\item{strict}{Boolean indicating whether to consider numeric instability in the check (default TRUE).
+If FALSE the vector is compared to it's sorted version using "all_equal" instead of the "==" operator.
+This helps to mitigate issues with floating-point precision, utilizing the default tolerance.}
 
 \item{vec_arg}{String indicating how to address vec in the alert message (default 'vec').}
 

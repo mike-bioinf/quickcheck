@@ -13,3 +13,6 @@ invisible NULL.
 Checks the presence of all arguments that have no default values in the upper calling function
 and stops if find some of them, indicating their names. Ensemble version of rlang 'check_required' function.
 }
+\details{
+To check the missingness of the caller frame bindings, this function evaluates the promises.
+}

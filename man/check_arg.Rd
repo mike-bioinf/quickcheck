@@ -20,7 +20,7 @@ If of length one the vector is recycled to args length}
 \item{with}{Character vector indicating which functions to use to get the actual types/class on which the expectation must be checked.
 Must be of the same length of args or of length 1. If of length one the vector is recycled to args length.
 Possible values are:
-'typeof': declare the use of the "typeof" function,
+'typeof': declare the use of the "typeof" function (default),
 'class': declare the use of the "class" function,
 'integerish': declare a check internally performed via class_integerish returning "integerish" for rlang-defined-integerish objects.}
 

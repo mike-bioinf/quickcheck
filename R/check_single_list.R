@@ -26,7 +26,7 @@ check_list <- function(x, xarg = "list", flatten = FALSE, null_check = FALSE, ze
     expected_types = c("list", "character", "logical", "logical", "logical", "logical", "function", "logical", "integerish", "integerish", "integerish"),
     null = c(TRUE, FALSE, FALSE, FALSE, FALSE, FALSE, TRUE, FALSE, TRUE, TRUE, TRUE),
     flag = c(FALSE, TRUE, TRUE, TRUE, TRUE, TRUE, FALSE, TRUE, TRUE, TRUE, TRUE),
-    with = c(rep("typeof", 6), "class", "typeof", rep("check_integerish", 3)),
+    with = c(rep("class", 8), rep("check_integerish", 3)),
     quickalert = FALSE
   )
 
@@ -52,7 +52,7 @@ check_empty_list <- function(x, null = TRUE, len = TRUE, xarg = "list", raise = 
     expected_types = c("list", "logical", "logical", "character"),
     flag = c(FALSE, TRUE, TRUE, TRUE),
     null = c(TRUE, FALSE, FALSE, FALSE),
-    with = "typeof",
+    with = "class",
     quickalert = FALSE
   )
 
@@ -72,7 +72,7 @@ check_empty_list <- function(x, null = TRUE, len = TRUE, xarg = "list", raise = 
 #' @export
 check_uniform_list <- function(x, flatten = FALSE, xarg = "list", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(x)
-  check_args(args = c("x", "flatten"), expected_types = c("list", "logical"), flag = c(FALSE, TRUE), with = "typeof", quickalert = FALSE)
+  check_args(c("x", "flatten"), c("list", "logical"), flag = c(FALSE, TRUE), with = "class", quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_uniform_list(x, flatten, xarg, raise, alert_message, n_evaluation_frame, quickalert, ...)
   invisible(NULL)
@@ -101,7 +101,7 @@ check_predicate_list <- function(x, predicate, inverse = FALSE, flatten = FALSE,
     args = c("x", "flatten", "predicate"),
     expected_types = c("list", "logical", "function"),
     flag = c(FALSE, TRUE, FALSE),
-    with = c("typeof", "typeof", "class"),
+    with = "class",
     quickalert = FALSE
   )
 
@@ -122,7 +122,7 @@ check_predicate_list <- function(x, predicate, inverse = FALSE, flatten = FALSE,
 check_length_list <- function(x, exact_len = NULL, min_len = NULL, max_len = NULL, flatten = FALSE, xarg = "list",
                               raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(x)
-  check_args(args = c("x", "flatten"), expected_types = c("list", "logical"), flag = c(FALSE, TRUE), with = "typeof", quickalert = FALSE)
+  check_args(c("x", "flatten"), c("list", "logical"), flag = c(FALSE, TRUE), with = "class", quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_length_list(x, exact_len, min_len, max_len, flatten, xarg, raise, alert_message, n_evaluation_frame, quickalert, ...)
   invisible(NULL)

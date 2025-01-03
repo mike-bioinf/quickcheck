@@ -38,7 +38,7 @@ test_columns_copresence(
 
 \item{df2}{second dataframe.}
 
-\item{columns}{Character vector of columns to consider. If NULL all columns are considered (default NULL).}
+\item{columns}{Character vector of columns to consider. If NULL, the default, all columns are considered. No check is done for not existent columns.}
 
 \item{df1_arg}{String specifying how to address first df in the raised messages (default "df1").}
 
@@ -64,4 +64,8 @@ the "test" function returns TRUE if the condition would be raised and FALSE othe
 }
 \description{
 Check duplicated column names in two dataframes
+}
+\details{
+The function does not check for the existence of the passed columns value.
+Therefore is possible to pass names not found in both dataframes and no error is raised.
 }

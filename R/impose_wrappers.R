@@ -90,7 +90,16 @@ impose_accumulation_behavior <- function(expr, raise = "error", alert_message = 
 impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element_nameroot = "element",
                                   raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  check_args_classes(c("x", "check_arg_list", "check_func"), c("list", "function"), c(2, 1), quickalert = FALSE)
+
+  check_args(
+    args = c("x", "check_arg_list", "check_func", "element_nameroot"),
+    expected_types = c("list", "function", "character"),
+    flag = c(rep(FALSE, 3), TRUE),
+    with = c("class", "typeof", "class", "typeof"),
+    recycle_expected_types = c(2, 1, 1),
+    quickalert = FALSE
+  )
+
   additional_params <- names(check_arg_list)
 
   if(!is.null(additional_params)){
@@ -148,7 +157,7 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
 #' @export
 impose_additional_alert <- function(expr, message, margin = 1, raise = "error", n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(message)
-  check_args_classes("message", "character", quickalert = FALSE)
+  check_args("message", "character", quickalert = FALSE)
 
   if(!margin %in% c(1, 2) || length(margin) > 1){
     cli::cli_abort(c("x" = "margin must be a single integerish equal to 1 or 2"))
@@ -172,7 +181,7 @@ impose_additional_alert <- function(expr, message, margin = 1, raise = "error", 
   if(!is.null(new_message)){
     alert_generator(raise, new_message, n_evaluation_frame, quickalert, ...)
   }
-  
+
   invisible(NULL)
 }
 

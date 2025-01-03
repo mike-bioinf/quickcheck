@@ -11,7 +11,15 @@
 #' @export
 check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)
+  
+  check_args(
+    args = c("df1", "df2", "df1_arg", "df2_arg"),
+    expected_types = c("data.frame", "character"),
+    flag = c(FALSE, FALSE, TRUE, TRUE),
+    with = "class",
+    recycle_expected_types = c(2, 2), 
+    quickalert = FALSE
+  )
 
   if(nrow(df1) != nrow(df2)){
     alert_message <- generate_message(alert_message, "{cli::col_red('Different number')} of rows between {df1_arg} and {df2_arg}.")
@@ -25,27 +33,39 @@ check_nrow_dfs <- function(df1, df2, df1_arg = "df1", df2_arg = "df2", raise = "
 
 #' Check duplicated column names in two dataframes
 #' @inheritParams check_nrow_dfs
-#' @param columns Character vector of columns to consider. If NULL all columns are considered (default NULL).
+#' @param columns Character vector of columns to consider. If NULL, the default, all columns are considered. No check is done for not existent columns.
 #' @param header String to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
+#' @details 
+#' The function does not check for the existence of the passed columns value. 
+#' Therefore is possible to pass names not found in both dataframes and no error is raised.
 #' @inherit check_atomic_vec return
 #' @export
 check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", df2_arg = "df2", raise = "error",
                                      alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  check_args_classes(c("df1", "df2", "df1_arg", "df2_arg"), c("data.frame", "character"), c(2, 2), quickalert = FALSE)
-  check_args_primitive_types("columns", "character", null = TRUE, quickalert = FALSE)
+  
+  check_args(
+    args = c("df1", "df2", "columns", "df1_arg", "df2_arg"),
+    expected_types = c("data.frame", "character"),
+    flag = c(FALSE, FALSE, FALSE, TRUE, TRUE),
+    null = c(FALSE, FALSE, TRUE, FALSE, FALSE),
+    with = "class",
+    recycle_expected_types = c(2, 3),
+    quickalert = FALSE
+  )
 
   if(!is.null(columns)){
     df1 <- dplyr::select(df1, dplyr::any_of(columns))
     df2 <- dplyr::select(df2, dplyr::any_of(columns))
-    if(length(df1) == 0 && length(df2) == 0) cli::cli_abort("{cli::qty(columns)} {? /None of} {columns} {?is not/are} found in {df1_arg} and {df2_arg}.")
+    if(length(df1) == 0 || length(df2) == 0) return(invisible(NULL))
   }
 
   all_cols <- c(colnames(df1), colnames(df2))
   duplicated_cols <- all_cols[duplicated(all_cols)]
+  n_duplicated_cols <- length(duplicated_cols)
 
-  if(length(duplicated_cols) > 0){
-    header <- generate_header(header, "The following columns are present in both dataframes:")
+  if(n_duplicated_cols > 0){
+    header <- generate_header(header, "The following {cli::qty(n_duplicated_cols)} column{?s} {?is/are} present in both dataframes:")
     alert_message <- generate_message(alert_message, "{cli::col_red(duplicated_cols)}.")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, header = header, ...)
   }
@@ -74,9 +94,18 @@ check_columns_copresence <- function(df1, df2, columns = NULL, df1_arg = "df1", 
 check_presence_dfs <- function(df1, df2, columns, coerce = FALSE, direction = "first_in_second", df1_arg = "df1", df2_arg = "df2", raise = "error",
                                alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
-  check_args_classes(c("df1", "df2", "columns"), c("data.frame", "character"), c(2, 1), quickalert = FALSE)
-  check_length_vec(columns, min_len = 1, max_len = 2, quickalert = FALSE)
+  
+  check_args(
+    args = c("df1", "df2", "columns", "coerce", "df1_arg", "df2_arg"),
+    expected_types = c("data.frame", "character", "logical", "character"),
+    flag = c(rep(FALSE, 3), rep(TRUE, 3)),
+    with = "class",
+    recycle_expected_types = c(2, 1, 1, 2),
+    quickalert = FALSE
+  )
+
   rlang::arg_match(arg = direction, values = c("first_in_second", "second_in_first", "bidirectional"), multiple = FALSE)
+  check_length_vec(columns, min_len = 1, max_len = 2, quickalert = FALSE)
   check_col_arg(df1, df2, columns)
 
   if(length(columns) == 2){
@@ -86,7 +115,7 @@ check_presence_dfs <- function(df1, df2, columns, coerce = FALSE, direction = "f
   col <- columns[1]
 
   if(!coerce){
-    check_identical_vecs(
+    internal_check_identical_vecs(
       vec1 = class(df1[[col]]),
       vec2 = class(df2[[col]]),
       n_evaluation_frame = 1,

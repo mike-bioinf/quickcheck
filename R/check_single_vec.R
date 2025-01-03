@@ -15,6 +15,7 @@
 #' @param inverse Boolean, whether the predicate must be NOT satisfied for all the elements for a successful check (default FALSE).
 #' @param sorted Boolean, is vec sorted? (default FALSE).
 #' @param decreasing Boolean, should the sort check be performed in decreasing order? (default FALSE).
+#' @param strict_sorted Boolean, should the sort check consider the numerical instability for the numeric vector (default TRUE).
 #' @param unique Boolean, should be vec a vector of unique values (default FALSE).
 #' @param na_rm_unique Boolean, should the NAs be removed for the unique-check (default FALSE).
 #' @param exact_len Integer(ish), indicating the exact expected vector length (default NULL).
@@ -27,25 +28,29 @@
 #' @inherit check_atomic_vec return
 #' @export
 check_vector <- function(vec, vec_arg = "vec", null_check = FALSE, zero_len_check = FALSE, na_check = FALSE, empty_string_check = FALSE,
-                          predicate = NULL, inverse = FALSE, sorted = FALSE, decreasing = FALSE, unique = FALSE, na_rm_unique = FALSE,
+                          predicate = NULL, inverse = FALSE, sorted = FALSE, decreasing = FALSE, strict_sorted = TRUE, unique = FALSE, na_rm_unique = FALSE,
                           exact_len = NULL, min_len = NULL, max_len = NULL, unique_len = FALSE, na_rm_len = FALSE, include = NULL, exclude = NULL){
   rlang::check_required(vec)
 
-  check_args_classes(
-    args = c("vec_arg", "null_check", "zero_len_check", "na_check", "empty_string_check", "inverse", "sorted", "decreasing", "unique", "na_rm_unique", "unique_len", "na_rm_len"),
-    expected_classes = c("character", "logical"),
-    numeric_correspondence = c(1, 11),
+  check_args(
+    args = c(
+      "vec_arg", "null_check", "zero_len_check", "na_check", "empty_string_check", "predicate", "inverse", "sorted",
+      "decreasing","strict_sorted", "unique", "na_rm_unique", "exact_len", "min_len", "max_len", "unique_len", "na_rm_len"
+    ),
+    expected_types = c("character", "logical", "function", "logical", "integerish", "logical"),
+    flag = TRUE,
+    null = c(rep(FALSE, 5), TRUE, rep(FALSE, 6), rep(TRUE, 3), rep(FALSE, 2)),
+    with = c(rep("typeof", 5), "class", rep("typeof", 6), rep("check_integerish", 3), rep("typeof", 2)),
+    recycle_expected_types = c(1, 4, 1, 6, 3, 2),
     quickalert = FALSE
   )
 
-  check_args_classes("predicate", "function", null = TRUE, quickalert = FALSE)
-  check_integerish_args(c("exact_len", "min_len", "max_len"), null = TRUE, quickalert = FALSE)
   check_atomic_vec(include, vec_arg = "include")
   check_atomic_vec(exclude, vec_arg = "exclude")
-  
+
   internal_check_vector(
     vec, vec_arg, null_check, zero_len_check, na_check, empty_string_check, predicate, inverse, sorted, decreasing,
-    unique, na_rm_unique, exact_len, min_len, max_len, unique_len, na_rm_len, include, exclude
+    strict_sorted, unique, na_rm_unique, exact_len, min_len, max_len, unique_len, na_rm_len, include, exclude
   )
 
   invisible(NULL)
@@ -58,11 +63,11 @@ check_vector <- function(vec, vec_arg = "vec", null_check = FALSE, zero_len_chec
 #' An atomic vector is defined slightly different from specifications in \link[base]{is.atomic},
 #' in the sense that it can logical, integer, numeric, complex, character, or NULL, but it cannot be
 #' a matrix or a factor. In short atomic here is declined as: is.atomic(vec) && !is.matrix(vec) && !is.factor(vec).
-#' @param vec 
+#' @param vec
 #' Vector to check.
-#' @param vec_arg 
+#' @param vec_arg
 #' String indicating how to address vec in the alert message (default 'vec').
-#' @param raise 
+#' @param raise
 #' Character string equal to one of "error", "warning" or "message" (default error). Set the type of alert that is created.
 #' @param alert_message
 #' Character vector reporting the alert message. Default NULL, in this case a standard message is used.
@@ -71,13 +76,14 @@ check_vector <- function(vec, vec_arg = "vec", null_check = FALSE, zero_len_chec
 #' numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
 #' The default value (0) points to the frame above this function frame. So to point to the frame below this function frame you have to set 2.
 #' @param quickalert logical, whether the raised alert has to be of class "quickalert".
-#' @param ... To pass the additional parameters sign, list_format and header (if not in the formals parameters). 
+#' @param ... To pass the additional parameters sign, list_format and header (if not in the formals parameters).
 #' @return
 #' Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,
 #' the "test" function returns TRUE if the condition would be raised and FALSE otherwise.
 #' @export
 check_atomic_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
+  check_args("vec_arg", "character", flag = TRUE, quickalert = FALSE)
   if(!is.atomic(vec) || is.matrix(vec) || is.factor(vec)){
     alert_message <- generate_message(alert_message, "{vec_arg} is not an {cli::col_red('atomic vector')}.")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
@@ -118,6 +124,7 @@ check_empty_vec <- function(vec, null = TRUE, len = TRUE, na = TRUE, empty_strin
                              raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
   check_atomic_vec(vec, vec_arg, quickalert = FALSE)
+  check_args(c("null", "len", "na", "empty_string", "vec_arg"), c("logical", "character"), flag = TRUE, recycle_expected_types = c(4, 1), quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_empty_vec(vec, null, len, na, empty_string, vec_arg, raise, alert_message, n_evaluation_frame, quickalert, ...)
   invisible(NULL)
@@ -132,6 +139,7 @@ check_empty_vec <- function(vec, null = TRUE, len = TRUE, na = TRUE, empty_strin
 check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
   check_atomic_vec(vec, vec_arg, quickalert = FALSE)
+  check_args("vec_arg", "character", flag = TRUE, quickalert = FALSE)
   if(any(is.na(vec))){
     alert_message <- generate_message(alert_message, "There are NAs in {vec_arg}.")
     alert_generator(raise, alert_message, n_evaluation_frame, quickalert, ...)
@@ -150,11 +158,11 @@ check_na_vec <- function(vec, vec_arg = "vec", raise = "error", alert_message = 
 #' @inheritParams check_atomic_vec
 #' @inherit check_atomic_vec return
 #' @export
-check_predicate_vec <- function(vec, predicate, inverse = FALSE, vec_arg = "vec", raise = "error", 
+check_predicate_vec <- function(vec, predicate, inverse = FALSE, vec_arg = "vec", raise = "error",
                                 alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_atomic_vec(vec, vec_arg, quickalert = FALSE)
-  check_args_classes("predicate", "function", quickalert = FALSE)
+  check_args(c("predicate", "inverse", "vec_arg"), c("function", "logical", "character"), flag = c(FALSE, TRUE, TRUE), with = "class", quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_predicate_vec(vec, predicate, inverse, vec_arg, raise, alert_message, header, n_evaluation_frame, quickalert, ...)
   invisible(NULL)
@@ -165,17 +173,19 @@ check_predicate_vec <- function(vec, predicate, inverse = FALSE, vec_arg = "vec"
 #' Check whether a vector is sorted
 #' @inheritParams check_length_vec
 #' @param decreasing Boolean indicating whether the expect sorted order is decreasing (default FALSE).
+#' @param strict Boolean indicating whether to consider numeric instability in the check (default TRUE).
+#' If FALSE the vector is compared to it's sorted version using "all_equal" instead of the "==" operator.
+#' This helps to mitigate issues with floating-point precision, utilizing the default tolerance.
 #' @details
-#' NAs in the vector are ignored during the check. A zero-length vector is treated as sorted.
-#' Internally, the check is performed by comparing the vector to its sorted version.
-#' The comparison is conducted using the `all.equal` function to mitigate issues with floating-point precision, utilizing the default tolerance.
+#' NAs in the vector are ignored during the check. NULL and zero-length vector is treated as sorted.
 #' @inherit check_atomic_vec return
 #' @export
-check_sorted_vec <- function(vec, decreasing = FALSE, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
+check_sorted_vec <- function(vec, decreasing = FALSE, strict = TRUE, vec_arg = "vec", raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
   check_atomic_vec(vec, vec_arg, quickalert = FALSE)
+  check_args(c("decreasing", "strict", "vec_arg"), c("logical", "logical", "character"), flag = TRUE, quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
-  internal_check_sorted_vec(vec, decreasing, vec_arg, raise, alert_message, n_evaluation_frame, quickalert, ...)
+  internal_check_sorted_vec(vec, decreasing, strict, vec_arg, raise, alert_message, n_evaluation_frame, quickalert, ...)
   invisible(NULL)
 }
 
@@ -190,6 +200,7 @@ check_sorted_vec <- function(vec, decreasing = FALSE, vec_arg = "vec", raise = "
 check_duplicate_vec <- function(vec, na_rm = TRUE, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
   check_atomic_vec(vec, vec_arg, quickalert = FALSE)
+  check_args("vec_arg", "character", flag = TRUE, quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_duplicate_vec(vec, na_rm, vec_arg, raise, alert_message, header, n_evaluation_frame, quickalert, ...)
   invisible(NULL)
@@ -213,6 +224,7 @@ check_length_vec <- function(vec, exact_len = NULL, min_len = NULL, max_len = NU
                               raise = "error", alert_message = NULL, n_evaluation_frame = 0, quickalert = TRUE, ...){
   rlang::check_required(vec)
   check_atomic_vec(vec, vec_arg, quickalert = FALSE)
+  check_args(c("na_rm", "unique", "vec_arg"), c("logical", "character"), flag = TRUE, recycle_expected_types = c(2, 1), quickalert = FALSE)
   check_len_args(exact_len, min_len, max_len)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_length_vec(vec, exact_len, min_len, max_len, na_rm, unique, vec_arg, raise, alert_message, n_evaluation_frame, quickalert, ...)
@@ -231,6 +243,7 @@ check_length_vec <- function(vec, exact_len = NULL, min_len = NULL, max_len = NU
 check_presence_vec <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_atomic_vec(vec, vec_arg, quickalert = FALSE)
+  check_args("vec_arg", "character", flag = TRUE, quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_presence_vec(vec, values, vec_arg, raise, alert_message, header, n_evaluation_frame, quickalert, ...)
   invisible(NULL)
@@ -245,6 +258,7 @@ check_presence_vec <- function(vec, values, vec_arg = "vec", raise = "error", al
 check_absence_vec <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
   check_required_all()
   check_atomic_vec(vec, vec_arg, quickalert = FALSE)
+  check_args("vec_arg", "character", flag = TRUE, quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_absence_vec(vec, values, vec_arg, raise, alert_message, header, n_evaluation_frame, quickalert, ...)
   invisible(NULL)

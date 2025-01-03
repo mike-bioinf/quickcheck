@@ -9,10 +9,11 @@ check_names <- function(x, xarg = "x", null_check = FALSE, zero_len_check = FALS
                         unique = FALSE, na_rm_unique = FALSE, include = NULL, exclude = NULL, what = "names"){
   rlang::check_required(x)
 
-  check_args_classes(
+  check_args(
     args = c("xarg", "null_check", "zero_len_check", "na_check", "empty_string_check", "unique", "na_rm_unique"),
-    expected_classes = c("character", "logical"),
-    numeric_correspondence = c(1, 6),
+    expected_types = c("character", "logical"),
+    flag = TRUE,
+    recycle_expected_types = c(1, 6),
     quickalert = FALSE
   )
 

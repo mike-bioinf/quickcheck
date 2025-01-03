@@ -4,8 +4,8 @@
 #' Check whether two vectors have the same length
 #' @param vec1 First vector.
 #' @param vec2 Second vector.
-#' @param vec1_arg string indicating how to address vec1 in the raised message (default 'vec1').
-#' @param vec2_arg string indicating how to address vec2 in the raised message (default 'vec2)'.
+#' @param vec1_arg String indicating how to address vec1 in the raised message (default 'vec1').
+#' @param vec2_arg String indicating how to address vec2 in the raised message (default 'vec2)'.
 #' @param na_rm Boolean indicating if NA must be excluded prior checking (default FALSE).
 #' @inheritParams check_columns_key
 #' @inheritParams check_length_vec
@@ -14,6 +14,7 @@
 check_length_vecs <- function(vec1, vec2, na_rm = FALSE, unique = FALSE, vec1_arg = "vec1", vec2_arg = "vec2",
                               raise = "error", alert_message = NULL, quickalert = TRUE, n_evaluation_frame = 0, ...){
   check_required_all()
+  check_args(c("na_rm", "unique", "vec1_arg", "vec2_arg"), c("logical", "character"), flag = TRUE, recycle_expected_types = c(2, 2), quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_length_vecs(vec1, vec2, na_rm, unique, vec1_arg, vec2_arg, raise, alert_message, quickalert, n_evaluation_frame, ...)
   invisible(NULL)
@@ -30,6 +31,7 @@ check_length_vecs <- function(vec1, vec2, na_rm = FALSE, unique = FALSE, vec1_ar
 check_identical_vecs <- function(vec1, vec2, na_rm = FALSE, unique = FALSE, sort = FALSE, vec1_arg = "vec1", vec2_arg = "vec2",
                                  raise = "error", alert_message = NULL, quickalert = TRUE, n_evaluation_frame = 0, ...){
   check_required_all()
+  check_args(c("na_rm", "unique", "sort", "vec1_arg", "vec2_arg"), c("logical", "character"), flag = TRUE, recycle_expected_types = c(3, 2), quickalert = FALSE)
   n_evaluation_frame <- raise_custom_frame(n_evaluation_frame, 1)
   internal_check_identical_vecs(vec1, vec2, na_rm, unique, sort, vec1_arg, vec2_arg, raise, alert_message, quickalert, n_evaluation_frame, ...)
   invisible(NULL)
@@ -49,7 +51,7 @@ check_identical_vecs <- function(vec1, vec2, na_rm = FALSE, unique = FALSE, sort
 #' Boolean indicating whether to allow vector recycling (default FALSE). If False a check on vectro lengths is performed before the "main" check
 #' @param coerce
 #' Boolean indicating whether the two vectors can be coerced during the check (default FALSE).
-#' If FALSE a check on vector classes is performed before the "main" check. This check is performed using the identical function. 
+#' If FALSE a check on vector classes is performed before the "main" check. This check is performed using the identical function.
 #' Therefore the vector classes must be perfectly identical in order to pass the check.
 #' @details NAs are always removed since comparisons involving them result always in NAs using the equality operator (a warning is raised).
 #' @inherit check_atomic_vec return
@@ -57,7 +59,15 @@ check_identical_vecs <- function(vec1, vec2, na_rm = FALSE, unique = FALSE, sort
 check_equality_vecs <- function(vec1, vec2, unique = FALSE, sort = FALSE, recycle = FALSE, coerce = FALSE, vec1_arg = "vec1", vec2_arg = "vec2",
                                  raise = "error", alert_message = NULL, quickalert = TRUE, n_evaluation_frame = 0, ...){
   check_required_all()
-  
+
+  check_args(
+    args = c("unique", "sort", "recycle", "coerce", "vec1_arg", "vec2_arg"),
+    expected_types = c("logical", "character"),
+    flag = TRUE,
+    recycle_expected_types = c(4, 2),
+    quickalert = FALSE
+  )
+
   if(any(is.na(c(vec1, vec2)))){
     cli::cli_warn(c("!" = "NAs in input vectors are removed prior checking."))
   }
@@ -75,7 +85,7 @@ check_equality_vecs <- function(vec1, vec2, unique = FALSE, sort = FALSE, recycl
       vec2_arg = vec2_arg,
       raise = raise,
       alert_message = alert_message,
-      n_evaluation_frame = nef_recycle, 
+      n_evaluation_frame = nef_recycle,
       quickalert = quickalert,
       ...
     )
@@ -117,9 +127,10 @@ check_equality_vecs <- function(vec1, vec2, unique = FALSE, sort = FALSE, recycl
 #' @inheritParams check_length_vecs
 #' @inherit check_atomic_vec return
 #' @export
-check_matching_vecs <- function(vec1, vec2, na_rm = FALSE, coerce = FALSE, vec1_arg = "vec1", vec2_arg = "vec2", 
+check_matching_vecs <- function(vec1, vec2, na_rm = FALSE, coerce = FALSE, vec1_arg = "vec1", vec2_arg = "vec2",
                                 raise = "error", alert_message = NULL, quickalert = TRUE, n_evaluation_frame = 0, ...){
   check_required_all()
+  check_args(c("na_rm", "coerce", "vec1_arg", "vec2_arg"), c("logical", "character"), flag = TRUE, recycle_expected_types = c(2, 2), quickalert = FALSE)
 
   if(!coerce){
     alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} are {cli::col_red('not equal')}.")

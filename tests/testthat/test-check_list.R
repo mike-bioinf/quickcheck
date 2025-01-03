@@ -6,6 +6,8 @@ test_that("check_list works as expected", {
   expect_error(check_list(x = list(1, "str"), predicate = is.numeric), class = "quickalert")
   expect_error(check_list(x = list(1, 2), exact_len = 3), class = "quickalert")
   expect_no_error(check_list(x = list(1), null_check = TRUE, zero_len_check = TRUE, uniform = TRUE, predicate = is.numeric, exact_len = 1))
+  ## refuses dataframe
+  expect_snapshot_error(check_list(qadf))
 })
 
 
@@ -28,6 +30,8 @@ test_that("check_empty_list works as expected", {
   ## evaluation mechanisms frame works
   mess <- "custom_error"
   expect_error(check_empty_list(NULL, alert_message = "{mess}", n_evaluation_frame = 1), regexp = "custom_error")
+  ## refuses dataframe
+  expect_snapshot_error(check_empty_list(qadf))
 })
 
 
@@ -38,6 +42,8 @@ test_that("check_uniform_list works", {
   expect_error(object = check_uniform_list(cancer_list), class = "quickalert")
   expect_no_error(check_uniform_list(numeric_list))
   expect_no_error(check_uniform_list(character_list, flatten = TRUE))
+  ## refuses dataframe
+  expect_snapshot_error(check_uniform_list(qadf))
 })
 
 
@@ -59,6 +65,8 @@ test_that("check_predicate_list function works", {
   names(clist)[1] <- NA
   expect_snapshot_error(check_predicate_list(x = clist, predicate = is.character))
   expect_snapshot_error(check_predicate_list(x = clist, predicate = is.character, inverse = TRUE))
+  ## refuses dataframe
+  expect_snapshot_error(check_predicate_list(qadf, predicate = is.numeric))
 })
 
 
@@ -81,6 +89,8 @@ test_that("check_length_list works as intented", {
     regexp = "List of maximum length 5 expected, 8 detected.",
     class = "quickalert"
   )
+  ## refuses dataframe
+  expect_snapshot_error(check_length_list(qadf))
 })
 
 
