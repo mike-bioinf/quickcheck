@@ -32,7 +32,7 @@ test_columns_levels(
 \arguments{
 \item{df}{Dataframe passed in the outer function.}
 
-\item{columns}{Character string reporting the column/s name.}
+\item{columns}{Character vector reporting the column/s name.}
 
 \item{col_levels}{List of character vectors reporting the expected levels for each column specified in columns.
 The element of the list must be nominated according to the columns names which they refer.}
@@ -44,10 +44,10 @@ It's also possible to pass a list of strings that is displayed as a nominated or
 
 \item{header}{String added at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.}
 
-\item{n_evaluation_frame}{Numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
-The default (0) points to this function frame.}
+\item{n_evaluation_frame}{Integerish, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+The default value (0) points to this function frame.}
 
-\item{quickalert}{logical, whether the raised alert has to be of class "quickalert".}
+\item{quickalert}{Logical, whether the raised alert has to be of class "quickalert".}
 
 \item{...}{To pass the additional parameters sign, list_format and header (if not in the formals parameters).}
 }

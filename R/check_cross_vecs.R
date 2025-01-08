@@ -72,8 +72,8 @@ check_equality_vecs <- function(vec1, vec2, unique = FALSE, sort = FALSE, recycl
     cli::cli_warn(c("!" = "NAs in input vectors are removed prior checking."))
   }
 
-  vec1 <- clean_vec(vec1, na_rm = TRUE, unique, sort)
-  vec2 <- clean_vec(vec2, na_rm = TRUE, unique, sort)
+  vec1 <- clean_vec(vec1, TRUE, unique, sort)
+  vec2 <- clean_vec(vec2, TRUE, unique, sort)
 
   if(!recycle) {
     alert_message <- generate_message(alert_message, "{vec1_arg} and {vec2_arg} are {cli::col_red('not equal')}.")

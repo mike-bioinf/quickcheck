@@ -27,7 +27,7 @@ check_args_incompatible <- function(args, alert_message = NULL, n_evaluation_fra
   rlang::check_required(args)
   if(!is.character(args)) cli::cli_abort(c("x" = "args must be a character vector."))
 
-   # do NOT convert into a list since these will evaluate expressions passed as argument in the calling func
+   # do NOT convert into a list since these will evaluate caller function promises
   calling_env <- rlang::caller_env(1)
 
   internal_check_presence_vec(
@@ -106,7 +106,7 @@ check_args <- function(args, expected_types, null = FALSE, flag = FALSE, with = 
     internal_check_length_vecs(args, expected_types, alert_message = "args and expected_types have different lengths.", quickalert = FALSE)
   }
 
-  # do NOT convert into a list since these will evaluate expressions passed as arguments in the caller function
+  # do NOT convert into a list since these will evaluate caller function promises
   calling_env <- rlang::caller_env(n = 1)
 
   internal_check_presence_vec(

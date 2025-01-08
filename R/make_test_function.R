@@ -76,6 +76,11 @@ test_absence_vec <- make_test_function("check_absence_vec")
 
 ### Single dataframe ------------------------------------------------------------------------
 
+#' @rdname check_dataframe
+#' @export
+test_dataframe <- make_test_function("check_dataframe")
+
+
 #' @rdname check_columns_presence
 #' @export
 test_columns_presence <- make_test_function("check_columns_presence")

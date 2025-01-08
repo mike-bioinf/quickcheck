@@ -149,7 +149,7 @@ impose_loop_behavior <- function(x, check_func, check_arg_list = list(), element
 #' Adds alert messages at the start or end of raised quickalert messages
 #' @description
 #' This wrapper works only with messages and warnings and not errors.
-#' Note that this is not enforced by the function and therefore the responsability fall on the user.
+#' Note that this is not enforced by the function and therefore the responsibility fall on the user.
 #' @inheritParams impose_accumulation_behavior
 #' @param message String to add to the alert message.
 #' @param margin Numeric equal to 1 or 2, indicating where to add the additional message (start or end respectively).

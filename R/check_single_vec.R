@@ -6,7 +6,7 @@
 #' Allow to test for different proprieties of an atomic vector. For the definition of “atomic”, see \link[base]{is.atomic}.
 #' The properties are tested in the order they compare as parameters function.
 #' @param vec Vector to check. Must be an atomic vector (see function description).
-#' @param vec_arg String reporting how to adress the vec in the alerts (default "vec").
+#' @param vec_arg String reporting how to address the vec in the alerts (default "vec").
 #' @param null_check Boolean, indicating whether to check for a NULL vec (default FALSE).
 #' @param zero_len_check Boolean, indicating whether to check for a zero-length vec (default FALSE).
 #' @param na_check Boolean, indicating whether to check for absence of NAs (default FALSE).
@@ -45,8 +45,8 @@ check_vector <- function(vec, vec_arg = "vec", null_check = FALSE, zero_len_chec
     quickalert = FALSE
   )
 
-  check_atomic_vec(include, vec_arg = "include")
-  check_atomic_vec(exclude, vec_arg = "exclude")
+  check_atomic_vec(include, vec_arg = "include", quickalert = FALSE)
+  check_atomic_vec(exclude, vec_arg = "exclude", quickalert = FALSE)
 
   internal_check_vector(
     vec, vec_arg, null_check, zero_len_check, na_check, empty_string_check, predicate, inverse, sorted, decreasing,
@@ -73,9 +73,9 @@ check_vector <- function(vec, vec_arg = "vec", null_check = FALSE, zero_len_chec
 #' Character vector reporting the alert message. Default NULL, in this case a standard message is used.
 #' It's also possible to pass a list of strings that is displayed as a nominated or numbered list.
 #' @param n_evaluation_frame
-#' numeric, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
-#' The default value (0) points to the frame above this function frame. So to point to the frame below this function frame you have to set 2.
-#' @param quickalert logical, whether the raised alert has to be of class "quickalert".
+#' Integerish, defines the number of stack frame to look down for the evaluation of the glue expressions of the alert message.
+#' The default value (0) points to this function frame.
+#' @param quickalert Logical, whether the raised alert has to be of class "quickalert".
 #' @param ... To pass the additional parameters sign, list_format and header (if not in the formals parameters).
 #' @return
 #' Depending on the function prefix: the "check" function returns the condition otherwise NULL invisibly,
@@ -237,7 +237,7 @@ check_length_vec <- function(vec, exact_len = NULL, min_len = NULL, max_len = NU
 #' @inheritParams check_atomic_vec
 #' @param values Character vector of values searched in vec.
 #' @param header Character string to add at the beginning of the alert message. If "default" the default header is used, otherwise the string passed in.
-#' @details vec and values vectors must share the same set of classes (this is enforced via "identical" function).
+#' @details vec and values vectors must share the same set of classes, otherwise a vector of FALSE is returned.
 #' @inherit check_atomic_vec return
 #' @export
 check_presence_vec <- function(vec, values, vec_arg = "vec", raise = "error", alert_message = NULL, header = "default", n_evaluation_frame = 0, quickalert = TRUE, ...){
